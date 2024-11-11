@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { redirect } from 'next/navigation';
 import { useForm, Resolver } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Api } from '@/services/api';
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 
 type FormValues = {
@@ -47,17 +48,21 @@ const resolver: Resolver<FormValues> = async (values) => {
 
 export default function Login() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const flow = searchParams.get("flow");
   console.log(flow);
+  const { setUser } = useAuth()
 
   const form = useForm<FormValues>({ resolver });
 
   const onSubmit = async (data: FormValues) => {
     if (flow == "interns") {
-      await Api.loginIntern(data)
-      if (true) {
-        redirect('/')
-      }
+      const response = await Api.loginIntern(data)
+      console.log(response)
+      setUser(response.intern)
+      localStorage.setItem("user", JSON.stringify(response.intern))
+      router.push("/dashboard")
+
     } else if (flow == "supervisors") {
       await Api.loginSupervisors(data)
     }
