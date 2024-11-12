@@ -13,10 +13,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Api } from '@/services/api';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-
 
 type FormValues = {
   email: string;
@@ -50,21 +48,29 @@ export default function Login() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const flow = searchParams.get("flow");
-  console.log(flow);
-  const { setUser } = useAuth()
+  const { setUser } = useAuth();
+  
+  React.useEffect(() => {
+    localStorage.setItem("lastFlow", flow || '');
+  }, [flow]);
 
   const form = useForm<FormValues>({ resolver });
 
   const onSubmit = async (data: FormValues) => {
-    if (flow == "interns") {
-      const response = await Api.loginIntern(data)
-      console.log(response)
-      setUser(response.intern)
-      localStorage.setItem("user", JSON.stringify(response.intern))
-      router.push("/dashboard")
-
-    } else if (flow == "supervisors") {
-      await Api.loginSupervisors(data)
+    try {
+      if (flow === "interns") {
+        const response = await Api.loginIntern(data);
+        setUser(response.intern);
+        localStorage.setItem("user", JSON.stringify(response.intern));
+        router.push("/dashboard");
+      } else if (flow === "supervisors") {
+        const response = await Api.loginSupervisors(data);
+        setUser(response.supervisor);
+        localStorage.setItem("user", JSON.stringify(response.supervisor));
+        router.push("/supervisor-dashboard");
+      }
+    } catch (error) {
+      router.push("/login?flow=" + localStorage.getItem("lastFlow"));
     }
   };
 
@@ -81,11 +87,11 @@ export default function Login() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="no-error-color">Email</FormLabel> {/* Classe personalizada */}
+                  <FormLabel className="no-error-color">Email</FormLabel>
                   <FormControl>
                     <Input placeholder="exemplo@esmaior.pt" {...field} />
                   </FormControl>
-                  <FormMessage /> {/* A mensagem de erro será exibida aqui */}
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -96,11 +102,11 @@ export default function Login() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="no-error-color">Palavra Passe</FormLabel> {/* Classe personalizada */}
+                  <FormLabel className="no-error-color">Palavra Passe</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
-                  <FormMessage /> {/* A mensagem de erro será exibida aqui */}
+                  <FormMessage />
                 </FormItem>
               )}
             />
