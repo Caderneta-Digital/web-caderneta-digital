@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { InfoInternsModal } from "./components/infoInternsModal";
 
 export const SupervisorDashboardInterns = () => {
   return (
@@ -54,20 +55,7 @@ export const SupervisorDashboardInterns = () => {
               <TableCell>Lidl</TableCell>
               <TableCell>Ativo</TableCell>
               <TableCell>
-              <Dialog>
-                <DialogTrigger>
-                  <Button variant="outline">Mais Informações</Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Estagiário</DialogTitle>
-                  </DialogHeader>
-                  <div>
-                    <h1 className="text-gray-600">Nome</h1>
-                    <p>André Ferreira</p>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <InfoInternsModal></InfoInternsModal>
               </TableCell>
             </TableRow>
           </TableBody>

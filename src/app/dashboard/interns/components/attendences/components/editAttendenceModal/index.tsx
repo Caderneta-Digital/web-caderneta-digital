@@ -25,7 +25,7 @@ export const EditAttendenceModal = () => {
     return (
         <Dialog>
             <DialogTrigger>
-                <Pencil cursor="pointer" />
+                <Button variant="outline">Msais Informações</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
