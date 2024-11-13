@@ -8,7 +8,7 @@ import { User } from "lucide-react"
 export const InternDashboardOverview = () => {
   return (
     <div className="flex flex-col gap-5">
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         {Array.from({ length: 4 }).map((item, index) => (
           <Card key={index}>
             <CardHeader>
@@ -24,7 +24,7 @@ export const InternDashboardOverview = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <Card>
           <div className="p-3">
             <h1 className="text-xl">Registos de Presenças</h1>
