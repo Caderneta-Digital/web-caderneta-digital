@@ -5,10 +5,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { InternDashboardOverview } from "./components/overview";
 import { InternDashboardAttendences } from "./components/attendences";
 import { InternDashboardWeeklySummaries } from "./components/weeklySummaries";
+import React from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
+    const Router = useRouter();
 
-    
+    React.useEffect(() => {
+        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user")
+        if (!token || user) {
+          const type = localStorage.getItem("lastFlow")
+          Router.push(`/login?flow=${type}`);
+        }
+      });
 
     return (
         <div className="h-screen w-screen">

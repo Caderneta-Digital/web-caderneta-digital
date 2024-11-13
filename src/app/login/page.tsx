@@ -41,18 +41,19 @@ export default function Login() {
 
   React.useEffect(() => {
     const user = localStorage.getItem("user");
-    if (user) {
+    const token = localStorage.getItem("token");
+    if (user || token) {
       const type = JSON.parse(user).type;
       router.push(`/dashboard/${type}`);
     }
-  });
+  }, [router]);
 
   const onSubmit = async (data: FormType) => {
     try {
       if (flow === "interns") {
         const response = await Api.loginIntern(data);
         setUser(response.intern);
-        localStorage.setItem("user", JSON.stringify({ ...response.intern, type: "intern" }));
+        localStorage.setItem("user", JSON.stringify({ ...response.intern, type: "interns" }));
         localStorage.setItem("token", response.token)
         console.log(response.token)
         router.push("/dashboard/interns");
