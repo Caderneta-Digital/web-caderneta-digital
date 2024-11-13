@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useForm, Resolver } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,41 +15,24 @@ import { Input } from "@/components/ui/input";
 import { Api } from '@/services/api';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 
-type FormValues = {
-  email: string;
-  password: string;
-};
+const schema = z.object({
+  email: z.string().email().min(1, { message: "Preencha o email" }),
+  password: z.string().min(1, { message: "Preencha a palavra-passe" })
+})
 
-const resolver: Resolver<FormValues> = async (values) => {
-  const errors: any = {};
-  
-  if (!values.email) {
-    errors.email = {
-      type: 'required',
-      message: 'Email é necessário.',
-    };
-  }
-
-  if (!values.password) {
-    errors.password = {
-      type: 'required',
-      message: 'Palavra Passe é necessária.',
-    };
-  }
-
-  return {
-    values: Object.keys(errors).length === 0 ? values : {},
-    errors,
-  };
-};
+type FormType = z.infer<typeof schema>
 
 export default function Login() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const flow = searchParams.get("flow");
   const { setUser } = useAuth();
-  
+
+  const form = useForm<FormType>({ resolver: zodResolver(schema) });
+
   React.useEffect(() => {
     if (flow) {
       localStorage.setItem("lastFlow", flow);
@@ -59,27 +42,24 @@ export default function Login() {
   React.useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      const type = JSON.parse(user).type; 
+      const type = JSON.parse(user).type;
       router.push(`/dashboard/${type}`);
     }
   });
 
-
-  const form = useForm<FormValues>({ resolver });
-
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormType) => {
     try {
       if (flow === "interns") {
         const response = await Api.loginIntern(data);
         setUser(response.intern);
-        localStorage.setItem("user", JSON.stringify({...response.intern, type:"intern"}));
+        localStorage.setItem("user", JSON.stringify({ ...response.intern, type: "intern" }));
         localStorage.setItem("token", response.token)
         console.log(response.token)
         router.push("/dashboard/interns");
       } else if (flow === "supervisors") {
         const response = await Api.loginSupervisors(data);
         setUser(response.supervisor);
-        localStorage.setItem("user", JSON.stringify({...response.supervisor, type:"supervisor"}));
+        localStorage.setItem("user", JSON.stringify({ ...response.supervisor, type: "supervisor" }));
         localStorage.setItem("token", response.token)
         router.push("/dashboard");
       }
