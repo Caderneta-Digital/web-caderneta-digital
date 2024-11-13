@@ -1,42 +1,37 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle
- } from "@/components/ui/dialog";
-
 import { Form,
-  FormItem,
-  FormControl,
-  FormField,
-  FormMessage,
-  FormLabel } from "@/components/ui/form";
+    FormItem,
+    FormControl,
+    FormField,
+    FormMessage,
+    FormLabel
+} from "@/components/ui/form";
 
-import { Textarea } from "@/components/ui/textarea";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Pencil } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { EditSummariesModal } from "./components/editSummariesModal";
 
-export const InternDashboardWeeklySummaries = () => {
-  const form = useForm();
-  return (
-    <div>
-      <Card>
-        <div className="flex justify-between p-3">
-          <h1 className="text-xl">Registos Semanais</h1>
-          <Dialog>
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Pencil } from "lucide-react";
+
+export const EditSummariesModal = () => {
+    const form = useForm();
+    return (
+        <Dialog>
             <DialogTrigger>
-              <Button variant="outline">Criar Registo</Button>
+                <Pencil cursor="pointer" />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Criar Registo</DialogTitle>
+                <DialogTitle>Editar Registo</DialogTitle>
               </DialogHeader>
               <div>
                 <Form {...form}>
@@ -95,34 +90,5 @@ export const InternDashboardWeeklySummaries = () => {
               </div>
             </DialogContent>
           </Dialog>
-        </div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Semana</TableHead>
-              <TableHead>Registo</TableHead>
-              <TableHead>Tutor</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead>Editar</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>12/12/2024 a 18/12/2024</TableCell>
-              <TableCell>
-                <Input />
-              </TableCell>
-              <TableCell>
-                <Checkbox />
-              </TableCell>
-              <TableCell>Por Aprovar</TableCell>
-              <TableCell>
-                <EditSummariesModal></EditSummariesModal>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Card>
-    </div>
-  )
+    )
 }
