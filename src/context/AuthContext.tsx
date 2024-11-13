@@ -53,8 +53,14 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const closeAuth = () => {
         setUser(null);
         localStorage.removeItem("user");
-        router.push("/login?flow=intern");
+        localStorage.removeItem("token");
+        router.push("/login?flow=" + localStorage.getItem("")
+        );
     };
+
+    const getToken = () => {
+        localStorage.getItem("token");
+    }
 
     return (
         <AuthContext.Provider value={{ user, setUser, closeAuth }}>

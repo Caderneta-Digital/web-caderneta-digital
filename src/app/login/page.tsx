@@ -51,7 +51,9 @@ export default function Login() {
   const { setUser } = useAuth();
   
   React.useEffect(() => {
-    localStorage.setItem("lastFlow", flow || '');
+    if (flow) {
+      localStorage.setItem("lastFlow", flow);
+    }
   }, [flow]);
 
   const form = useForm<FormValues>({ resolver });
@@ -62,12 +64,15 @@ export default function Login() {
         const response = await Api.loginIntern(data);
         setUser(response.intern);
         localStorage.setItem("user", JSON.stringify(response.intern));
-        router.push("/dashboard");
+        localStorage.setItem("token", response.token)
+        console.log(response.token)
+        router.push("/dashboard/interns");
       } else if (flow === "supervisors") {
         const response = await Api.loginSupervisors(data);
         setUser(response.supervisor);
         localStorage.setItem("user", JSON.stringify(response.supervisor));
-        router.push("/supervisor-dashboard");
+        localStorage.setItem("token", response.token)
+        router.push("/dashboard");
       }
     } catch (error) {
       router.push("/login?flow=" + localStorage.getItem("lastFlow"));
