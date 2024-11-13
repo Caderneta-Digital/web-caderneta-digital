@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DialogHeader } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
+import { Dialog,DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Pencil } from "lucide-react";
 
 export const SupervisorDashboardEntities = () => {
@@ -47,20 +46,19 @@ export const SupervisorDashboardEntities = () => {
               <TableCell>Fábio Pereira, Rita Saramago</TableCell>
               <TableCell>Ativo</TableCell>
               <TableCell>
-              <Dialog>
-                <DialogTrigger>
-                  <Button variant="outline">Mais Informações</Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Ver Estagiários</DialogTitle>
-                  </DialogHeader>
-                  <div>
-                    <h1 className="text-gray-600">Nome</h1>
-                    <p>André Ferreira</p>
-                  </div>
-                </DialogContent>
-              </Dialog>
+                <Dialog>
+                  <DialogTrigger>
+                    <Button variant="outline">Criar Entidade</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Ver Entidades</DialogTitle>
+                    </DialogHeader>
+                    <div>
+                      <h1>ADD FORM AQUI</h1>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </TableCell>
             </TableRow>
           </TableBody>

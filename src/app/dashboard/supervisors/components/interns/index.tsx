@@ -24,7 +24,7 @@ export const SupervisorDashboardInterns = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Ver Estagiários</DialogTitle>
+                <DialogTitle>Ver Estagiário</DialogTitle>
               </DialogHeader>
               <div>
                 <h1>ADD FORM AQUI</h1>
