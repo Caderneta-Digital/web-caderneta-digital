@@ -17,7 +17,7 @@ export default function Dashboard() {
             </div>
             <div className="px-4 py-3 flex flex-col gap-4">
                 <Tabs defaultValue="overview" className="w-full space-y-5">
-                    <TabsList className="grid w-[400px] grid-cols-4">
+                    <TabsList className="grid w-fit grid-cols-4">
                         <TabsTrigger value="overview">Overview</TabsTrigger>
                         <TabsTrigger value="attendences">Presenças</TabsTrigger>
                         <TabsTrigger value="weeklySummaries">Registos</TabsTrigger>
