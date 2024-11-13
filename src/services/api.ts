@@ -1,20 +1,21 @@
+import { InternType } from '@/types/internTypes';
 import axios from 'axios';
 
 class API {
     axios;
 
-    constructor () {
+    constructor() {
         this.axios = axios.create({
             baseURL: 'http://100.28.23.135:8888'
         })
     }
 
-    public async loginIntern(data: {email: string, password: string}) {
-        const response = await this.axios.post('/interns/login', data)
+    public async loginIntern(data: { email: string, password: string }) {
+        const response = await this.axios.post<{ token: string; intern: InternType }>('/interns/login', data)
         return response.data
     }
 
-    public async loginSupervisors(data: {email: string, password: string}) {
+    public async loginSupervisors(data: { email: string, password: string }) {
         const response = await this.axios.post('/supervisors/login', data)
         return response.data
     }

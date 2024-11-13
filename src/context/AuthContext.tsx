@@ -2,28 +2,12 @@
 
 import React, { createContext, useState, ReactNode, FC, useContext, useEffect } from "react";
 import { useRouter } from 'next/navigation';
-
-interface User {
-    id: string;
-    name: string;
-    password: string;
-    email: string;
-    phone: string;
-    cc: string;
-    nif: string;
-    adress: string;
-    postalCode: string;
-    dadName: string;
-    motherName: string;
-    obs: string;
-    totalHours: number;
-    createdAt: string;
-}
+import { UserType } from "@/types/userTypes";
 
 // Definir o tipo do contexto de autenticação
 interface AuthContextType {
-    user: User | null;
-    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    user: UserType | null;
+    setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
     closeAuth: () => void;
 }
 
@@ -37,7 +21,7 @@ interface AuthProviderProps {
 
 // Criar o AuthProvider
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserType | null>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -57,10 +41,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         router.push("/login?flow=" + localStorage.getItem("")
         );
     };
-
-    const getToken = () => {
-        localStorage.getItem("token");
-    }
 
     return (
         <AuthContext.Provider value={{ user, setUser, closeAuth }}>
