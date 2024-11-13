@@ -60,7 +60,7 @@ export const SupervisorDashboardInterns = () => {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Ver Estagiários</DialogTitle>
+                    <DialogTitle>Estagiário</DialogTitle>
                   </DialogHeader>
                   <div>
                     <h1 className="text-gray-600">Nome</h1>
