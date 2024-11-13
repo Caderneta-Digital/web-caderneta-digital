@@ -1,33 +1,62 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { User } from "lucide-react"
 
 
 export const SupervisorDashboardOverview = () => {
+
+  const cardsData = [
+    { title: "Tutores Existentes", value: 2 },
+    { title: "Estagiários Inseridos", value: 2 },
+    { title: "Horas Restantes (média)", value: 146 },
+    { title: "Classificação (média)", value: 16.5 }
+  ];
+
   return (
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        {Array.from({ length: 4 }).map((item, index) => (
+        {cardsData.map((card, index) => (
           <Card key={index}>
             <CardHeader>
               <div className="flex justify-between">
-                <h1 className="font-bold">Nota de FCT (média)</h1>
+                <h1 className="font-bold">{card.title}</h1>
                 <User />
               </div>
             </CardHeader>
             <CardContent>
-              <h1 className="font-bold text-3xl">N/A</h1>
+              <h1 className="font-bold text-3xl">{card.value}</h1>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
         <Card>
-          <div className="p-3">
+          <div className="flex justify-between p-3">
             <h1 className="text-xl">Estagiários</h1>
           </div>
+          <Dialog>
+            <DialogTrigger>
+              <Button variant="outline">Criar Entidade</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Ver Entidades</DialogTitle>
+              </DialogHeader>
+              <div>
+                <h1>ADD FORM AQUI</h1>
+              </div>
+            </DialogContent>
+          </Dialog>
           <Table>
             <TableHeader>
               <TableRow>
@@ -43,28 +72,6 @@ export const SupervisorDashboardOverview = () => {
                 <TableCell>andreferreira@aluno.com</TableCell>
                 <TableCell>GPSI</TableCell>
                 <TableCell>18</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Card>
-        <Card>
-          <div className="p-3">
-            <h1 className="text-xl">Entidades de acolhimento</h1>
-          </div>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nome</TableHead>
-                <TableHead>Nome do Responsável</TableHead>
-                <TableHead>Estiários inseridos</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              <TableRow>
-                <TableCell>Lidl</TableCell>
-                <TableCell>Ricardo Rocha</TableCell>
-                <TableCell>André Ferreira, Rita Saramago</TableCell>
               </TableRow>
             </TableBody>
           </Table>

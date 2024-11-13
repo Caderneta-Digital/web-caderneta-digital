@@ -48,7 +48,7 @@ export const SupervisorDashboardEntities = () => {
               <TableCell>
                 <Dialog>
                   <DialogTrigger>
-                    <Button variant="outline">Criar Entidade</Button>
+                    <Button variant="outline">Mais informações</Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>

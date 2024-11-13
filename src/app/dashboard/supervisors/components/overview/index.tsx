@@ -5,19 +5,27 @@ import { User } from "lucide-react"
 
 
 export const SupervisorDashboardOverview = () => {
+
+  const cardsData = [
+    { title: "Nota de FCT (média)", value: "N/A" },
+    { title: "Nº de Estagiários", value: 34 },
+    { title: "Nº de Entidades", value: 2 },
+    { title: "Nº de Estagiários sem Entidade", value: 4 }
+  ];
+
   return (
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        {Array.from({ length: 4 }).map((item, index) => (
+        {cardsData.map((card, index) => (
           <Card key={index}>
             <CardHeader>
               <div className="flex justify-between">
-                <h1 className="font-bold">Nota de FCT (média)</h1>
+                <h1 className="font-bold">{card.title}</h1>
                 <User />
               </div>
             </CardHeader>
             <CardContent>
-              <h1 className="font-bold text-3xl">N/A</h1>
+              <h1 className="font-bold text-3xl">{card.value}</h1>
             </CardContent>
           </Card>
         ))}
