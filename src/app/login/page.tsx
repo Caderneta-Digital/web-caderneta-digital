@@ -56,6 +56,15 @@ export default function Login() {
     }
   }, [flow]);
 
+  React.useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const type = JSON.parse(user).type; 
+      router.push(`/dashboard/${type}`);
+    }
+  });
+
+
   const form = useForm<FormValues>({ resolver });
 
   const onSubmit = async (data: FormValues) => {
@@ -63,14 +72,14 @@ export default function Login() {
       if (flow === "interns") {
         const response = await Api.loginIntern(data);
         setUser(response.intern);
-        localStorage.setItem("user", JSON.stringify(response.intern));
+        localStorage.setItem("user", JSON.stringify({...response.intern, type:"intern"}));
         localStorage.setItem("token", response.token)
         console.log(response.token)
         router.push("/dashboard/interns");
       } else if (flow === "supervisors") {
         const response = await Api.loginSupervisors(data);
         setUser(response.supervisor);
-        localStorage.setItem("user", JSON.stringify(response.supervisor));
+        localStorage.setItem("user", JSON.stringify({...response.supervisor, type:"supervisor"}));
         localStorage.setItem("token", response.token)
         router.push("/dashboard");
       }

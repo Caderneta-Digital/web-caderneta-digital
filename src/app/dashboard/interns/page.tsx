@@ -7,6 +7,9 @@ import { InternDashboardAttendences } from "./components/attendences";
 import { InternDashboardWeeklySummaries } from "./components/weeklySummaries";
 
 export default function Dashboard() {
+
+    
+
     return (
         <div className="h-screen w-screen">
             <div className="flex justify-between items-center px-5 py-3 border-b-[1px] border-b-gray-300">
