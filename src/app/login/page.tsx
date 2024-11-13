@@ -13,13 +13,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Api } from "@/services/api";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "react-query"
 import { useToast } from "@/hooks/use-toast";
 import { handleError } from "@/utils/handleError";
+import { UserTypeEnum } from "@/types/userTypes";
 
 const schema = z.object({
   email: z.string().email().min(1, { message: "Preencha o email" }),
@@ -30,21 +31,56 @@ type FormType = z.infer<typeof schema>;
 
 export default function Login() {
   const { toast } = useToast()
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const flow = searchParams.get("flow");
+  const { setUser } = useAuth();
+  const pathname = usePathname()
+  const form = useForm<FormType>({ resolver: zodResolver(schema) });
+
   const { mutateAsync: loginInternMutation, isLoading } = useMutation({
     mutationKey: ["loginIntern"],
     mutationFn: async (data: { email: string; password: string }) => {
       const response = await Api.loginIntern(data)
       return response;
     },
-    onError: (error) => handleError(error, toast) 
+    onError: (error) => handleError(error, toast)
   })
 
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const flow = searchParams.get("flow");
-  const { setUser } = useAuth();
+  const onSubmit = async (data: FormType) => {
+    if (flow === "interns") {
+      // TODO: Passar toda essa função para o AuthContext
+      const response = await loginInternMutation(data);
+      setUser({
+        id: response.intern.id,
+        name: response.intern.name,
+        email: response.intern.email,
+        type: UserTypeEnum.INTERN,
+      });
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...response.intern, type: "interns" })
+      );
+      localStorage.setItem("token", response.token);
+      router.push("/dashboard/interns");
+    } else if (flow === "supervisors") {
+      const response = await Api.loginSupervisors(data);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...response.supervisor, type: "supervisors" })
+      );
+      localStorage.setItem("token", response.token);
+      router.push("/dashboard");
+    }
+  };
 
-  const form = useForm<FormType>({ resolver: zodResolver(schema) });
+  React.useEffect(() => {
+    const lastFlow = localStorage.getItem("lastFlow")
+    const url = new URLSearchParams(searchParams.toString())
+    url.set("flow", lastFlow || "interns")
+    router.push(`${pathname}?${url.toString()}`)
+
+  }, [pathname, router, searchParams])
 
   React.useEffect(() => {
     if (flow) {
@@ -59,31 +95,6 @@ export default function Login() {
       router.push(`/dashboard/${type}`);
     }
   }, [router]);
-
-  const onSubmit = async (data: FormType) => {
-    try {
-      if (flow === "interns") {
-        const response = await loginInternMutation(data);
-        setUser(response.intern);
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...response.intern, type: "interns" })
-        );
-        localStorage.setItem("token", response.token);
-        router.push("/dashboard/interns");
-      } else if (flow === "supervisors") {
-        const response = await Api.loginSupervisors(data);
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...response.supervisor, type: "supervisors" })
-        );
-        localStorage.setItem("token", response.token);
-        router.push("/dashboard");
-      }
-    } catch (error) {
-      router.push("/login?flow=" + localStorage.getItem("lastFlow"));
-    }
-  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
