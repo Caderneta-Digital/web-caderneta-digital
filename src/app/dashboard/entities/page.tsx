@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SupervisorDashboardOverview } from "./components/overview";
 import { SupervisorDashboardInterns } from "./components/interns";
-import { SupervisorDashboardEntities } from "./components/entitys";
+import { SupervisorDashboardEntities } from "./components/entities";
 import React from "react";
 //import { useRouter } from 'next/navigation';
 
