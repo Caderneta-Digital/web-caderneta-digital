@@ -13,8 +13,7 @@ export default function Dashboard() {
 
     React.useEffect(() => {
         const token = localStorage.getItem("token");
-        const user = localStorage.getItem("user")
-        if (!token || user) {
+        if (!token) {
           const type = localStorage.getItem("lastFlow")
           Router.push(`/login?flow=${type}`);
         }

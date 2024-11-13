@@ -41,8 +41,7 @@ export default function Login() {
 
   React.useEffect(() => {
     const user = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-    if (user || token) {
+    if (user) {
       const type = JSON.parse(user).type;
       router.push(`/dashboard/${type}`);
     }
