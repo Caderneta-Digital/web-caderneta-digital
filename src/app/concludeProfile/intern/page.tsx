@@ -6,9 +6,19 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  nif: z.string().min(1, { message: "Preencha o NIF"})
+})
+
+type FormType = z.infer<typeof schema>
 
 export default function ConcludeInternProfilePage() {
-  const form = useForm()
+  const form = useForm<FormType>({
+    resolver: zodResolver(schema)
+  })
 
   return (
     <div className="h-screen flex justify-center p-5">

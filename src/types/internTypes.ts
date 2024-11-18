@@ -6,7 +6,7 @@ export interface InternType {
   phone: string;
   cc: string;
   nif: string;
-  adress: string;
+  address: string;
   postalCode: string;
   dadName: string;
   motherName: string;

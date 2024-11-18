@@ -21,6 +21,8 @@ import { useMutation } from "react-query"
 import { useToast } from "@/hooks/use-toast";
 import { handleError } from "@/utils/handleError";
 import { UserTypeEnum } from "@/types/userTypes";
+import { InternBusinessLogic } from "@/utils/internBusinessLogin";
+import { InternType } from "@/types/internTypes";
 
 const schema = z.object({
   email: z.string().email().min(1, { message: "Preencha o email" }),
@@ -59,9 +61,12 @@ export default function Login() {
       });
       localStorage.setItem(
         "user",
-        JSON.stringify({ ...response.intern, type: "interns" })
+        JSON.stringify({ ...response.intern, type: UserTypeEnum.INTERN })
       );
       localStorage.setItem("token", response.token);
+      if (InternBusinessLogic.shouldConcludeProfile(response.intern)) {
+        return router.push("/concludeProfile/intern")
+      }
       router.push("/dashboard/interns");
     } else if (flow === "supervisors") {
       const response = await Api.loginSupervisors(data);
@@ -89,9 +94,14 @@ export default function Login() {
   }, [flow]);
 
   React.useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      const type = JSON.parse(user).type;
+    const user = JSON.parse(localStorage.getItem("user") as string);
+    const type = user && user.type;
+
+    if (type === UserTypeEnum.INTERN && InternBusinessLogic.shouldConcludeProfile(user as InternType)) {
+      return router.push("/concludeProfile/intern")
+    }
+
+    if (user && type) {
       router.push(`/dashboard/${type}`);
     }
   }, [router]);
