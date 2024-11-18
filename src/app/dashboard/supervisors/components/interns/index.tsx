@@ -55,7 +55,7 @@ export const SupervisorDashboardInterns = () => {
               <TableCell>Lidl</TableCell>
               <TableCell>Ativo</TableCell>
               <TableCell>
-              <InfoInternsModal></InfoInternsModal>
+                <InfoInternsModal></InfoInternsModal>
               </TableCell>
             </TableRow>
           </TableBody>

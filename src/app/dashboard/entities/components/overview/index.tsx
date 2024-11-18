@@ -43,9 +43,8 @@ export const SupervisorDashboardOverview = () => {
         <Card>
           <div className="flex justify-between p-3">
             <h1 className="text-xl">Estagiários</h1>
-          </div>
-          <Dialog>
-            <DialogTrigger>
+            <Dialog>
+            <DialogTrigger asChild>
               <Button variant="outline">Criar Entidade</Button>
             </DialogTrigger>
             <DialogContent>
@@ -57,6 +56,7 @@ export const SupervisorDashboardOverview = () => {
               </div>
             </DialogContent>
           </Dialog>
+          </div>
           <Table>
             <TableHeader>
               <TableRow>
