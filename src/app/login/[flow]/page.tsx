@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Api } from "@/services/api";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -25,7 +25,7 @@ import { InternBusinessLogic } from "@/utils/internBusinessLogin";
 import { InternType } from "@/types/internTypes";
 
 const schema = z.object({
-  email: z.string().email().min(1, { message: "Preencha o email" }),
+  email: z.string().email("O email precisa ser válido").min(1, { message: "Preencha o email" }),
   password: z.string().min(1, { message: "Preencha a palavra-passe" }),
 });
 
@@ -33,12 +33,17 @@ type FormType = z.infer<typeof schema>;
 
 export default function Login() {
   const { toast } = useToast()
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const flow = searchParams.get("flow");
   const { setUser } = useAuth();
-  const pathname = usePathname()
-  const form = useForm<FormType>({ resolver: zodResolver(schema) });
+  const form = useForm<FormType>({
+    resolver: zodResolver(schema),
+    defaultValues: { 
+      email: "",
+      password: ""
+    }
+  });
+  const params = useParams()
+  const flow = params.flow as UserTypeEnum
 
   const { mutateAsync: loginInternMutation, isLoading } = useMutation({
     mutationKey: ["loginIntern"],
@@ -50,7 +55,7 @@ export default function Login() {
   })
 
   const onSubmit = async (data: FormType) => {
-    if (flow === "interns") {
+    if (flow === UserTypeEnum.INTERN) {
       // TODO: Passar toda essa função para o AuthContext
       const response = await loginInternMutation(data);
       setUser({
@@ -59,16 +64,19 @@ export default function Login() {
         email: response.intern.email,
         type: UserTypeEnum.INTERN,
       });
+      Api.setBearerToken(response.token)
       localStorage.setItem(
         "user",
         JSON.stringify({ ...response.intern, type: UserTypeEnum.INTERN })
       );
       localStorage.setItem("token", response.token);
+
       if (InternBusinessLogic.shouldConcludeProfile(response.intern)) {
         return router.push("/concludeProfile/intern")
       }
-      router.push("/dashboard/interns");
-    } else if (flow === "supervisors") {
+
+      return router.push("/concludeProfile/intern")
+    } else if (flow === UserTypeEnum.SUPERVISOR) {
       const response = await Api.loginSupervisors(data);
       localStorage.setItem(
         "user",
@@ -78,20 +86,6 @@ export default function Login() {
       router.push("/dashboard");
     }
   };
-
-  React.useEffect(() => {
-    const lastFlow = localStorage.getItem("lastFlow")
-    const url = new URLSearchParams(searchParams.toString())
-    url.set("flow", lastFlow || "interns")
-    router.push(`${pathname}?${url.toString()}`)
-
-  }, [pathname, router, searchParams])
-
-  React.useEffect(() => {
-    if (flow) {
-      localStorage.setItem("lastFlow", flow);
-    }
-  }, [flow]);
 
   React.useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") as string);
