@@ -7,15 +7,30 @@ import { InternDashboardAttendences } from "./components/attendences";
 import { InternDashboardWeeklySummaries } from "./components/weeklySummaries";
 import React from "react";
 import { useRouter } from 'next/navigation';
+import { useQuery } from "react-query";
+import { Api } from "@/services/api";
+import { useAuth } from "@/context/AuthContext";
+
 
 export default function Dashboard() {
-    const Router = useRouter();
+    const Router = useRouter()
+    const { user } = useAuth();
+
+    const { isPending, error, data } = useQuery({
+        queryKey: ['internDashboard', user?.id],
+        queryFn: async () => {
+            const response = await Api.dashboardIntern()
+            return response
+        }
+    })
+
+    console.log(data)
 
     React.useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token")
         if (!token) {
           const type = localStorage.getItem("lastFlow")
-          Router.push(`/login?flow=${type}`);
+          Router.push(`/login?flow=${type}`)
         }
       });
 

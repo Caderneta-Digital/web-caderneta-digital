@@ -30,7 +30,10 @@ class API {
         return response.data
     }
 
+    public async dashboardIntern() {
+        const response = await this.axios.get('/interns/dashboard')
+        return response
+    }
 }
 
 export const Api = new API();
-
