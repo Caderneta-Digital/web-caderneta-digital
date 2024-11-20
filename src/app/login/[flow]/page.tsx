@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,7 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 import { handleError } from "@/utils/handleError";
 import { UserTypeEnum } from "@/types/userTypes";
 import { InternBusinessLogic } from "@/utils/internBusinessLogin";
-import { InternType } from "@/types/internTypes";
+import Cookies from "js-cookie"
 
 const schema = z.object({
   email: z.string().email("O email precisa ser válido").min(1, { message: "Preencha o email" }),
@@ -65,17 +65,15 @@ export default function Login() {
         type: UserTypeEnum.INTERN,
       });
       Api.setBearerToken(response.token)
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ ...response.intern, type: UserTypeEnum.INTERN })
-      );
-      localStorage.setItem("token", response.token);
+      Cookies.set("user", JSON.stringify({ ...response.intern, type: UserTypeEnum.INTERN }))
+      Cookies.set("token", response.token)
+      Cookies.set("type", UserTypeEnum.INTERN)
 
       if (InternBusinessLogic.shouldConcludeProfile(response.intern)) {
         return router.push("/concludeProfile/intern")
       }
 
-      return router.push("/concludeProfile/intern")
+      return router.push("/dashboard/intern")
     } else if (flow === UserTypeEnum.SUPERVISOR) {
       const response = await Api.loginSupervisors(data);
       localStorage.setItem(
@@ -87,18 +85,18 @@ export default function Login() {
     }
   };
 
-  React.useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") as string);
-    const type = user && user.type;
+  useEffect(() => {
+    const validFlows = ["intern", "supervisor"]
+    if (!validFlows.includes(flow)) {
+      const userType = Cookies.get("type")
 
-    if (type === UserTypeEnum.INTERN && InternBusinessLogic.shouldConcludeProfile(user as InternType)) {
-      return router.push("/concludeProfile/intern")
-    }
+      if(userType) {
+        return router.push(`/login/${userType}`)
+      }
 
-    if (user && type) {
-      router.push(`/dashboard/${type}`);
+      return router.push("/")
     }
-  }, [router]);
+  }, [flow, router])
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
