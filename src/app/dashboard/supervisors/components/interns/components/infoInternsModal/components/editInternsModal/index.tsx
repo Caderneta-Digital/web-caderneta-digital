@@ -8,13 +8,15 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { EditInternsModal } from "./components/editInternsModal";
 
-export const InfoInternsModal = () => {
+export const EditInternsModal = () => {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button variant="outline">Mais Informações</Button>
+                {/* Botão de Submissão */}
+                <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+                        Editar
+                    </Button>
             </DialogTrigger>
             <DialogContent className="h-[500px] overflow-auto">
                 <DialogHeader>
@@ -94,8 +96,12 @@ export const InfoInternsModal = () => {
                     <Label className="text-gray-600">Estado</Label>
                     <h1>Ativo</h1>
                 </div>
+                
 
-                <EditInternsModal></EditInternsModal>
+                    {/* Botão de Submissão */}
+                    <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+                        Editar
+                    </Button>
             </DialogContent>
         </Dialog>
     )

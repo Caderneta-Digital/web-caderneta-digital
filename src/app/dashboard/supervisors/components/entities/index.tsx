@@ -3,10 +3,17 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog,DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { Dialog,DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Pencil } from "lucide-react";
+import { useForm } from "react-hook-form";
+
+import { Form, FormItem, FormControl, FormField, FormMessage, FormLabel } from "@/components/ui/form";
+import { InfoEntityModal } from "./components/infoEntityModal";
+
+
 
 export const SupervisorDashboardEntities = () => {
+  const form = useForm();
   return (
     <div>
       <Card>
@@ -18,10 +25,66 @@ export const SupervisorDashboardEntities = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Ver Entidades</DialogTitle>
+                <DialogTitle>Criar Conta</DialogTitle>
+                <DialogDescription>Crie a conta da Entidade de Acolhimento</DialogDescription>
               </DialogHeader>
               <div>
-                <h1>ADD FORM AQUI</h1>
+                <Form {...form}>
+                  <form className="space-y-6">
+                    {/* Campo de Nome */}
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="no-error-color">Nome</FormLabel>
+                          <FormControl>
+                            <Input placeholder="António Pinheiro" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Campo de Email */}
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="no-error-color">Email</FormLabel>
+                          <FormControl>
+                            <Input placeholder="a00000@alunos.esmaior.pt" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Campo de Senha */}
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="no-error-color">
+                            Palavra Passe
+                          </FormLabel>
+                          <FormControl>
+                            <Input type="password" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Botão de Submissão */}
+                    <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+                      Criar
+                    </Button>
+
+                  </form>
+                </Form>
               </div>
             </DialogContent>
           </Dialog>
@@ -46,19 +109,8 @@ export const SupervisorDashboardEntities = () => {
               <TableCell>Fábio Pereira, Rita Saramago</TableCell>
               <TableCell>Ativo</TableCell>
               <TableCell>
-                <Dialog>
-                  <DialogTrigger>
-                    <Button variant="outline">Mais informações</Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Ver Entidades</DialogTitle>
-                    </DialogHeader>
-                    <div>
-                      <h1>ADD FORM AQUI</h1>
-                    </div>
-                  </DialogContent>
-                </Dialog>
+                <InfoEntityModal></InfoEntityModal>
+                {/* meter aqui o Component Ver Mais */}
               </TableCell>
             </TableRow>
           </TableBody>
