@@ -144,12 +144,7 @@ export const SupervisorDashboardInterns = () => {
 
                     {/* Botão de Submissão */}
                     <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
-                      Confirmar
-                    </Button>
-
-                    {/* Botão de Submissão */}
-                    <Button type="submit" className="w-full bg-white text-black border-solid border-2 border-black hover:bg-gray-900 hover:text-white hover:border-gray-900">
-                      Cancelar
+                      Criar
                     </Button>
 
                   </form>
