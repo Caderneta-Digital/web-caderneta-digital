@@ -8,7 +8,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { EditInternsModal } from "./components/editInternsModal";
+import { InputEditLine } from "@/components/ui/inputEditLine";
 
 export const InfoInternsModal = () => {
     return (
@@ -92,10 +92,8 @@ export const InfoInternsModal = () => {
 
                 <div>
                     <Label className="text-gray-600">Estado</Label>
-                    <h1>Ativo</h1>
+                    <InputEditLine value="Ativo"/>
                 </div>
-
-                <EditInternsModal></EditInternsModal>
             </DialogContent>
         </Dialog>
     )

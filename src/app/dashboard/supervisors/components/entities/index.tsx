@@ -110,7 +110,6 @@ export const SupervisorDashboardEntities = () => {
               <TableCell>Ativo</TableCell>
               <TableCell>
                 <InfoEntityModal></InfoEntityModal>
-                {/* meter aqui o Component Ver Mais */}
               </TableCell>
             </TableRow>
           </TableBody>

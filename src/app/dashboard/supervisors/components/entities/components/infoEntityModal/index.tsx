@@ -8,6 +8,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { InputEditLine } from "@/components/ui/inputEditLine";
 
 export const InfoEntityModal = () => {
     return (
@@ -71,7 +72,7 @@ export const InfoEntityModal = () => {
 
                 <div>
                     <Label className="text-gray-600">Estado</Label>
-                    <h1>Ativo</h1>
+                    <InputEditLine value="Ativo"/>
                 </div>
             </DialogContent>
         </Dialog>
