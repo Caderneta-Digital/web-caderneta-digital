@@ -22,6 +22,10 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL(`/concludeProfile/intern`, req.url));
     }
 
+    if (!req.url.includes("dashboard")) {
+      return NextResponse.redirect(new URL(`/dashboard/intern`, req.url));
+    }
+
     return NextResponse.next();
   }
 

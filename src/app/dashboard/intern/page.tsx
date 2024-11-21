@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { InternDashboardOverview } from "./components/overview";
 import { InternDashboardAttendences } from "./components/attendences";
 import { InternDashboardWeeklySummaries } from "./components/weeklySummaries";
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import { Api } from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
@@ -13,22 +13,15 @@ import { useAuth } from "@/context/AuthContext";
 export default function Dashboard() {
   const { user } = useAuth();
 
-  // const { data } = useQuery({
-  //   queryKey: ["internDashboard", user?.id],
-  //   queryFn: async () => {
-  //     const response = await Api.dashboardIntern();
-  //     return response;
-  //   },
-  // });
+  const { data } = useQuery({
+    queryKey: ["internDashboard", user?.id],
+    queryFn: async () => {
+      const response = await Api.dashboardIntern();
+      return response;
+    },
+  });
 
-  useEffect(() => {
-    const a = async () => {
-      const v = await Api.dashboardIntern();
-      console.log(v);
-    };
-
-    a();
-  }, []);
+  console.log(data);
 
   return (
     <div className="h-screen w-screen">
@@ -60,4 +53,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
