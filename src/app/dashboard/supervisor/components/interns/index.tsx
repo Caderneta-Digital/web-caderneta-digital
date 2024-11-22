@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-//import { Checkbox } from "@/components/ui/checkbox";
-//import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-//import { Pencil } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -11,11 +15,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { InfoInternsModal } from "./components/infoInternsModal";
-import { Form, FormItem, FormControl, FormField, FormMessage, FormLabel } from "@/components/ui/form";
+import {
+  Form,
+  FormItem,
+  FormControl,
+  FormField,
+  FormMessage,
+  FormLabel,
+} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -23,11 +33,16 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+import { InternType } from "@/types/internTypes";
 
+type PropsType = {
+  interns: InternType[];
+};
 
-
-export const SupervisorDashboardInterns = () => {
+export const SupervisorDashboardInterns: React.FC<PropsType> = ({
+  interns,
+}) => {
   const form = useForm();
   return (
     <div>
@@ -41,7 +56,9 @@ export const SupervisorDashboardInterns = () => {
             <DialogContent className="h-[500px] overflow-auto">
               <DialogHeader>
                 <DialogTitle>Criar Conta</DialogTitle>
-                <DialogDescription>Crie a conta do Estagiário</DialogDescription>
+                <DialogDescription>
+                  Crie a conta do Estagiário
+                </DialogDescription>
               </DialogHeader>
               <div>
                 <Form {...form}>
@@ -67,9 +84,14 @@ export const SupervisorDashboardInterns = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Email</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Email
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="a00000@alunos.esmaior.pt" {...field} />
+                            <Input
+                              placeholder="a00000@alunos.esmaior.pt"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -82,15 +104,21 @@ export const SupervisorDashboardInterns = () => {
                       name="curso"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Curso</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Curso
+                          </FormLabel>
                           <FormControl>
                             <Select>
                               <SelectTrigger>
                                 <SelectValue placeholder="GPSI" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="audiovisuais">AUD</SelectItem>
-                                <SelectItem value="informatica">GPSI</SelectItem>
+                                <SelectItem value="audiovisuais">
+                                  AUD
+                                </SelectItem>
+                                <SelectItem value="informatica">
+                                  GPSI
+                                </SelectItem>
                                 <SelectItem value="massagens">MEBE</SelectItem>
                                 <SelectItem value="turismo">TUR</SelectItem>
                               </SelectContent>
@@ -107,7 +135,9 @@ export const SupervisorDashboardInterns = () => {
                       name="turma"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Turma</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Turma
+                          </FormLabel>
                           <FormControl>
                             <Select>
                               <SelectTrigger>
@@ -143,10 +173,12 @@ export const SupervisorDashboardInterns = () => {
                     />
 
                     {/* Botão de Submissão */}
-                    <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+                    <Button
+                      type="submit"
+                      className="w-full bg-black text-white hover:bg-gray-900"
+                    >
                       Criar
                     </Button>
-
                   </form>
                 </Form>
               </div>
@@ -166,21 +198,24 @@ export const SupervisorDashboardInterns = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>André Ferreira</TableCell>
-              <TableCell>andreferreira@aluno.com</TableCell>
-              <TableCell>GPSI</TableCell>
-              <TableCell>18</TableCell>
-              <TableCell>172</TableCell>
-              <TableCell>Lidl</TableCell>
-              <TableCell>Ativo</TableCell>
-              <TableCell>
-                <InfoInternsModal></InfoInternsModal>
-              </TableCell>
-            </TableRow>
+            {interns.map((intern) => (
+              <TableRow key={intern.id}>
+                <TableCell>{intern.name}</TableCell>
+                <TableCell>{intern.email}</TableCell>
+                <TableCell>?</TableCell>
+                <TableCell>?</TableCell>
+                <TableCell>?</TableCell>
+                <TableCell>{intern.hostEntity?.name}</TableCell>
+                <TableCell>?</TableCell>
+                <TableCell>
+                  <InfoInternsModal intern={intern}></InfoInternsModal>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Card>
     </div>
-  )
-}
+  );
+};
+

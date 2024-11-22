@@ -1,10 +1,12 @@
+import { HostEntity } from "./hostEntititesType";
+
 export interface InternType {
   id: string;
   name: string;
   password: string;
   email: string;
   phone: string;
-  cc: string;
+  cc: string | null;
   nif: string;
   address: string;
   postalCode: string;
@@ -13,4 +15,5 @@ export interface InternType {
   obs: string;
   totalHours: number;
   createdAt: string;
+  hostEntity?: HostEntity;
 }

@@ -1,16 +1,30 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { User } from "lucide-react"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { HostEntity } from "@/types/hostEntititesType";
+import { InternType } from "@/types/internTypes";
+import { User } from "lucide-react";
 
+type PropsType = {
+  interns: InternType[];
+  hostEntities: HostEntity[];
+};
 
-export const SupervisorDashboardOverview = () => {
-
+export const SupervisorDashboardOverview: React.FC<PropsType> = ({
+  interns,
+  hostEntities,
+}) => {
   const cardsData = [
-    { title: "Nota de FCT (média)", value: "N/A" },
-    { title: "Nº de Estagiários", value: 34 },
-    { title: "Nº de Entidades", value: 2 },
-    { title: "Nº de Estagiários sem Entidade", value: 4 }
+    { title: "Nota de FCT (média)", value: "?" },
+    { title: "Nº de Estagiários", value: interns.length },
+    { title: "Nº de Entidades", value: hostEntities.length },
+    { title: "Nº de Estagiários sem Entidade (n faz sentido)", value: 4 },
   ];
 
   return (
@@ -46,12 +60,14 @@ export const SupervisorDashboardOverview = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>André Ferreira</TableCell>
-                <TableCell>andreferreira@aluno.com</TableCell>
-                <TableCell>GPSI</TableCell>
-                <TableCell>18</TableCell>
-              </TableRow>
+              {interns.map((intern) => (
+                <TableRow key={intern.id}>
+                  <TableCell>{intern.name}</TableCell>
+                  <TableCell>{intern.email}</TableCell>
+                  <TableCell>?</TableCell>
+                  <TableCell>?</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Card>
@@ -67,17 +83,20 @@ export const SupervisorDashboardOverview = () => {
                 <TableHead>Estiários inseridos</TableHead>
               </TableRow>
             </TableHeader>
-
             <TableBody>
-              <TableRow>
-                <TableCell>Lidl</TableCell>
-                <TableCell>Ricardo Rocha</TableCell>
-                <TableCell>André Ferreira, Rita Saramago</TableCell>
-              </TableRow>
+              {hostEntities.map((hostEntity) => (
+                <TableRow key={hostEntity.id}>
+                  <TableCell>{hostEntity.name}</TableCell>
+                  <TableCell>{hostEntity.responsibleName}</TableCell>
+                  <TableCell>
+                    {hostEntity.interns.map((intern) => intern.name).join(", ")}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Card>
       </div>
     </div>
-  )
-}
+  );
+};

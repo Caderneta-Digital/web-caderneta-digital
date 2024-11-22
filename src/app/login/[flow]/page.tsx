@@ -82,12 +82,24 @@ export default function Login() {
       return router.push("/dashboard/intern");
     } else if (flow === UserTypeEnum.SUPERVISOR) {
       const response = await Api.loginSupervisors(data);
-      localStorage.setItem(
+      setUser({
+        id: response.supervisor.id,
+        name: response.supervisor.name,
+        email: response.supervisor.email,
+        type: UserTypeEnum.SUPERVISOR,
+      });
+      Api.setBearerToken(response.token);
+      Cookies.set(
         "user",
-        JSON.stringify({ ...response.supervisor, type: "supervisors" }),
+        JSON.stringify({
+          ...response.supervisor,
+          type: UserTypeEnum.SUPERVISOR,
+        }),
       );
-      localStorage.setItem("token", response.token);
-      router.push("/dashboard");
+      Cookies.set("token", response.token);
+      Cookies.set("type", UserTypeEnum.SUPERVISOR);
+
+      return router.push("/dashboard/supervisor");
     }
   };
 

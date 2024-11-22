@@ -1,5 +1,11 @@
+import { HostEntity } from "@/types/hostEntititesType";
 import { InternType } from "@/types/internTypes";
 import axios from "axios";
+
+type SupervisorDashboardResponse = {
+  interns: InternType[];
+  hostEntities: HostEntity[];
+};
 
 class API {
   axios;
@@ -48,8 +54,14 @@ class API {
   }
 
   public async dashboardIntern() {
-    console.log(this.axios.defaults.headers);
     const response = await this.axios.get("/interns/dashboard");
+    return response.data;
+  }
+
+  public async supervisorDashboard() {
+    const response = await this.axios.get<SupervisorDashboardResponse>(
+      "/supervisors/dashboard",
+    );
     return response.data;
   }
 }
