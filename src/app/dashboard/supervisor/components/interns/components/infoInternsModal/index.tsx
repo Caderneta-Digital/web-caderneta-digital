@@ -21,7 +21,7 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
       <DialogTrigger>
         <Button variant="outline">Mais Informações</Button>
       </DialogTrigger>
-      <DialogContent className="h-[500px] overflow-auto">
+      <DialogContent className="h-[500px] overflow-auto w-11/12">
         <DialogHeader>
           <DialogTitle>Estagiário</DialogTitle>
         </DialogHeader>
