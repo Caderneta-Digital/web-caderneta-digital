@@ -12,8 +12,8 @@ class API {
 
   constructor() {
     this.axios = axios.create({
-      baseURL: "https://100.28.23.135:8888",
-      // baseURL: "https://localhost:8888"
+      baseURL: "/api",
+      // baseURL: "http://localhost:8888"
     });
 
     this.axios.interceptors.request.use(
