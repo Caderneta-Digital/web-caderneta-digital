@@ -1,19 +1,32 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Pencil } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Form, FormItem, FormControl, FormField, FormMessage, FormLabel } from "@/components/ui/form";
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormItem,
+  FormControl,
+  FormField,
+  FormMessage,
+  FormLabel,
+} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { EditAttendenceModal } from "./components/editAttendenceModal";
@@ -44,7 +57,11 @@ export const InternDashboardAttendences = () => {
                         <FormItem>
                           <FormLabel className="no-error-color">Data</FormLabel>
                           <FormControl>
-                            <Input placeholder="dd/mm/aaaa" type="date" {...field} />
+                            <Input
+                              placeholder="dd/mm/aaaa"
+                              type="date"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -57,9 +74,17 @@ export const InternDashboardAttendences = () => {
                       name="morningHours"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Manhã</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Manhã
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="Nº Horas" type="number" max={7} min={0} {...field} />
+                            <Input
+                              placeholder="Nº Horas"
+                              type="number"
+                              max={7}
+                              min={0}
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -72,9 +97,17 @@ export const InternDashboardAttendences = () => {
                       name="afternoonHours"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Tarde</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Tarde
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="Nº Horas" type="number" max={7} min={0} {...field} />
+                            <Input
+                              placeholder="Nº Horas"
+                              type="number"
+                              max={7}
+                              min={0}
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -87,9 +120,14 @@ export const InternDashboardAttendences = () => {
                       name="observacoes"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Observações</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Observações
+                          </FormLabel>
                           <FormControl>
-                            <Textarea placeholder="Escreve aqui as tuas Observações" {...field} />
+                            <Textarea
+                              placeholder="Escreve aqui as tuas Observações"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -97,7 +135,10 @@ export const InternDashboardAttendences = () => {
                     />
 
                     {/* Botão de Submissão */}
-                    <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+                    <Button
+                      type="submit"
+                      className="w-full bg-black text-white hover:bg-gray-900"
+                    >
                       Confirmar
                     </Button>
                   </form>
@@ -131,13 +172,13 @@ export const InternDashboardAttendences = () => {
               </TableCell>
               <TableCell>Por Aprovar</TableCell>
               <TableCell>
-              <EditAttendenceModal>
-              </EditAttendenceModal>
+                <EditAttendenceModal></EditAttendenceModal>
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </Card>
     </div>
-  )
-}
+  );
+};
+

@@ -102,7 +102,7 @@ export const SupervisorDashboardInterns: React.FC<PropsType> = ({
                     <FormField
                       control={form.control}
                       name="curso"
-                      render={({ field }) => (
+                      render={({}) => (
                         <FormItem>
                           <FormLabel className="no-error-color">
                             Curso
@@ -133,7 +133,7 @@ export const SupervisorDashboardInterns: React.FC<PropsType> = ({
                     <FormField
                       control={form.control}
                       name="turma"
-                      render={({ field }) => (
+                      render={({}) => (
                         <FormItem>
                           <FormLabel className="no-error-color">
                             Turma
@@ -218,4 +218,3 @@ export const SupervisorDashboardInterns: React.FC<PropsType> = ({
     </div>
   );
 };
-
