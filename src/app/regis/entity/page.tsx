@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useForm, Resolver } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,27 +25,8 @@ type FormValues = {
   cargo: string;
 };
 
-const resolver: Resolver<FormValues> = async (values) => {
-  const errors: any = {};
-  
-  if (!values.nome) errors.nome = { type: 'required', message: 'Nome é necessário.' };
-  if (!values.ramoAtividade) errors.ramoAtividade = { type: 'required', message: 'Ramo de Atividade é necessário.' };
-  if (!values.nif) errors.nif = { type: 'required', message: 'NIF é necessário.' };
-  if (!values.endereco) errors.endereco = { type: 'required', message: 'Endereço é necessário.' };
-  if (!values.telefone) errors.telefone = { type: 'required', message: 'Telefone é necessário.' };
-  if (!values.email) errors.email = { type: 'required', message: 'Email é necessário.' };
-  if (!values.responsavel) errors.responsavel = { type: 'required', message: 'Responsável é necessário.' };
-  if (!values.tutor) errors.tutor = { type: 'required', message: 'Tutor é necessário.' };
-  if (!values.cargo) errors.cargo = { type: 'required', message: 'Cargo é necessário.' };
-
-  return {
-    values: Object.keys(errors).length === 0 ? values : {},
-    errors,
-  };
-};
-
 export default function ConcluirPerfil() {
-  const form = useForm<FormValues>({ resolver });
+  const form = useForm<FormValues>({});
 
   const onSubmit = async (data: FormValues) => {
     console.log('Form Data:', data);
