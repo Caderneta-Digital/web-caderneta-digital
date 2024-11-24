@@ -17,9 +17,18 @@ import { Form, FormItem, FormControl, FormField, FormMessage, FormLabel } from "
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { EditAttendenceModal } from "./components/editAttendenceModal";
+import { format, parseISO } from "date-fns"; 
 
-export const InternDashboardAttendences = () => {
+export const InternDashboardAttendences = ({ data }: { data: any }) => {
   const form = useForm();
+  const formatDate = (dateString: string) => {
+    try {
+      return format(parseISO(dateString), "dd/MM/yyyy");
+    } catch {
+      return "Data inválida";
+    }
+  };
+
   return (
     <div>
       <Card>
@@ -119,22 +128,22 @@ export const InternDashboardAttendences = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>12/12/2024</TableCell>
-              <TableCell>3</TableCell>
-              <TableCell>4</TableCell>
+          {data?.attendences?.map((attendance: any, index: number) => (
+            <TableRow key={index}>
+              <TableCell>{formatDate(attendance.date)}</TableCell>
+              <TableCell>{attendance.morningHours || 0}</TableCell>
+              <TableCell>{attendance.afternoonHours || 0}</TableCell>
+              <TableCell><Input disabled/></TableCell>
               <TableCell>
-                <Input />
+                <Checkbox checked={attendance.tutorApproved} disabled />
               </TableCell>
+              <TableCell>{attendance.status || "Por Aprovar"}</TableCell>
               <TableCell>
-                <Checkbox />
-              </TableCell>
-              <TableCell>Por Aprovar</TableCell>
-              <TableCell>
-              <EditAttendenceModal>
-              </EditAttendenceModal>
+                <EditAttendenceModal>
+                </EditAttendenceModal>
               </TableCell>
             </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Card>

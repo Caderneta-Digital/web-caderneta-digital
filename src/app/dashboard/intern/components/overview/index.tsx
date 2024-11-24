@@ -1,19 +1,26 @@
-
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { User } from "lucide-react"
+import { User } from "lucide-react";
+import { format, parseISO } from "date-fns"; 
 
-
-export const InternDashboardOverview = () => {
-
+export const InternDashboardOverview = ({ data }: { data: any }) => {
   const cardsData = [
     { title: "Nota de FCT", value: "N/A" },
-    { title: "Horas Restantes", value: 413 },
-    { title: "Faltas", value: 2 },
-    { title: "Registos semanais", value: 4 }
+    { title: "Horas Restantes", value: data?.totalHours || 0 },
+    { title: "Faltas", value: data?.absences?.length || 0 },
+    { title: "Registos semanais", value: data?.weeklySummaries?.length || 0 },
   ];
 
+  const formatDate = (dateString: string) => {
+    try {
+      return format(parseISO(dateString), "dd/MM/yyyy");
+    } catch {
+      return "Data inválida";
+    }
+  };
+
+  console.log(data)
 
   return (
     <div className="flex flex-col gap-5">
@@ -34,7 +41,7 @@ export const InternDashboardOverview = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <Card>
+      <Card>
           <div className="p-3">
             <h1 className="text-xl">Registos de Presenças</h1>
           </div>
@@ -49,47 +56,46 @@ export const InternDashboardOverview = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>12/12/2024</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>4</TableCell>
-                <TableCell>
-                  <Checkbox />
-                </TableCell>
-                <TableCell>Por Aprovar</TableCell>
-              </TableRow>
+              {data?.attendences?.map((attendance: any, index: number) => (
+                <TableRow key={index}>
+                  <TableCell>{formatDate(attendance.date)}</TableCell>
+                  <TableCell>{attendance.morningHours || 0}</TableCell>
+                  <TableCell>{attendance.afternoonHours || 0}</TableCell>
+                  <TableCell>
+                    <Checkbox checked={attendance.tutorApproved} disabled />
+                  </TableCell>
+                  <TableCell>{attendance.status || "Por Aprovar"}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Card>
         <Card>
           <div className="p-3">
-            <h1 className="text-xl">Registos de Presenças</h1>
+            <h1 className="text-xl">Registos Semanais</h1>
           </div>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Data</TableHead>
-                <TableHead>Manhã</TableHead>
-                <TableHead>Tarde</TableHead>
+                <TableHead>Semana</TableHead>
                 <TableHead>Tutor</TableHead>
                 <TableHead>Estado</TableHead>
               </TableRow>
             </TableHeader>
-
             <TableBody>
-              <TableRow>
-                <TableCell>12/12/2024</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>4</TableCell>
-                <TableCell>
-                  <Checkbox />
-                </TableCell>
-                <TableCell>Por Aprovar</TableCell>
-              </TableRow>
+              {data?.weeklySummaries?.map((summary: any, index: number) => (
+                <TableRow key={index}>
+                  <TableCell>{`${formatDate(summary.weekStart)} a ${formatDate(summary.weekEnd)}`}</TableCell>
+                  <TableCell>
+                    <Checkbox checked={summary.tutorApproved} disabled />
+                  </TableCell>
+                  <TableCell>{summary.status || "Por Aprovar"}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Card>
       </div>
     </div>
-  )
-}
+  );
+};

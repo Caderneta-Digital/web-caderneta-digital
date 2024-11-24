@@ -22,9 +22,17 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { EditSummariesModal } from "./components/editSummariesModal";
+import { format, parseISO } from "date-fns"; 
 
-export const InternDashboardWeeklySummaries = () => {
+export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
   const form = useForm();
+  const formatDate = (dateString: string) => {
+    try {
+      return format(parseISO(dateString), "dd/MM/yyyy");
+    } catch {
+      return "Data inválida";
+    }
+  };
   return (
     <div>
       <Card>
@@ -107,20 +115,24 @@ export const InternDashboardWeeklySummaries = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>12/12/2024 a 18/12/2024</TableCell>
-              <TableCell>
-                <Input />
-              </TableCell>
-              <TableCell>
-                <Checkbox />
-              </TableCell>
-              <TableCell>Por Aprovar</TableCell>
-              <TableCell>
-                <EditSummariesModal></EditSummariesModal>
-              </TableCell>
-            </TableRow>
           </TableBody>
+          <TableBody>
+              {data?.weeklySummaries?.map((summary: any, index: number) => (
+                <TableRow key={index}>
+                  <TableCell>{`${formatDate(summary.weekStart)} a ${formatDate(summary.weekEnd)}`}</TableCell>
+                  <TableCell>
+                    <Input disabled />
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox checked={summary.tutorApproved} disabled />
+                  </TableCell>
+                  <TableCell>{summary.status || "Por Aprovar"}</TableCell>
+                  <TableCell>
+                    <EditSummariesModal></EditSummariesModal>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
         </Table>
       </Card>
     </div>

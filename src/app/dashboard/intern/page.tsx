@@ -21,12 +21,10 @@ export default function Dashboard() {
     },
   });
 
-  console.log(data);
-
   return (
     <div className="h-screen w-screen">
       <div className="flex justify-between items-center px-5 py-3 border-b-[1px] border-b-gray-300">
-        <h1 className="font-bold text-2xl">O seu dashboard {user?.name}</h1>
+        <h1 className="font-bold text-2xl">O seu dashboard {data?.name}</h1>
         <Avatar>
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
@@ -40,13 +38,13 @@ export default function Dashboard() {
             <TabsTrigger value="avaliacoes">Avaliações</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
-            <InternDashboardOverview />
+            <InternDashboardOverview data={data}/>
           </TabsContent>
           <TabsContent value="attendences">
-            <InternDashboardAttendences />
+            <InternDashboardAttendences data={data}/>
           </TabsContent>
           <TabsContent value="weeklySummaries">
-            <InternDashboardWeeklySummaries />
+            <InternDashboardWeeklySummaries data={data}/>
           </TabsContent>
         </Tabs>
       </div>
