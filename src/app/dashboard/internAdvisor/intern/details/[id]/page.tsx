@@ -3,9 +3,9 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
-import { InternAdvisorDashboardAttendences } from "./components/attendences/page";
-import { InternAdvisorDashboardEvaluation } from "./components/evaluation/page";
-import { InternAdvisorDashboardWeeklySummaries } from "./components/weeklySummaries/page";
+import { InternAdvisorDashboardAttendences } from "./components/attendences";
+import { InternAdvisorDashboardEvaluation } from "./components/evaluation";
+import { InternAdvisorDashboardWeeklySummaries } from "./components/weeklySummaries";
 import Link from "next/link";
 //import { useRouter } from 'next/navigation';
 

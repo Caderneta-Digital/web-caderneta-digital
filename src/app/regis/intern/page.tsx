@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useForm, Resolver } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,8 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"
-
+import { Textarea } from "@/components/ui/textarea";
 
 type FormValues = {
   nome: string;
@@ -28,30 +27,11 @@ type FormValues = {
   observacoes: string;
 };
 
-const resolver: Resolver<FormValues> = async (values) => {
-  const errors: any = {};
-  
-  if (!values.nome) errors.nome = { type: 'required', message: 'Nome é necessário.' };
-  if (!values.ccn) errors.ccn = { type: 'required', message: 'CCN é necessário.' };
-  if (!values.nif) errors.nif = { type: 'required', message: 'NIF é necessário.' };
-  if (!values.endereco) errors.endereco = { type: 'required', message: 'Endereço é necessário.' };
-  if (!values.codigoPostal) errors.codigoPostal = { type: 'required', message: 'Código Postal é necessário.' };
-  if (!values.telefone) errors.telefone = { type: 'required', message: 'Telefone é necessário.' };
-  if (!values.email) errors.email = { type: 'required', message: 'Email é necessário.' };
-  if (!values.nomePai) errors.nomePai = { type: 'required', message: 'Nome do Pai é necessário.' };
-  if (!values.nomeMae) errors.nomeMae = { type: 'required', message: 'Nome da Mãe é necessário.' };
-
-  return {
-    values: Object.keys(errors).length === 0 ? values : {},
-    errors,
-  };
-};
-
 export default function ConcluirPerfil() {
-  const form = useForm<FormValues>({ resolver });
+  const form = useForm<FormValues>({});
 
   const onSubmit = async (data: FormValues) => {
-    console.log('Form Data:', data);
+    console.log("Form Data:", data);
     // Aqui você pode fazer a requisição à API
   };
 
@@ -59,13 +39,16 @@ export default function ConcluirPerfil() {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h1 className="text-4xl font-semibold mb-4">Concluir Perfil</h1>
-        <p className="text-gray-500 mb-6">Complete o seu perfil para ter acesso à sua Caderneta Digital.</p>
+        <p className="text-gray-500 mb-6">
+          Complete o seu perfil para ter acesso à sua Caderneta Digital.
+        </p>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            
             {/* Identificação do Aluno */}
-            <h2 className="text-xl font-semibold">Identificação do(a) Aluno(a)</h2>
+            <h2 className="text-xl font-semibold">
+              Identificação do(a) Aluno(a)
+            </h2>
 
             <FormField
               control={form.control}
@@ -209,7 +192,10 @@ export default function ConcluirPerfil() {
                 <FormItem>
                   <FormLabel>Observações</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Escreva aqui as observações" {...field} />
+                    <Textarea
+                      placeholder="Escreva aqui as observações"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -217,7 +203,10 @@ export default function ConcluirPerfil() {
             />
 
             {/* Botão de Submissão */}
-            <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+            <Button
+              type="submit"
+              className="w-full bg-black text-white hover:bg-gray-900"
+            >
               Aceder à Caderneta Digital
             </Button>
           </form>

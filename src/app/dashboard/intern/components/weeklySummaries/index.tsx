@@ -1,25 +1,34 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog,
+import {
+  Dialog,
   DialogTrigger,
   DialogContent,
   DialogHeader,
-  DialogTitle
- } from "@/components/ui/dialog";
+  DialogTitle,
+} from "@/components/ui/dialog";
 
-import { Form,
+import {
+  Form,
   FormItem,
   FormControl,
   FormField,
   FormMessage,
-  FormLabel } from "@/components/ui/form";
+  FormLabel,
+} from "@/components/ui/form";
 
 import { Textarea } from "@/components/ui/textarea";
 
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Pencil } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useForm } from "react-hook-form";
 import { EditSummariesModal } from "./components/editSummariesModal";
 import { format, parseISO } from "date-fns"; 
@@ -55,9 +64,15 @@ export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
                       name="dateBegin"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Data de ínicio</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Data de ínicio
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="dd/mm/aaaa" type="date" {...field} />
+                            <Input
+                              placeholder="dd/mm/aaaa"
+                              type="date"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -70,9 +85,15 @@ export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
                       name="dateFinal"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Data de Fim</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Data de Fim
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="Nº Horas" type="date" {...field} />
+                            <Input
+                              placeholder="Nº Horas"
+                              type="date"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -85,9 +106,14 @@ export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
                       name="observacoes"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Observações</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Observações
+                          </FormLabel>
                           <FormControl>
-                            <Textarea placeholder="Escreve aqui as tuas Observações" {...field} />
+                            <Textarea
+                              placeholder="Escreve aqui as tuas Observações"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -95,7 +121,10 @@ export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
                     />
 
                     {/* Botão de Submissão */}
-                    <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+                    <Button
+                      type="submit"
+                      className="w-full bg-black text-white hover:bg-gray-900"
+                    >
                       Confirmar
                     </Button>
                   </form>
@@ -136,5 +165,6 @@ export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
         </Table>
       </Card>
     </div>
-  )
-}
+  );
+};
+
