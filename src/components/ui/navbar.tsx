@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
 
 type PropsType = {
   title: string;
@@ -40,8 +41,12 @@ export const Navbar: React.FC<PropsType> = ({ title }) => {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Minha conta</span>
+            <Link href="/myAccount">
+              <div className="flex">
+                <User className="mr-2 h-4 w-4" />
+                <span>Minha conta</span>
+              </div>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             className="text-red-600 focus:bg-red-50 focus:text-red-600"
