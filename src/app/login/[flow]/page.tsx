@@ -48,14 +48,29 @@ export default function Login() {
   const params = useParams();
   const flow = params.flow as UserTypeEnum;
 
-  const { mutateAsync: loginInternMutation, isLoading } = useMutation({
-    mutationKey: ["loginIntern"],
+  const { mutateAsync: loginInternMutation, isLoading: isLoadingLoginIntern } =
+    useMutation({
+      mutationKey: ["loginIntern"],
+      mutationFn: async (data: { email: string; password: string }) => {
+        const response = await Api.loginIntern(data);
+        return response;
+      },
+      onError: (error) => handleError(error, toast),
+    });
+
+  const {
+    mutateAsync: loginInternAdvisorMutation,
+    isLoading: isLoadingLoginInternAdvisor,
+  } = useMutation({
+    mutationKey: ["loginInternAdvisor"],
     mutationFn: async (data: { email: string; password: string }) => {
-      const response = await Api.loginIntern(data);
+      const response = await Api.loginInternAdvisor(data);
       return response;
     },
     onError: (error) => handleError(error, toast),
   });
+
+  const isLoading = isLoadingLoginIntern || isLoadingLoginInternAdvisor;
 
   const onSubmit = async (data: FormType) => {
     if (flow === UserTypeEnum.INTERN) {
@@ -100,11 +115,31 @@ export default function Login() {
       Cookies.set("type", UserTypeEnum.SUPERVISOR);
 
       return router.push("/dashboard/supervisor");
+    } else if (flow === UserTypeEnum.INTERN_ADVISOR) {
+      const response = await loginInternAdvisorMutation(data);
+      setUser({
+        id: response.internAdvisor.id,
+        name: response.internAdvisor.name,
+        email: response.internAdvisor.email,
+        type: UserTypeEnum.INTERN_ADVISOR,
+      });
+      Api.setBearerToken(response.token);
+      Cookies.set(
+        "user",
+        JSON.stringify({
+          ...response.internAdvisor,
+          type: UserTypeEnum.INTERN_ADVISOR,
+        }),
+      );
+      Cookies.set("token", response.token);
+      Cookies.set("type", UserTypeEnum.INTERN_ADVISOR);
+
+      return router.push("/dashboard/internAdvisor");
     }
   };
 
   useEffect(() => {
-    const validFlows = ["intern", "supervisor"];
+    const validFlows = ["intern", "supervisor", "internAdvisor"];
     if (!validFlows.includes(flow)) {
       const userType = Cookies.get("type");
 

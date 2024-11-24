@@ -1,6 +1,6 @@
 import { InternType } from "./internTypes";
 
-export type HostEntity = {
+export type HostEntityType = {
   id: string;
   name: string;
   address: string;

@@ -1,6 +1,6 @@
-import { HostEntity } from "./hostEntititesType";
+import { HostEntityType } from "./hostEntititesType";
 
-export interface InternType {
+export type InternType = {
   id: string;
   name: string;
   password: string;
@@ -15,5 +15,28 @@ export interface InternType {
   obs: string;
   totalHours: number;
   createdAt: string;
-  hostEntity?: HostEntity;
-}
+  hostEntity?: HostEntityType;
+  attendences?: InternAttendenceType[];
+  weeklySummaries?: InternWeeklySummaryType[];
+};
+
+export type InternAttendenceType = {
+  id: string;
+  internId: string;
+  afternoonHours: number;
+  morningHours: number;
+  date: string;
+  period: "11" | "12";
+  isConfirmedByInternAdvisor: boolean;
+  createdAt: string;
+};
+
+export type InternWeeklySummaryType = {
+  id: string;
+  internId: string;
+  text: string;
+  weekEnd: string;
+  weekStart: string;
+  isConfirmedByInternAdvisor: boolean;
+  createdAt: string;
+};

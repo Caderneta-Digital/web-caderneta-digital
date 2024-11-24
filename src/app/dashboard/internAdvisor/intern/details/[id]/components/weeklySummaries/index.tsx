@@ -1,11 +1,23 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { InternWeeklySummaryType } from "@/types/internTypes";
+import { WeeklySummaryTableRow } from "./components/weeklySummaryTableRow";
 
-export const InternAdvisorDashboardWeeklySummaries = () => {
+type PropsType = {
+  weeklySummaries: InternWeeklySummaryType[];
+};
+
+export const InternAdvisorDashboardWeeklySummaries: React.FC<PropsType> = ({
+  weeklySummaries,
+}) => {
   return (
     <div>
       <Card>
@@ -21,19 +33,15 @@ export const InternAdvisorDashboardWeeklySummaries = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>12/12/2024 - 20/12/2024</TableCell>
-              <TableCell>
-                <Input />
-              </TableCell>
-              <TableCell>
-                <Button variant="outline">Aprovar</Button>
-                <Button variant="outline">Não aprovar</Button>
-              </TableCell>
-            </TableRow>
+            {weeklySummaries.map((weeklySummary) => (
+              <WeeklySummaryTableRow
+                key={weeklySummary.id}
+                weeklySummary={weeklySummary}
+              />
+            ))}
           </TableBody>
         </Table>
       </Card>
     </div>
-  )
-}
+  );
+};

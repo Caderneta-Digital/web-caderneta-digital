@@ -1,32 +1,33 @@
-'use client'
+"use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { InternAdvisorDashboardOverview } from "./components/overview";
 import React from "react";
-//import { useRouter } from 'next/navigation';
+import { useQuery } from "react-query";
+import { useAuth } from "@/context/AuthContext";
+import { Api } from "@/services/api";
+import { Navbar } from "@/components/ui/navbar";
 
 export default function Dashboard() {
-    /*const Router = useRouter();
-    React.useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          const type = localStorage.getItem("lastFlow")
-          Router.push(`/login?flow=${type}`);
-        }
-      });
-    */
+  const { user: internAdvisor } = useAuth();
 
-    return (
-        <div className="h-screen w-screen">
-            <div className="flex justify-between items-center px-5 py-3 border-b-[1px] border-b-gray-300">
-                <h1 className="font-bold text-2xl">O seu dashboard</h1>
-                <Avatar>
-                    <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-            </div>
-            <div className="px-4 py-3 flex flex-col gap-4">
-                <InternAdvisorDashboardOverview />  
-            </div>
-        </div>
-    );
+  const { data, isLoading } = useQuery({
+    queryKey: ["internAdvisorDashboard", internAdvisor?.id],
+    queryFn: async () => {
+      const response = await Api.internAdvisorDashboard();
+      return response;
+    },
+  });
+
+  if (!data || isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  return (
+    <div className="h-screen w-screen">
+      <Navbar title="O seu dashboard" />
+      <div className="px-4 py-3 flex flex-col gap-4">
+        <InternAdvisorDashboardOverview interns={data.interns} />
+      </div>
+    </div>
+  );
 }

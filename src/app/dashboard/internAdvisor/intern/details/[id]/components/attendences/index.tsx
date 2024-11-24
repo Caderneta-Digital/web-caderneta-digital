@@ -1,11 +1,23 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { InternAttendenceType } from "@/types/internTypes";
+import { AttendenceTableRow } from "./components/attendenceTableRow";
 
-export const InternAdvisorDashboardAttendences = () => {
+type PropsType = {
+  attendences: InternAttendenceType[];
+};
+
+export const InternAdvisorDashboardAttendences: React.FC<PropsType> = ({
+  attendences,
+}) => {
   return (
     <div>
       <Card>
@@ -18,26 +30,16 @@ export const InternAdvisorDashboardAttendences = () => {
               <TableHead>Data</TableHead>
               <TableHead>Manhã</TableHead>
               <TableHead>Tarde</TableHead>
-              <TableHead>Observações</TableHead>
               <TableHead>Estado</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>15/10/2024</TableCell>
-              <TableCell>3</TableCell>
-              <TableCell>4</TableCell>
-              <TableCell>
-                <Input placeholder="N/A"/>
-              </TableCell>
-              <TableCell>
-                <Button variant="outline">Aprovar</Button>
-                <Button variant="outline">Não aprovar</Button>
-              </TableCell>
-            </TableRow>
+            {attendences.map((attendence) => (
+              <AttendenceTableRow key={attendence.id} attendence={attendence} />
+            ))}
           </TableBody>
         </Table>
       </Card>
     </div>
-  )
-}
+  );
+};
