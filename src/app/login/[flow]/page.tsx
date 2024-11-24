@@ -102,6 +102,7 @@ export default function Login() {
         name: response.supervisor.name,
         email: response.supervisor.email,
         type: UserTypeEnum.SUPERVISOR,
+        supervisorType: response.supervisor.type,
       });
       Api.setBearerToken(response.token);
       Cookies.set(
@@ -109,6 +110,7 @@ export default function Login() {
         JSON.stringify({
           ...response.supervisor,
           type: UserTypeEnum.SUPERVISOR,
+          supervisorType: response.supervisor.type,
         }),
       );
       Cookies.set("token", response.token);

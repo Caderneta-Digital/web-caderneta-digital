@@ -1,5 +1,17 @@
 import { HostEntityType } from "./hostEntititesType";
 
+export enum InternCourseEnum {
+  GPSI = "GPSI",
+  AUD = "AUD",
+  MEDE = "MEDE",
+  TUR = "TUR",
+}
+
+export enum InternStatusEnum {
+  ACTIVE = "active",
+  NOT_ACTIVE = "not_active",
+}
+
 export type InternType = {
   id: string;
   name: string;
@@ -14,7 +26,11 @@ export type InternType = {
   motherName: string;
   obs: string;
   totalHours: number;
+  course: InternCourseEnum;
+  status: InternStatusEnum;
   createdAt: string;
+  hostEntityId: string | null;
+  supervisorId: string | null;
   hostEntity?: HostEntityType;
   attendences?: InternAttendenceType[];
   weeklySummaries?: InternWeeklySummaryType[];

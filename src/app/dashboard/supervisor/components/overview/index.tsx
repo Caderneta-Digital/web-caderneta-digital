@@ -7,13 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { HostEntity } from "@/types/hostEntititesType";
+import { HostEntityType } from "@/types/hostEntititesType";
 import { InternType } from "@/types/internTypes";
 import { User } from "lucide-react";
 
 type PropsType = {
   interns: InternType[];
-  hostEntities: HostEntity[];
+  hostEntities: HostEntityType[];
 };
 
 export const SupervisorDashboardOverview: React.FC<PropsType> = ({
@@ -64,7 +64,7 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
                 <TableRow key={intern.id}>
                   <TableCell>{intern.name}</TableCell>
                   <TableCell>{intern.email}</TableCell>
-                  <TableCell>?</TableCell>
+                  <TableCell>{intern.course}</TableCell>
                   <TableCell>?</TableCell>
                 </TableRow>
               ))}
@@ -89,7 +89,9 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
                   <TableCell>{hostEntity.name}</TableCell>
                   <TableCell>{hostEntity.responsibleName}</TableCell>
                   <TableCell>
-                    {hostEntity.interns.map((intern) => intern.name).join(", ")}
+                    {hostEntity.interns
+                      .map((intern) => intern.name)
+                      .join(", ") || "-"}
                   </TableCell>
                 </TableRow>
               ))}

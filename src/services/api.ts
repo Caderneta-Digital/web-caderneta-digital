@@ -18,6 +18,12 @@ type InternAdvisorDashboardResponseType = {
   interns: InternType[];
 };
 
+export type CreateInternRequestType = {
+  name: string;
+  password: string;
+  email: string;
+};
+
 class API {
   axios;
 
@@ -59,6 +65,11 @@ class API {
     return response.data;
   }
 
+  public async createIntern(data: CreateInternRequestType) {
+    const response = await this.axios.post("/interns", data);
+    return response.data;
+  }
+
   public async loginInternAdvisor(data: { email: string; password: string }) {
     const response = await this.axios.post<{
       token: string;
@@ -93,6 +104,11 @@ class API {
 
   public async findInternById(internId: string) {
     const response = await this.axios.get<InternType>(`/interns/${internId}`);
+    return response.data;
+  }
+
+  public async findAllHostEntities() {
+    const response = await this.axios.get<HostEntityType[]>(`/hostEntities`);
     return response.data;
   }
 
