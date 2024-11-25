@@ -1,25 +1,43 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Pencil } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Form, FormItem, FormControl, FormField, FormMessage, FormLabel } from "@/components/ui/form";
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormItem,
+  FormControl,
+  FormField,
+  FormMessage,
+  FormLabel,
+} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { EditAttendenceModal } from "./components/editAttendenceModal";
 import { format, parseISO } from "date-fns"; 
+import { InternAttendenceType } from "@/types/internTypes";
 
-export const InternDashboardAttendences = ({ data }: { data: any }) => {
+type PropsType = {
+  attendences: InternAttendenceType[]
+}
+
+export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences }) => {
   const form = useForm();
   const formatDate = (dateString: string) => {
     try {
@@ -53,7 +71,11 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
                         <FormItem>
                           <FormLabel className="no-error-color">Data</FormLabel>
                           <FormControl>
-                            <Input placeholder="dd/mm/aaaa" type="date" {...field} />
+                            <Input
+                              placeholder="dd/mm/aaaa"
+                              type="date"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -66,9 +88,17 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
                       name="morningHours"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Manhã</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Manhã
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="Nº Horas" type="number" max={7} min={0} {...field} />
+                            <Input
+                              placeholder="Nº Horas"
+                              type="number"
+                              max={7}
+                              min={0}
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -81,9 +111,17 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
                       name="afternoonHours"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Tarde</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Tarde
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="Nº Horas" type="number" max={7} min={0} {...field} />
+                            <Input
+                              placeholder="Nº Horas"
+                              type="number"
+                              max={7}
+                              min={0}
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -96,9 +134,14 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
                       name="observacoes"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Observações</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Observações
+                          </FormLabel>
                           <FormControl>
-                            <Textarea placeholder="Escreve aqui as tuas Observações" {...field} />
+                            <Textarea
+                              placeholder="Escreve aqui as tuas Observações"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -106,7 +149,10 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
                     />
 
                     {/* Botão de Submissão */}
-                    <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+                    <Button
+                      type="submit"
+                      className="w-full bg-black text-white hover:bg-gray-900"
+                    >
                       Confirmar
                     </Button>
                   </form>
@@ -128,7 +174,7 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-          {data?.attendences?.map((attendance: any, index: number) => (
+          {attendences?.map((attendance: attendences, index: number) => (
             <TableRow key={index}>
               <TableCell>{formatDate(attendance.date)}</TableCell>
               <TableCell>{attendance.morningHours || 0}</TableCell>
@@ -139,8 +185,7 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
               </TableCell>
               <TableCell>{attendance.status || "Por Aprovar"}</TableCell>
               <TableCell>
-                <EditAttendenceModal>
-                </EditAttendenceModal>
+                <EditAttendenceModal />
               </TableCell>
             </TableRow>
             ))}
@@ -148,5 +193,6 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
         </Table>
       </Card>
     </div>
-  )
-}
+  );
+};
+

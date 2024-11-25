@@ -19,10 +19,13 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { EditSummariesModal } from "./components/editSummariesModal";
 import { format, parseISO } from "date-fns"; 
+
+type PropsType = {
+  weeklyeSummaries: Intern
+}
 
 export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
   const form = useForm();
