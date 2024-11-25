@@ -14,6 +14,7 @@ import { useAuth } from "@/context/AuthContext";
 import { InternType } from "@/types/internTypes";
 import { useRouter } from "next/navigation";
 import { UserTypeEnum } from "@/types/userTypes";
+import Cookies from "js-cookie";
 
 const schema = z.object({
   nif: z.string().min(1, { message: "Preencha o NIF" }),
@@ -52,7 +53,8 @@ export default function ConcludeInternProfilePage() {
       const response = await Api.updateIntern(data)
       return response;
     },
-    onSuccess: () => {
+    onSuccess: (intern) => {
+      Cookies.set("user", JSON.stringify(intern))
       router.push(`/dashboard/${UserTypeEnum.INTERN}`)
     }
   })

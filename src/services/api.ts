@@ -84,7 +84,7 @@ class API {
   }
 
   public async dashboardIntern() {
-    const response = await this.axios.get("/interns/dashboard");
+    const response = await this.axios.get<InternType>("/interns/dashboard");
     return response.data;
   }
 
