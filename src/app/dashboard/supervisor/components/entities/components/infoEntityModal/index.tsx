@@ -9,10 +9,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { InputEditLine } from "@/components/ui/inputEditLine";
-import { HostEntity } from "@/types/hostEntititesType";
+import { HostEntityType } from "@/types/hostEntititesType";
 
 type PropsType = {
-  hostEntity: HostEntity;
+  hostEntity: HostEntityType;
 };
 
 export const InfoEntityModal: React.FC<PropsType> = ({ hostEntity }) => {
