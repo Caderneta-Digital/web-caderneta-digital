@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import { useAuth } from "@/context/AuthContext";
 import { Api } from "@/services/api";
 import { Navbar } from "@/components/ui/navbar";
+import { SupervisorDashboardGrades } from "./components/grades";
 
 export default function Dashboard() {
   const { user: supervisor } = useAuth();
@@ -35,7 +36,7 @@ export default function Dashboard() {
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="interns">Estagiários</TabsTrigger>
             <TabsTrigger value="entities">Entidades</TabsTrigger>
-            <TabsTrigger value="avaliacoes">Avaliações</TabsTrigger>
+            <TabsTrigger value="grades">Avaliações</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
             <SupervisorDashboardOverview
@@ -48,6 +49,9 @@ export default function Dashboard() {
           </TabsContent>
           <TabsContent value="entities">
             <SupervisorDashboardEntities hostEntities={data.hostEntities} />
+          </TabsContent>
+          <TabsContent value="grades">
+            <SupervisorDashboardGrades/>
           </TabsContent>
         </Tabs>
       </div>
