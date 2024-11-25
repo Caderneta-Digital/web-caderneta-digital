@@ -29,6 +29,14 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  if (user && userType === UserTypeEnum.SUPERVISOR) {
+    if (!req.url.includes("dashboard")) {
+      return NextResponse.redirect(new URL(`/dashboard/supervisor`, req.url));
+    }
+
+    return NextResponse.next();
+  }
+
   return NextResponse.next();
 }
 

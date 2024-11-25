@@ -1,19 +1,43 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog,DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
-import { Pencil } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
-
-import { Form, FormItem, FormControl, FormField, FormMessage, FormLabel } from "@/components/ui/form";
 import { InfoEntityModal } from "./components/infoEntityModal";
+import { HostEntity } from "@/types/hostEntititesType";
+import {
+  Form,
+  FormItem,
+  FormControl,
+  FormField,
+  FormMessage,
+  FormLabel,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
+type PropsType = {
+  hostEntities: HostEntity[];
+};
 
-
-export const SupervisorDashboardEntities = () => {
+export const SupervisorDashboardEntities: React.FC<PropsType> = ({
+  hostEntities,
+}) => {
   const form = useForm();
+
   return (
     <div>
       <Card>
@@ -26,7 +50,9 @@ export const SupervisorDashboardEntities = () => {
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Criar Conta</DialogTitle>
-                <DialogDescription>Crie a conta da Entidade de Acolhimento</DialogDescription>
+                <DialogDescription>
+                  Crie a conta da Entidade de Acolhimento
+                </DialogDescription>
               </DialogHeader>
               <div>
                 <Form {...form}>
@@ -52,9 +78,14 @@ export const SupervisorDashboardEntities = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="no-error-color">Email</FormLabel>
+                          <FormLabel className="no-error-color">
+                            Email
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="a00000@alunos.esmaior.pt" {...field} />
+                            <Input
+                              placeholder="a00000@alunos.esmaior.pt"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -79,10 +110,12 @@ export const SupervisorDashboardEntities = () => {
                     />
 
                     {/* Botão de Submissão */}
-                    <Button type="submit" className="w-full bg-black text-white hover:bg-gray-900">
+                    <Button
+                      type="submit"
+                      className="w-full bg-black text-white hover:bg-gray-900"
+                    >
                       Criar
                     </Button>
-
                   </form>
                 </Form>
               </div>
@@ -94,27 +127,32 @@ export const SupervisorDashboardEntities = () => {
             <TableRow>
               <TableHead>Nome</TableHead>
               <TableHead>Nome do Responsável</TableHead>
-              <TableHead>Rame de Actividade</TableHead>
+              <TableHead>Ramo de Actividade</TableHead>
               <TableHead>Tutores de FCT</TableHead>
-              <TableHead>Estiários Inseridos</TableHead>
+              <TableHead>Estágiarios Inseridos</TableHead>
               <TableHead>Estado</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>Lidl</TableCell>
-              <TableCell>Ricardo Rocha</TableCell>
-              <TableCell>Desenvolvimento de Software</TableCell>
-              <TableCell>Fábio Afonso</TableCell>
-              <TableCell>Fábio Pereira, Rita Saramago</TableCell>
-              <TableCell>Ativo</TableCell>
-              <TableCell>
-                <InfoEntityModal></InfoEntityModal>
-              </TableCell>
-            </TableRow>
+            {hostEntities.map((hostEntity) => (
+              <TableRow key={hostEntity.id}>
+                <TableCell>{hostEntity.name}</TableCell>
+                <TableCell>{hostEntity.responsibleName}</TableCell>
+                <TableCell>{hostEntity.activityField}</TableCell>
+                <TableCell>?</TableCell>
+                <TableCell>
+                  {hostEntity.interns.map((intern) => intern.name).join(", ")}
+                </TableCell>
+                <TableCell>?</TableCell>
+                <TableCell>
+                  <InfoEntityModal hostEntity={hostEntity}></InfoEntityModal>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Card>
     </div>
-  )
-}
+  );
+};
+

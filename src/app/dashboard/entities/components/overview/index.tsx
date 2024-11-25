@@ -1,24 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { User } from "lucide-react"
-
+} from "@/components/ui/dialog";
+import { User } from "lucide-react";
 
 export const SupervisorDashboardOverview = () => {
-
   const cardsData = [
     { title: "Tutores Existentes", value: 2 },
     { title: "Estagiários Inseridos", value: 2 },
     { title: "Horas Restantes (média)", value: 146 },
-    { title: "Classificação (média)", value: 16.5 }
+    { title: "Classificação (média)", value: 16.5 },
   ];
 
   return (
@@ -44,18 +48,18 @@ export const SupervisorDashboardOverview = () => {
           <div className="flex justify-between p-3">
             <h1 className="text-xl">Estagiários</h1>
             <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline">Criar Entidade</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Ver Entidades</DialogTitle>
-              </DialogHeader>
-              <div>
-                <h1>ADD FORM AQUI</h1>
-              </div>
-            </DialogContent>
-          </Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">Criar Entidade</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Ver Entidades</DialogTitle>
+                </DialogHeader>
+                <div>
+                  <h1>ADD FORM AQUI</h1>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
           <Table>
             <TableHeader>
@@ -78,5 +82,6 @@ export const SupervisorDashboardOverview = () => {
         </Card>
       </div>
     </div>
-  )
-}
+  );
+};
+
