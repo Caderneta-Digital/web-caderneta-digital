@@ -1,23 +1,57 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { User } from "lucide-react"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { InternType } from "@/types/internTypes";
+import { User } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+type PropsType = {
+  interns: InternType[];
+};
 
-export const InternAdvisorDashboardOverview = () => {
-  const Router = useRouter();
+export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({
+  interns,
+}) => {
+  const router = useRouter();
+
+  const needToConfirmAttendencesCount = interns.reduce((counter, intern) => {
+    return (
+      counter +
+      (intern.attendences?.filter(
+        (attendance) => !attendance.isConfirmedByInternAdvisor,
+      ).length || 0)
+    );
+  }, 0);
+
+  const needToConfirmWeeklySummariesCount = interns.reduce(
+    (counter, intern) => {
+      return (
+        counter +
+        (intern.weeklySummaries?.filter(
+          (weeklySummary) => !weeklySummary.isConfirmedByInternAdvisor,
+        ).length || 0)
+      );
+    },
+    0,
+  );
 
   const cardsData = [
-    { title: "Estagiários Inseridos", value: 2 },
-    { title: "Vistos a confirmar", value: 13 },
-    { title: "Horas Restantes (média)", value: 146 },
-    { title: "Classificação (média)", value: 16.5 }
+    { title: "Estagiários Inseridos", value: interns.length },
+    { title: "Presenças a confirmar", value: needToConfirmAttendencesCount },
+    { title: "Registos a confirmar", value: needToConfirmWeeklySummariesCount },
+    { title: "Horas Restantes (média)", value: "?" },
   ];
 
-  const goInternDetails = () => {
-    Router.push(`/dashboard/internAdvisor/intern/details/${1}`);
-  }
+  const goInternDetails = (internId: string) => {
+    router.push(`/dashboard/internAdvisor/intern/details/${internId}`);
+  };
 
   return (
     <div className="flex flex-col gap-5">
@@ -54,21 +88,28 @@ export const InternAdvisorDashboardOverview = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>André Ferreira</TableCell>
-                <TableCell>andreferreira@aluno.com</TableCell>
-                <TableCell>23</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>18</TableCell>
-                <TableCell>172</TableCell>
-                <TableCell>
-                  <Button variant="outline" onClick={goInternDetails}>Mais Informações</Button>
-                </TableCell>
-              </TableRow>
+              {interns.map((intern) => (
+                <TableRow key={intern.id}>
+                  <TableCell>{intern.name}</TableCell>
+                  <TableCell>{intern.email}</TableCell>
+                  <TableCell>{intern.attendences?.length}</TableCell>
+                  <TableCell>{intern.weeklySummaries?.length}</TableCell>
+                  <TableCell>?</TableCell>
+                  <TableCell>?</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outline"
+                      onClick={() => goInternDetails(intern.id)}
+                    >
+                      Mais Informações
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Card>
       </div>
     </div>
-  )
-}
+  );
+};

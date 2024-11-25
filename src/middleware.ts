@@ -8,7 +8,9 @@ export function middleware(req: NextRequest) {
   const userType = req.cookies.get("type")?.value as UserTypeEnum;
   const user = req.cookies.get("user")?.value;
 
-  if (!token && req.url.includes("login")) {
+  const isAPublicRoute = req.url.includes("/") || req.url.includes("/login");
+
+  if (!token && isAPublicRoute) {
     return NextResponse.next();
   }
 
@@ -37,9 +39,24 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  if (user && userType === UserTypeEnum.INTERN_ADVISOR) {
+    if (!req.url.includes("dashboard")) {
+      return NextResponse.redirect(
+        new URL(`/dashboard/internAdvisor`, req.url),
+      );
+    }
+
+    return NextResponse.next();
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/login/:path*", "/dashboard/:path*", "/concludeProfile/:path"],
+  matcher: [
+    "/",
+    "/login/:path*",
+    "/dashboard/:path*",
+    "/concludeProfile/:path",
+  ],
 };

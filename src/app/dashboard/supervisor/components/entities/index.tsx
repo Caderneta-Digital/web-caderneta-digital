@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import { InfoEntityModal } from "./components/infoEntityModal";
-import { HostEntity } from "@/types/hostEntititesType";
+import { HostEntityType } from "@/types/hostEntititesType";
 import {
   Form,
   FormItem,
@@ -30,7 +30,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 type PropsType = {
-  hostEntities: HostEntity[];
+  hostEntities: HostEntityType[];
 };
 
 export const SupervisorDashboardEntities: React.FC<PropsType> = ({
@@ -57,7 +57,6 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
               <div>
                 <Form {...form}>
                   <form className="space-y-6">
-                    {/* Campo de Nome */}
                     <FormField
                       control={form.control}
                       name="name"
@@ -72,7 +71,6 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
                       )}
                     />
 
-                    {/* Campo de Email */}
                     <FormField
                       control={form.control}
                       name="email"
@@ -92,7 +90,6 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
                       )}
                     />
 
-                    {/* Campo de Senha */}
                     <FormField
                       control={form.control}
                       name="password"
@@ -109,11 +106,7 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
                       )}
                     />
 
-                    {/* Botão de Submissão */}
-                    <Button
-                      type="submit"
-                      className="w-full bg-black text-white hover:bg-gray-900"
-                    >
+                    <Button type="submit" className="w-full">
                       Criar
                     </Button>
                   </form>
@@ -141,7 +134,8 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
                 <TableCell>{hostEntity.activityField}</TableCell>
                 <TableCell>?</TableCell>
                 <TableCell>
-                  {hostEntity.interns.map((intern) => intern.name).join(", ")}
+                  {hostEntity.interns.map((intern) => intern.name).join(", ") ||
+                    "-"}
                 </TableCell>
                 <TableCell>?</TableCell>
                 <TableCell>
@@ -155,4 +149,3 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
     </div>
   );
 };
-

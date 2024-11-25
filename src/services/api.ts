@@ -1,10 +1,27 @@
-import { HostEntity } from "@/types/hostEntititesType";
-import { InternType } from "@/types/internTypes";
+import { HostEntityType } from "@/types/hostEntititesType";
+import { InternAdvisorType } from "@/types/internAdvisorTypes";
+import {
+  InternAttendenceType,
+  InternType,
+  InternWeeklySummaryType,
+} from "@/types/internTypes";
 import axios from "axios";
 
-type SupervisorDashboardResponse = {
+type SupervisorDashboardResponseType = {
+  // Vem mais coisa porem nao é util para a rota em questão
   interns: InternType[];
-  hostEntities: HostEntity[];
+  hostEntities: HostEntityType[];
+};
+
+type InternAdvisorDashboardResponseType = {
+  // Vem mais coisa porem nao é util para a rota em questão
+  interns: InternType[];
+};
+
+export type CreateInternRequestType = {
+  name: string;
+  password: string;
+  email: string;
 };
 
 class API {
@@ -48,19 +65,65 @@ class API {
     return response.data;
   }
 
+  public async createIntern(data: CreateInternRequestType) {
+    const response = await this.axios.post("/interns", data);
+    return response.data;
+  }
+
+  public async loginInternAdvisor(data: { email: string; password: string }) {
+    const response = await this.axios.post<{
+      token: string;
+      internAdvisor: InternAdvisorType;
+    }>("/internAdvisors/login", data);
+    return response.data;
+  }
+
   public async loginSupervisors(data: { email: string; password: string }) {
     const response = await this.axios.post("/supervisors/login", data);
     return response.data;
   }
 
   public async dashboardIntern() {
-    const response = await this.axios.get("/interns/dashboard");
+    const response = await this.axios.get<InternType>("/interns/dashboard");
     return response.data;
   }
 
   public async supervisorDashboard() {
-    const response = await this.axios.get<SupervisorDashboardResponse>(
+    const response = await this.axios.get<SupervisorDashboardResponseType>(
       "/supervisors/dashboard",
+    );
+    return response.data;
+  }
+
+  public async internAdvisorDashboard() {
+    const response = await this.axios.get<InternAdvisorDashboardResponseType>(
+      "/internAdvisors/dashboard",
+    );
+    return response.data;
+  }
+
+  public async findInternById(internId: string) {
+    const response = await this.axios.get<InternType>(`/interns/${internId}`);
+    return response.data;
+  }
+
+  public async findAllHostEntities() {
+    const response = await this.axios.get<HostEntityType[]>(`/hostEntities`);
+    return response.data;
+  }
+
+  public async updateInternAttendence(data: InternAttendenceType) {
+    const response = await this.axios.patch<InternAttendenceType>(
+      `/interns/${data.internId}/attendences/${data.id}`,
+      data,
+    );
+    return response.data;
+  }
+
+  public async updateInternWeeklySummary(data: InternWeeklySummaryType) {
+    const response = await this.axios.patch<InternWeeklySummaryType>(
+      `/interns/${data.internId}/weeklySummaries/${data.id}`,
+      data,
     );
     return response.data;
   }

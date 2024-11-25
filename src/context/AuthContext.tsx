@@ -11,12 +11,13 @@ import React, {
 import { UserType } from "@/types/userTypes";
 import Cookies from "js-cookie";
 import { Api } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 // Definir o tipo do contexto de autenticação
 interface AuthContextType {
   user: UserType | null;
   setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
-  closeAuth: () => void;
+  logOut: () => void;
 }
 
 // Criar o contexto com um valor inicial indefinido
@@ -31,6 +32,8 @@ interface AuthProviderProps {
 
 // Criar o AuthProvider
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
+  const router = useRouter();
+
   const [user, setUser] = useState<UserType | null>(null);
 
   useEffect(() => {
@@ -44,15 +47,16 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     if (token) Api.setBearerToken(token);
   }, []);
 
-  const closeAuth = () => {
+  const logOut = () => {
     setUser(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    // TODO: redirect user to login page
+    Cookies.remove("token");
+    Cookies.remove("user");
+    Cookies.remove("type");
+    router.push("/");
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, closeAuth }}>
+    <AuthContext.Provider value={{ user, setUser, logOut }}>
       {children}
     </AuthContext.Provider>
   );
