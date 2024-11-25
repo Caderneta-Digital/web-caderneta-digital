@@ -42,8 +42,8 @@ export const Navbar: React.FC<PropsType> = ({ title }) => {
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link href="/myAccount">
-              <div className="flex">
-                <User className="mr-2 h-4 w-4" />
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4" />
                 <span>Minha conta</span>
               </div>
             </Link>
@@ -52,8 +52,10 @@ export const Navbar: React.FC<PropsType> = ({ title }) => {
             className="text-red-600 focus:bg-red-50 focus:text-red-600"
             onClick={logOut}
           >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Sair</span>
+            <div className="flex items-center gap-2">
+              <LogOut className="h-4 w-4" />
+              <span>Sair</span>
+            </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
