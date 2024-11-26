@@ -31,8 +31,13 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { EditAttendenceModal } from "./components/editAttendenceModal";
 import { format, parseISO } from "date-fns"; 
+import { InternAttendenceType } from "@/types/internTypes";
 
-export const InternDashboardAttendences = ({ data }: { data: any }) => {
+type PropsType = {
+  attendences: InternAttendenceType[]
+}
+
+export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences }) => {
   const form = useForm();
   const formatDate = (dateString: string) => {
     try {
@@ -169,7 +174,7 @@ export const InternDashboardAttendences = ({ data }: { data: any }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-          {data?.attendences?.map((attendance: any, index: number) => (
+          {attendences?.map((attendance: attendences, index: number) => (
             <TableRow key={index}>
               <TableCell>{formatDate(attendance.date)}</TableCell>
               <TableCell>{attendance.morningHours || 0}</TableCell>

@@ -21,6 +21,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import { Input } from "@/components/ui/input";
+<<<<<<< HEAD
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+=======
 import {
   Table,
   TableBody,
@@ -29,9 +32,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+>>>>>>> cc41e36e076059dd8aa838a162cadf41efe0e208
 import { useForm } from "react-hook-form";
 import { EditSummariesModal } from "./components/editSummariesModal";
 import { format, parseISO } from "date-fns"; 
+
+type PropsType = {
+  weeklyeSummaries: Intern
+}
 
 export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
   const form = useForm();
