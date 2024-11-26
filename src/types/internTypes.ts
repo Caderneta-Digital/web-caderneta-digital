@@ -26,6 +26,7 @@ export type InternType = {
   motherName: string;
   obs: string;
   totalHours: number;
+  remainingHours: number;
   course: InternCourseEnum;
   status: InternStatusEnum;
   createdAt: string;

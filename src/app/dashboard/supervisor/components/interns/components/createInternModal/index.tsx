@@ -66,11 +66,9 @@ export const CreateInternModal = () => {
   };
 
   return (
-    <Dialog open={isModalOpen}>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger>
-        <Button variant="outline" onClick={() => setIsModalOpen(true)}>
-          Criar Estagiário
-        </Button>
+        <Button variant="outline">Criar Estagiário</Button>
       </DialogTrigger>
       <DialogContent className="h-[500px] overflow-auto">
         <DialogHeader>
@@ -139,13 +137,6 @@ export const CreateInternModal = () => {
 
               <Button type="submit" className="w-full" isLoading={isLoading}>
                 Criar
-              </Button>
-              <Button
-                variant="secondary"
-                className="w-full"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancelar
               </Button>
             </form>
           </Form>

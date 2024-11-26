@@ -1,12 +1,25 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { z } from "zod"
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "react-query";
 import { Api } from "@/services/api";
@@ -17,21 +30,32 @@ import { UserTypeEnum } from "@/types/userTypes";
 import Cookies from "js-cookie";
 
 const schema = z.object({
-  nif: z.string().min(1, { message: "Preencha o NIF" }),
+  nif: z
+    .string()
+    .length(9, { message: "Insira um NIF valido" })
+    .min(1, { message: "Preencha o NIF" })
+    .max(9, { message: "Insira um NIF valido" }),
   cc: z.string(),
   address: z.string().min(1, { message: "Preencha o endereço" }),
-  postalCode: z.string().min(1, { message: "Preencha o codigo postal" }),
-  phone: z.string().min(1, { message: "Preencha o telemovel" }),
+  postalCode: z
+    .string()
+    .length(7, { message: "Insira um código postal valido" })
+    .min(1, { message: "Preencha o codigo postal" })
+    .max(7, { message: "Insira um código postal valido" }),
+  phone: z
+    .string()
+    .length(9, { message: "Insira um telemovel valido" })
+    .min(1, { message: "Preencha o telemovel" }),
   dadName: z.string().min(1, { message: "Preencha o nome do pai" }),
   motherName: z.string().min(1, { message: "Preencha o nome do mãe" }),
-  observations: z.string()
-})
+  observations: z.string(),
+});
 
-type FormType = z.infer<typeof schema>
+type FormType = z.infer<typeof schema>;
 
 export default function ConcludeInternProfilePage() {
-  const { user } = useAuth()
-  const router = useRouter()
+  const { user } = useAuth();
+  const router = useRouter();
 
   const form = useForm<FormType>({
     resolver: zodResolver(schema),
@@ -44,41 +68,45 @@ export default function ConcludeInternProfilePage() {
       dadName: "",
       motherName: "",
       observations: "",
-    }
-  })
+    },
+  });
 
   const { mutateAsync: updateIntern, isLoading } = useMutation({
     mutationKey: ["updateIntern"],
     mutationFn: async (data: Partial<InternType>) => {
-      const response = await Api.updateIntern(data)
+      const response = await Api.updateIntern(data);
       return response;
     },
     onSuccess: (intern) => {
-      Cookies.set("user", JSON.stringify(intern))
-      router.push(`/dashboard/${UserTypeEnum.INTERN}`)
-    }
-  })
-
+      Cookies.set("user", JSON.stringify(intern));
+      router.push(`/dashboard/${UserTypeEnum.INTERN}`);
+    },
+  });
 
   const handleUpdateIntern: SubmitHandler<FormType> = async (data) => {
-    if (!user) return
+    if (!user) return;
 
     await updateIntern({
       id: user.id,
-      ...data
-    })
-  }
+      ...data,
+    });
+  };
 
   return (
     <div className="h-screen flex justify-center p-5">
       <Card className="h-max">
         <CardHeader>
           <CardTitle>Concluir Perfil</CardTitle>
-          <CardDescription>Conclui o teu perfil para teres acesso à tua Caderneta Digital</CardDescription>
+          <CardDescription>
+            Conclui o teu perfil para teres acesso à tua Caderneta Digital
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form className="space-y-6" onSubmit={form.handleSubmit(handleUpdateIntern)}>
+            <form
+              className="space-y-6"
+              onSubmit={form.handleSubmit(handleUpdateIntern)}
+            >
               <h1 className="text-lg">Identificação do(a) aluno(a)</h1>
               <FormField
                 control={form.control}
@@ -87,7 +115,7 @@ export default function ConcludeInternProfilePage() {
                   <FormItem>
                     <FormLabel className="no-error-color">CC nº</FormLabel>
                     <FormControl>
-                      <Input placeholder="0000000" type="numeric" {...field} />
+                      <Input placeholder="0000000" type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -101,7 +129,7 @@ export default function ConcludeInternProfilePage() {
                   <FormItem>
                     <FormLabel className="no-error-color">NIF</FormLabel>
                     <FormControl>
-                      <Input placeholder="00000000" type="numeric" {...field} />
+                      <Input placeholder="00000000" type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,7 +143,10 @@ export default function ConcludeInternProfilePage() {
                   <FormItem>
                     <FormLabel className="no-error-color">Endereço</FormLabel>
                     <FormControl>
-                      <Input placeholder="Rua Capitães de Abril, 23, Alfornelos" {...field} />
+                      <Input
+                        placeholder="Rua Capitães de Abril, 23, Alfornelos"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -127,9 +158,16 @@ export default function ConcludeInternProfilePage() {
                 name="postalCode"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="no-error-color">Código Postal</FormLabel>
+                    <FormLabel className="no-error-color">
+                      Código Postal
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="0000000" type="numeric" {...field} />
+                      <Input
+                        placeholder="4900297"
+                        type="numeric"
+                        max="7"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -144,7 +182,7 @@ export default function ConcludeInternProfilePage() {
                   <FormItem>
                     <FormLabel className="no-error-color">Telemóvel</FormLabel>
                     <FormControl>
-                      <Input placeholder="937644100" type="numeric" {...field} />
+                      <Input placeholder="937644100" type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -157,9 +195,15 @@ export default function ConcludeInternProfilePage() {
                 name="dadName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="no-error-color">Nome do Pai</FormLabel>
+                    <FormLabel className="no-error-color">
+                      Nome do Pai
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="Daniel Filipe Vieira" {...field} />
+                      <Input
+                        placeholder="Daniel Filipe Vieira"
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -171,9 +215,15 @@ export default function ConcludeInternProfilePage() {
                 name="motherName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="no-error-color">Nome da Mãe</FormLabel>
+                    <FormLabel className="no-error-color">
+                      Nome da Mãe
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="Mafalda Santos Carvalho" {...field} />
+                      <Input
+                        placeholder="Mafalda Santos Carvalho"
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -187,14 +237,21 @@ export default function ConcludeInternProfilePage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea placeholder="Escreva as tuas observações aqui" {...field} />
+                      <Textarea
+                        placeholder="Escreva as tuas observações aqui"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" isLoading={isLoading} className="w-full bg-black text-white hover:bg-gray-900">
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                className="w-full bg-black text-white hover:bg-gray-900"
+              >
                 Aceder à Caderneta Digital
               </Button>
             </form>
@@ -202,5 +259,6 @@ export default function ConcludeInternProfilePage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
+

@@ -14,7 +14,7 @@ export const InternTableRow: React.FC<PropsType> = ({ intern }) => {
       <TableCell>{intern.email}</TableCell>
       <TableCell>{intern.course}</TableCell>
       <TableCell>?</TableCell>
-      <TableCell>?</TableCell>
+      <TableCell>{intern.remainingHours}</TableCell>
       <TableCell>
         {intern.hostEntity ? (
           <h1>{intern.hostEntity.name}</h1>

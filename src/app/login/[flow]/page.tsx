@@ -59,6 +59,18 @@ export default function Login() {
     });
 
   const {
+    mutateAsync: loginSupervisorMutation,
+    isLoading: isLoadingLoginSupervisor,
+  } = useMutation({
+    mutationKey: ["loginSupervisor"],
+    mutationFn: async (data: { email: string; password: string }) => {
+      const response = await Api.loginSupervisors(data);
+      return response;
+    },
+    onError: (error) => handleError(error, toast),
+  });
+
+  const {
     mutateAsync: loginInternAdvisorMutation,
     isLoading: isLoadingLoginInternAdvisor,
   } = useMutation({
@@ -70,7 +82,10 @@ export default function Login() {
     onError: (error) => handleError(error, toast),
   });
 
-  const isLoading = isLoadingLoginIntern || isLoadingLoginInternAdvisor;
+  const isLoading =
+    isLoadingLoginIntern ||
+    isLoadingLoginInternAdvisor ||
+    isLoadingLoginSupervisor;
 
   const onSubmit = async (data: FormType) => {
     if (flow === UserTypeEnum.INTERN) {
@@ -96,7 +111,7 @@ export default function Login() {
 
       return router.push("/dashboard/intern");
     } else if (flow === UserTypeEnum.SUPERVISOR) {
-      const response = await Api.loginSupervisors(data);
+      const response = await loginSupervisorMutation(data);
       setUser({
         id: response.supervisor.id,
         name: response.supervisor.name,
