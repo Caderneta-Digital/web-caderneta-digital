@@ -10,18 +10,15 @@ import {
   TableCell
 } from "@/components/ui/table";
 import { SupervisorDashboardGradesCriteria } from "./components/assessmentCriteria";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const SupervisorDashboardGrades = () => {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
-  console.log(shouldShowComponent);
-  useEffect(()=>{
-   console.log("aaaa");
-  }, []);
+
   return (
     <div>
       {shouldShowComponent ? (
-        <SupervisorDashboardGradesCriteria />
+        <SupervisorDashboardGradesCriteria setShouldShowComponent={setShouldShowComponent}/>
       ) : (
         <Card>
           <div className="flex justify-between p-3">
