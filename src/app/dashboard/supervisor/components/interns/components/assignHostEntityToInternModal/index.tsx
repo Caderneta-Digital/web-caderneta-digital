@@ -13,7 +13,7 @@ import { useUpdateIntern } from "@/hooks/useUpdateIntern";
 import { Api } from "@/services/api";
 import { HostEntityType } from "@/types/hostEntititesType";
 import { InternType } from "@/types/internTypes";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 
@@ -28,7 +28,16 @@ export const AssignHostEntityToInternModal: React.FC<PropsType> = ({
 
   const { user: supervisor } = useAuth();
 
-  const { mutateAsync: updateIntern } = useUpdateIntern();
+  const { mutateAsync: updateIntern, isLoading } = useUpdateIntern({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([
+        "supervisorDashboard",
+        supervisor?.id,
+      ]);
+
+      setIsModalOpen(false);
+    }
+  });
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -39,12 +48,6 @@ export const AssignHostEntityToInternModal: React.FC<PropsType> = ({
       return response;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries([
-        "supervisorDashboard",
-        supervisor?.id,
-      ]);
-
-      setIsModalOpen(false);
     },
   });
 
@@ -85,7 +88,9 @@ export const AssignHostEntityToInternModal: React.FC<PropsType> = ({
                     <Label>Estágiario Inseridos</Label>
                     <p>{hostEntity.interns.length}</p>
                   </div>
-                  <ArrowRight />
+                  {isLoading ?
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    : <ArrowRight />}
                 </div>
               </CardContent>
             </Card>

@@ -20,7 +20,6 @@ type InternAdvisorDashboardResponseType = {
 
 export type CreateInternRequestType = {
   name: string;
-  password: string;
   email: string;
 };
 

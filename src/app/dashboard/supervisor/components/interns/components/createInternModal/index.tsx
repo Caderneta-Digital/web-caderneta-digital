@@ -1,12 +1,5 @@
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Form,
   FormItem,
   FormControl,
@@ -34,8 +27,6 @@ import { useAuth } from "@/context/AuthContext";
 const schema = z.object({
   name: z.string().min(1, { message: "Preencha o nome" }),
   email: z.string().email().min(1, { message: "Preencha o email" }),
-  password: z.string().min(1, { message: "Preencha a senha" }),
-  course: z.string(),
 });
 
 type FormType = z.infer<typeof schema>;
@@ -50,8 +41,6 @@ export const CreateInternModal = () => {
     defaultValues: {
       name: "",
       email: "",
-      password: "",
-      course: "",
     },
   });
 
@@ -124,32 +113,6 @@ export const CreateInternModal = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="course"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="no-error-color">Curso</FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={(value) => field.onChange(value)}
-                        value={field.value}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Curso" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="AUD">AUD</SelectItem>
-                          <SelectItem value="GPSI">GPSI</SelectItem>
-                          <SelectItem value="MEBE">MEBE</SelectItem>
-                          <SelectItem value="TUR">TUR</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
               {/* <FormField */}
               {/*   control={form.control} */}
@@ -173,22 +136,6 @@ export const CreateInternModal = () => {
               {/*     </FormItem> */}
               {/*   )} */}
               {/* /> */}
-
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="no-error-color">
-                      Palavra Passe
-                    </FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
               <Button type="submit" className="w-full" isLoading={isLoading}>
                 Criar
