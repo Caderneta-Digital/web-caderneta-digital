@@ -8,6 +8,14 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 type PropsType = {
   setShouldShowComponent: (value: boolean) => void
@@ -19,6 +27,17 @@ export const SupervisorDashboardGradesCriteria: React.FC<PropsType> = ({ setShou
       <Card>
         <div className="flex justify-between p-3">
           <h1 className="text-xl">Rubrica - Relatório de FCT (EFP)</h1>
+          <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Avaliações</BreadcrumbPage>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Critérios de Avaliação</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
           <Button variant={"outline"} onClick={() => setShouldShowComponent(false)}>Voltar Atrás</Button>
         </div>
         <Table>
