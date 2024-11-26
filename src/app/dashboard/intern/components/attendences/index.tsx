@@ -63,7 +63,6 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
               <div>
                 <Form {...form}>
                   <form className="space-y-6">
-                    {/* Campo de Data */}
                     <FormField
                       control={form.control}
                       name="date"
@@ -82,7 +81,6 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
                       )}
                     />
 
-                    {/* Campo de Manhã */}
                     <FormField
                       control={form.control}
                       name="morningHours"
@@ -105,7 +103,6 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
                       )}
                     />
 
-                    {/* Campo de Tarde */}
                     <FormField
                       control={form.control}
                       name="afternoonHours"
@@ -128,7 +125,6 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
                       )}
                     />
 
-                    {/* Campo de Observações */}
                     <FormField
                       control={form.control}
                       name="observacoes"
@@ -148,7 +144,6 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
                       )}
                     />
 
-                    {/* Botão de Submissão */}
                     <Button
                       type="submit"
                       className="w-full bg-black text-white hover:bg-gray-900"
@@ -174,16 +169,16 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
             </TableRow>
           </TableHeader>
           <TableBody>
-          {attendences?.map((attendance: attendences, index: number) => (
+          {attendences?.map((attendance: InternAttendenceType, index: number) => (
             <TableRow key={index}>
               <TableCell>{formatDate(attendance.date)}</TableCell>
               <TableCell>{attendance.morningHours || 0}</TableCell>
               <TableCell>{attendance.afternoonHours || 0}</TableCell>
               <TableCell><Input disabled/></TableCell>
               <TableCell>
-                <Checkbox checked={attendance.tutorApproved} disabled />
+                <Checkbox checked={attendance.isConfirmedByInternAdvisor} disabled />
               </TableCell>
-              <TableCell>{attendance.status || "Por Aprovar"}</TableCell>
+              <TableCell>{attendance.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
               <TableCell>
                 <EditAttendenceModal />
               </TableCell>

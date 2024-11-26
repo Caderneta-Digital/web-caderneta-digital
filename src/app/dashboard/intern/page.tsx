@@ -13,13 +13,17 @@ import { Navbar } from "@/components/ui/navbar";
 export default function Dashboard() {
   const { user } = useAuth();
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["internDashboard", user?.id],
     queryFn: async () => {
       const response = await Api.dashboardIntern();
       return response;
     },
   });
+
+  if (!data || isLoading) {
+    return <h1>Carrengando...</h1>;
+  }
 
   return (
     <div className="h-screen w-screen">
@@ -34,13 +38,13 @@ export default function Dashboard() {
             <TabsTrigger value="avaliacoes">Avaliações</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
-            <InternDashboardOverview data={data} />
+            <InternDashboardOverview attendences={data.attendences} weeklySummaries={data.weeklySummaries} />
           </TabsContent>
           <TabsContent value="attendences">
-            <InternDashboardAttendences data={data} />
+            <InternDashboardAttendences attendences={data.attendences} />
           </TabsContent>
           <TabsContent value="weeklySummaries">
-            <InternDashboardWeeklySummaries data={data} />
+            <InternDashboardWeeklySummaries weeklySummaries={data.weeklySummaries} />
           </TabsContent>
         </Tabs>
       </div>
