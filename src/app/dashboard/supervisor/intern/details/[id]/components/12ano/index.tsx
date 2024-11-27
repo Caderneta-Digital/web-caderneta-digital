@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { SupervisorGrades12anoAuto } from "./components/supervisorGrades12anoAuto";
 import { SupervisorGrades12anoInfo } from "./components/supervisorGrades12anoInfo";
+import { SupervisorGrades12anoFinal } from "./components/supervisorGrades12anoFinal";
 
 export const SupervisorDashboardGrades12Ano = () => {
   return (
@@ -105,9 +106,7 @@ export const SupervisorDashboardGrades12Ano = () => {
             <span className="text-sm text-neutral-950">
               Avaliação Final: N/A &nbsp;&nbsp;&nbsp; Data: N/A
             </span>
-            <Button variant="outline" size="sm">
-              Preencher Avaliação
-            </Button>
+            <SupervisorGrades12anoFinal/>
           </div>
         </CardContent>
       </Card>
