@@ -51,7 +51,7 @@ export default function Dashboard() {
             <SupervisorDashboardEntities hostEntities={data.hostEntities} />
           </TabsContent>
           <TabsContent value="grades">
-            <SupervisorDashboardGrades/>
+            <SupervisorDashboardGrades interns={data.interns}/>
           </TabsContent>
         </Tabs>
       </div>

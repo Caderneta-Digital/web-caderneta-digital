@@ -70,7 +70,7 @@ export const CreateInternModal = () => {
       <DialogTrigger>
         <Button variant="outline">Criar Estagiário</Button>
       </DialogTrigger>
-      <DialogContent className="h-[500px] overflow-auto">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Criar Conta</DialogTitle>
           <DialogDescription>Crie a conta do Estagiário</DialogDescription>
@@ -111,30 +111,6 @@ export const CreateInternModal = () => {
                   </FormItem>
                 )}
               />
-
-              {/* <FormField */}
-              {/*   control={form.control} */}
-              {/*   name="turma" */}
-              {/*   render={({}) => ( */}
-              {/*     <FormItem> */}
-              {/*       <FormLabel className="no-error-color">Turma</FormLabel> */}
-              {/*       <FormControl> */}
-              {/*         <Select> */}
-              {/*           <SelectTrigger> */}
-              {/*             <SelectValue placeholder="12ºP" /> */}
-              {/*           </SelectTrigger> */}
-              {/*           <SelectContent> */}
-              {/*             <SelectItem value="10">10ºP</SelectItem> */}
-              {/*             <SelectItem value="11">11ºP</SelectItem> */}
-              {/*             <SelectItem value="12">12ºP</SelectItem> */}
-              {/*           </SelectContent> */}
-              {/*         </Select> */}
-              {/*       </FormControl> */}
-              {/*       <FormMessage /> */}
-              {/*     </FormItem> */}
-              {/*   )} */}
-              {/* /> */}
-
               <Button type="submit" className="w-full" isLoading={isLoading}>
                 Criar
               </Button>
