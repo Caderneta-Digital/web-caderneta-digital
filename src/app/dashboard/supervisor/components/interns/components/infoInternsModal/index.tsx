@@ -52,9 +52,9 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
 
         <div>
           <Label className="text-gray-600">
-            Registos Semanais (acho q nao faz sentido)
+            Registos Semanais 
           </Label>
-          <h1>?</h1>
+          <h1>{intern.weeklySummaries?.length || 0}</h1>
         </div>
 
         <div>
@@ -94,12 +94,12 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
 
         <div>
           <Label className="text-gray-600">Observações</Label>
-          <h1>{intern.obs}</h1>
+          <h1>{intern.obs || "-"}</h1>
         </div>
 
         <div>
           <Label className="text-gray-600">
-            Estado (tem q ser um dropdown e nao um inputEditLine)
+            Estado 
           </Label>
           <InputEditLine value={intern.status} />
         </div>

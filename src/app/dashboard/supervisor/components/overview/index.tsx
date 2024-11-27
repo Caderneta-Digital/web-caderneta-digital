@@ -24,7 +24,7 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
     { title: "Nota de FCT (média)", value: "?" },
     { title: "Nº de Estagiários", value: interns.length },
     { title: "Nº de Entidades", value: hostEntities.length },
-    { title: "Nº de Estagiários sem Entidade (n faz sentido)", value: 4 },
+    { title: "Nº de Estagiários sem Entidade", value: interns.filter(intern => !intern.hostEntity).length },
   ];
 
   return (
