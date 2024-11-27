@@ -14,11 +14,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SupervisorDashboardGrades11Ano } from "./components/11ano";
 import { Button } from "@/components/ui/button";
+import { SupervisorDashboardGradesCriteria } from "../../../components/grades/components/assessmentCriteria";
+import { SupervisorDashboardGrades11Ano } from "./components/11ano";
 import { SupervisorDashboardGrades12Ano } from "./components/12ano";
 import { SupervisorDashboardGradesFinal } from "./components/final";
-import { SupervisorDashboardGradesCriteria } from "../../../components/grades/components/assessmentCriteria";
 
 export default function Dashboard() {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
