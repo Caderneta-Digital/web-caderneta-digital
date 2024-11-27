@@ -5,11 +5,18 @@ import React from "react";
 import { InternAdvisorDashboardAttendences } from "./components/attendences";
 import { InternAdvisorDashboardEvaluation } from "./components/evaluation";
 import { InternAdvisorDashboardWeeklySummaries } from "./components/weeklySummaries";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useQuery } from "react-query";
 import { Api } from "@/services/api";
 import { Navbar } from "@/components/ui/navbar";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export default function Dashboard() {
   const params = useParams();
@@ -29,27 +36,32 @@ export default function Dashboard() {
 
   return (
     <div className="h-screen w-screen">
-      <Navbar title={`Informaçõs do ${intern.name}`} />
+      <Navbar title={`Informações do ${intern.name}`} />
 
       <div className="px-4 py-3 flex flex-col gap-4">
         <Tabs defaultValue="attendences" className="w-full space-y-5">
           <div className="flex justify-between items-center">
             <TabsList className="grid w-fit grid-cols-3">
               <TabsTrigger value="attendences">Presenças</TabsTrigger>
-              <TabsTrigger value="weeklySummaries">
-                Registos Semanais
-              </TabsTrigger>
-              <TabsTrigger value="evaluations">?</TabsTrigger>
+              <TabsTrigger value="weeklySummaries">Registos</TabsTrigger>
+              <TabsTrigger value="evaluations">Avaliações</TabsTrigger>
             </TabsList>
-            <p className="text-sm">
-              <Link
-                href={"/dashboard/internAdvisor/"}
-                className="text-gray-600"
-              >
-                Home
-              </Link>{" "}
-              &gt; Informações do estagiário
-            </p>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink
+                    href={"/dashboard/internAdvisor/"}
+                    className="cursor-pointer"
+                  >
+                    Home
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Informações do Estagiário</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
           </div>
           <TabsContent value="attendences">
             <InternAdvisorDashboardAttendences

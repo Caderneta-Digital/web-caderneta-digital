@@ -11,10 +11,21 @@ import {
 } from "@/components/ui/table";
 import { SupervisorDashboardGradesCriteria } from "./components/assessmentCriteria";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { InternType } from "@/types/internTypes";
 
+type PropsType = {
+  interns: InternType[];
+};
 
-export const SupervisorDashboardGrades = () => {
+export const SupervisorDashboardGrades: React.FC<PropsType> = ({ interns }) => {
+  const router = useRouter();
+
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
+
+  const goInternDetails = (internId: string) => {
+    router.push(`/dashboard/supervisor/intern/details/${internId}`);
+  };
 
   return (
     <div>
@@ -45,16 +56,23 @@ export const SupervisorDashboardGrades = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>João</TableCell>
-                <TableCell>HitEcossystem</TableCell>
-                <TableCell>17</TableCell>
-                <TableCell>?</TableCell>
-                <TableCell>?</TableCell>
-                <TableCell>
-                  <Button variant="outline">Processo de Avaliação</Button>
-                </TableCell>
-              </TableRow>
+              {interns.map((intern) => (
+                <TableRow key={intern.id}>
+                  <TableCell>{intern.name}</TableCell>
+                  <TableCell>{intern.hostEntity?.name}</TableCell>
+                  <TableCell>?</TableCell>
+                  <TableCell>?</TableCell>
+                  <TableCell>?</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outline"
+                      onClick={() => goInternDetails(intern.id)}
+                    >
+                      Processo de Avaliação
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Card>
