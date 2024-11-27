@@ -7,7 +7,6 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -28,17 +27,16 @@ export const SupervisorDashboardGradesCriteria: React.FC<PropsType> = ({ setShou
         <div className="flex justify-between p-3">
           <h1 className="text-xl">Rubrica - Relatório de FCT (EFP)</h1>
           <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Avaliações</BreadcrumbPage>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Critérios de Avaliação</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          <Button variant={"outline"} onClick={() => setShouldShowComponent(false)}>Voltar Atrás</Button>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink onClick={() => setShouldShowComponent(false)} className="cursor-pointer">Avaliações</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Critérios de Avaliação</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
         <Table>
           <TableHeader>
