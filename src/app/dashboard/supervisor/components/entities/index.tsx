@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
   Table,
@@ -8,26 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { useForm } from "react-hook-form";
-import { InfoEntityModal } from "./components/infoEntityModal";
 import { HostEntityType } from "@/types/hostEntititesType";
-import {
-  Form,
-  FormItem,
-  FormControl,
-  FormField,
-  FormMessage,
-  FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { CreateHostEntityModal } from "./components/createHostEntityModal";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   hostEntities: HostEntityType[];
@@ -36,84 +19,14 @@ type PropsType = {
 export const SupervisorDashboardEntities: React.FC<PropsType> = ({
   hostEntities,
 }) => {
-  const form = useForm();
+  const router = useRouter()
 
   return (
     <div>
       <Card>
         <div className="flex justify-between p-3">
           <h1 className="text-xl">Entidades de Acolhimento</h1>
-          <Dialog>
-            <DialogTrigger>
-              <Button variant="outline">Criar Entidade</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Criar Conta</DialogTitle>
-                <DialogDescription>
-                  Crie a conta da Entidade de Acolhimento
-                </DialogDescription>
-              </DialogHeader>
-              <div>
-                <Form {...form}>
-                  <form className="space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="no-error-color">Nome</FormLabel>
-                          <FormControl>
-                            <Input placeholder="António Pinheiro" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="no-error-color">
-                            Email
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="a00000@alunos.esmaior.pt"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="no-error-color">
-                            Palavra Passe
-                          </FormLabel>
-                          <FormControl>
-                            <Input type="password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button type="submit" className="w-full">
-                      Criar
-                    </Button>
-                  </form>
-                </Form>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <CreateHostEntityModal />
         </div>
         <Table>
           <TableHeader>
@@ -139,7 +52,9 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
                 </TableCell>
                 <TableCell>?</TableCell>
                 <TableCell>
-                  <InfoEntityModal hostEntity={hostEntity}></InfoEntityModal>
+                  <Button variant="outline" onClick={() => router.push(`/dashboard/supervisor/hostEntity/details/${hostEntity.id}`)}>
+                    Mais Informações
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

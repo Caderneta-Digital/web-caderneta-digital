@@ -13,9 +13,18 @@ import { useUpdateIntern } from "@/hooks/useUpdateIntern";
 import { Api } from "@/services/api";
 import { HostEntityType } from "@/types/hostEntititesType";
 import { InternType } from "@/types/internTypes";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 type PropsType = {
   intern: InternType;
@@ -40,6 +49,8 @@ export const AssignHostEntityToInternModal: React.FC<PropsType> = ({
   });
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedHostEntity, setSelectedHostEntity] = useState<HostEntityType | null>(null)
+  const [selectedHostEntityAdvisorId, setSelectedHostEntityAdvisorId] = useState<string | null>(null)
 
   const { data: hostEntities } = useQuery({
     queryKey: ["hostEntities"],
@@ -51,51 +62,85 @@ export const AssignHostEntityToInternModal: React.FC<PropsType> = ({
     },
   });
 
-  const handleAssignHostEntity = async (selectedHostEntity: HostEntityType) => {
+  const handleAssignHostEntity = async () => {
+    if(!selectedHostEntity) return;
+    if(!selectedHostEntityAdvisorId) return;
+
     await updateIntern({
       ...intern,
+      advisorId: selectedHostEntityAdvisorId,
       hostEntityId: selectedHostEntity.id,
     });
   };
 
   return (
-    <Dialog open={isModalOpen}>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger>
         <Button variant="outline" onClick={() => setIsModalOpen(true)}>
           Atribuir
         </Button>
       </DialogTrigger>
       <DialogContent className="w-11/12">
-        <DialogHeader>
-          <DialogTitle>
-            Atribuir Ent. de Acolhimento ao {intern.name}
-          </DialogTitle>
-        </DialogHeader>
+        {selectedHostEntity ? (
+          <>
+            <DialogHeader>
+              <DialogTitle>
+                Selecione um tutor da {selectedHostEntity.name}
+              </DialogTitle>
+            </DialogHeader>
 
-        <div>
-          {hostEntities?.map((hostEntity) => (
-            <Card
-              key={hostEntity.id}
-              className="cursor-pointer"
-              onClick={() => handleAssignHostEntity(hostEntity)}
-            >
-              <CardHeader>
-                <CardTitle className="text-lg">{hostEntity.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-between">
-                  <div>
-                    <Label>Estágiario Inseridos</Label>
-                    <p>{hostEntity.interns.length}</p>
-                  </div>
-                  {isLoading ?
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    : <ArrowRight />}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+            <div className="flex flex-col gap-2">
+              <Select onValueChange={(value) => setSelectedHostEntityAdvisorId(value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Tutor" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Tutor</SelectLabel>
+                    {selectedHostEntity.advisors.map(advisor => (
+                      <SelectItem key={advisor.id} value={advisor.id}>{advisor.name}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+
+              <Button onClick={handleAssignHostEntity} isLoading={isLoading}>
+                Atribuir
+              </Button>
+            </div>
+          </>
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle>
+                Atribuir Ent. de Acolhimento ao {intern.name}
+              </DialogTitle>
+            </DialogHeader>
+
+            <div>
+              {hostEntities?.map((hostEntity) => (
+                <Card
+                  key={hostEntity.id}
+                  className="cursor-pointer"
+                  onClick={() => setSelectedHostEntity(hostEntity)}
+                >
+                  <CardHeader>
+                    <CardTitle className="text-lg">{hostEntity.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex justify-between">
+                      <div>
+                        <Label>Estágiario Inseridos</Label>
+                        <p>{hostEntity.interns.length}</p>
+                      </div>
+                      <ArrowRight />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );

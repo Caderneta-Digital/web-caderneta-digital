@@ -32,6 +32,7 @@ export type InternType = {
   createdAt: string;
   hostEntityId: string | null;
   supervisorId: string | null;
+  advisorId: string | null;
   hostEntity?: HostEntityType;
   attendences?: InternAttendenceType[];
   weeklySummaries?: InternWeeklySummaryType[];

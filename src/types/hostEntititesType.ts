@@ -1,3 +1,4 @@
+import { InternAdvisorType } from "./internAdvisorTypes";
 import { InternType } from "./internTypes";
 
 export type HostEntityType = {
@@ -12,4 +13,5 @@ export type HostEntityType = {
   responsibleName: string;
   createdAt: string;
   interns: InternType[];
+  advisors: InternAdvisorType[]
 };

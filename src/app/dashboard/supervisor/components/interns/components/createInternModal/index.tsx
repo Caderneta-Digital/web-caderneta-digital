@@ -23,6 +23,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Preencha o nome" }),
@@ -45,6 +46,7 @@ export const CreateInternModal = () => {
   });
 
   const queryClient = useQueryClient();
+  const { toast } = useToast()
 
   const { mutateAsync: createIntern, isLoading } = useMutation({
     mutationKey: ["createIntern"],
@@ -58,6 +60,11 @@ export const CreateInternModal = () => {
         supervisor?.id,
       ]);
       setIsModalOpen(false);
+
+      toast({
+        title: "Estágiario criado com sucesso!",
+        description: "Foi enviado um email para o estágiario para que o mesmo possa aceder à Caderneta Digital"
+      })
     },
   });
 
