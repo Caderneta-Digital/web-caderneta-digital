@@ -37,7 +37,7 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
 
         <div>
           <Label className="text-gray-600">Curso</Label>
-          <h1>{intern.course}</h1>
+          <h1>{intern.course.name}</h1>
         </div>
 
         <div>
@@ -51,9 +51,7 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
         </div>
 
         <div>
-          <Label className="text-gray-600">
-            Registos Semanais 
-          </Label>
+          <Label className="text-gray-600">Registos Semanais</Label>
           <h1>{intern.weeklySummaries?.length || 0}</h1>
         </div>
 
@@ -98,9 +96,7 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
         </div>
 
         <div>
-          <Label className="text-gray-600">
-            Estado 
-          </Label>
+          <Label className="text-gray-600">Estado</Label>
           <InputEditLine value={intern.status} />
         </div>
       </DialogContent>

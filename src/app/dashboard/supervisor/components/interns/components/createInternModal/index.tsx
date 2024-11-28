@@ -46,7 +46,7 @@ export const CreateInternModal = () => {
   });
 
   const queryClient = useQueryClient();
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const { mutateAsync: createIntern, isLoading } = useMutation({
     mutationKey: ["createIntern"],
@@ -63,8 +63,9 @@ export const CreateInternModal = () => {
 
       toast({
         title: "Estágiario criado com sucesso!",
-        description: "Foi enviado um email para o estágiario para que o mesmo possa aceder à Caderneta Digital"
-      })
+        description:
+          "Foi enviado um email para o estágiario para que o mesmo possa aceder à Caderneta Digital",
+      });
     },
   });
 
@@ -118,6 +119,7 @@ export const CreateInternModal = () => {
                   </FormItem>
                 )}
               />
+
               <Button type="submit" className="w-full" isLoading={isLoading}>
                 Criar
               </Button>

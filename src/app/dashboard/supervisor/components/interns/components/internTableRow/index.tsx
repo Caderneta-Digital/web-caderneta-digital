@@ -12,7 +12,7 @@ export const InternTableRow: React.FC<PropsType> = ({ intern }) => {
     <TableRow key={intern.id}>
       <TableCell>{intern.name}</TableCell>
       <TableCell>{intern.email}</TableCell>
-      <TableCell>{intern.course}</TableCell>
+      <TableCell>{intern.course.name}</TableCell>
       <TableCell>?</TableCell>
       <TableCell>{intern.remainingHours}</TableCell>
       <TableCell>

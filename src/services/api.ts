@@ -23,6 +23,13 @@ export type CreateInternRequestType = {
   email: string;
 };
 
+export type CreateInternAdvisorRequestType = {
+  name: string;
+  email: string;
+  phone: string | null;
+  hostEntityId: string;
+};
+
 export type CreateHostEntityRequestType = {
   name: string;
   email: string;
@@ -30,7 +37,7 @@ export type CreateHostEntityRequestType = {
   nif: string;
   responsibleName: string;
   activityField: string;
-  address: string
+  address: string;
 };
 
 class API {
@@ -76,6 +83,11 @@ class API {
 
   public async createIntern(data: CreateInternRequestType) {
     const response = await this.axios.post("/interns", data);
+    return response.data;
+  }
+
+  public async createInternAdvisor(data: CreateInternAdvisorRequestType) {
+    const response = await this.axios.post("/internAdvisors", data);
     return response.data;
   }
 
@@ -127,7 +139,9 @@ class API {
   }
 
   public async findHostEntityById(hostEntityId: string) {
-    const response = await this.axios.get<HostEntityType>(`/hostEntities/${hostEntityId}`);
+    const response = await this.axios.get<HostEntityType>(
+      `/hostEntities/${hostEntityId}`,
+    );
     return response.data;
   }
 

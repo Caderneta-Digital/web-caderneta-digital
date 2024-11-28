@@ -5,8 +5,8 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*", // Captura chamadas feitas para /api/*
-        destination: "http://100.28.23.135:8888/:path*", // Redireciona para o backend de prod
-        // destination: "http://localhost:8888/:path*", // Redireciona para o backend local
+        // destination: "http://100.28.23.135:8888/:path*", // Redireciona para o backend de prod
+        destination: "http://localhost:8888/:path*", // Redireciona para o backend local
       },
     ];
   },

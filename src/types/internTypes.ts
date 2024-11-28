@@ -1,6 +1,6 @@
 import { HostEntityType } from "./hostEntititesType";
 
-export enum InternCourseEnum {
+export enum CourseEnum {
   GPSI = "GPSI",
   AUD = "AUD",
   MEDE = "MEDE",
@@ -11,6 +11,12 @@ export enum InternStatusEnum {
   ACTIVE = "active",
   NOT_ACTIVE = "not_active",
 }
+
+export type CourseType = {
+  id: string;
+  name: CourseEnum;
+  createdAt: string;
+};
 
 export type InternType = {
   id: string;
@@ -27,7 +33,7 @@ export type InternType = {
   obs: string;
   totalHours: number;
   remainingHours: number;
-  course: InternCourseEnum;
+  course: CourseType;
   status: InternStatusEnum;
   createdAt: string;
   hostEntityId: string | null;
