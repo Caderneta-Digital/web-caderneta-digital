@@ -160,6 +160,13 @@ class API {
     );
     return response.data;
   }
+
+  public async requestPasswordReset() {
+    const response = await this.axios.post(
+      `/users/requestPasswordReset`,
+    );
+    return response.data;
+  }
 }
 
 export const Api = new API();

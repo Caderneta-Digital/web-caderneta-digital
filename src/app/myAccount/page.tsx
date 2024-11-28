@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,8 +11,22 @@ import {
 import { InputEditLine } from "@/components/ui/inputEditLine";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/ui/navbar";
+import { Api } from "@/services/api";
+import { useMutation } from "react-query";
 
 export default function MyAccount() {
+  const { mutateAsync: requestPasswordReset, isLoading } = useMutation({
+    mutationKey: ["requestPasswordReset"],
+    mutationFn: async () => {
+      const response = await Api.requestPasswordReset()
+      return response
+    }
+  })
+
+  const handleRequestPasswordReset = async () => {
+    await requestPasswordReset();
+  }
+
   return (
     <div className="w-screen h-screen">
       <Navbar title="Minha Conta" />
@@ -38,6 +53,7 @@ export default function MyAccount() {
             <div>
               <Label>Palavra-passe</Label>
               <h1>*********</h1>
+              <Button isLoading={isLoading} onClick={handleRequestPasswordReset}>Pedir Redefinição de Palavra Passe</Button>
             </div>
 
             <div>
