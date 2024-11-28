@@ -24,7 +24,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 type PropsType = {
   intern: InternType;
@@ -45,12 +45,14 @@ export const AssignHostEntityToInternModal: React.FC<PropsType> = ({
       ]);
 
       setIsModalOpen(false);
-    }
+    },
   });
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedHostEntity, setSelectedHostEntity] = useState<HostEntityType | null>(null)
-  const [selectedHostEntityAdvisorId, setSelectedHostEntityAdvisorId] = useState<string | null>(null)
+  const [selectedHostEntity, setSelectedHostEntity] =
+    useState<HostEntityType | null>(null);
+  const [selectedHostEntityAdvisorId, setSelectedHostEntityAdvisorId] =
+    useState<string | null>(null);
 
   const { data: hostEntities } = useQuery({
     queryKey: ["hostEntities"],
@@ -58,13 +60,12 @@ export const AssignHostEntityToInternModal: React.FC<PropsType> = ({
       const response = await Api.findAllHostEntities();
       return response;
     },
-    onSuccess: async () => {
-    },
+    onSuccess: async () => {},
   });
 
   const handleAssignHostEntity = async () => {
-    if(!selectedHostEntity) return;
-    if(!selectedHostEntityAdvisorId) return;
+    if (!selectedHostEntity) return;
+    if (!selectedHostEntityAdvisorId) return;
 
     await updateIntern({
       ...intern,
@@ -90,15 +91,19 @@ export const AssignHostEntityToInternModal: React.FC<PropsType> = ({
             </DialogHeader>
 
             <div className="flex flex-col gap-2">
-              <Select onValueChange={(value) => setSelectedHostEntityAdvisorId(value)}>
+              <Select
+                onValueChange={(value) => setSelectedHostEntityAdvisorId(value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Tutor" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Tutor</SelectLabel>
-                    {selectedHostEntity.advisors.map(advisor => (
-                      <SelectItem key={advisor.id} value={advisor.id}>{advisor.name}</SelectItem>
+                    {selectedHostEntity.advisors.map((advisor) => (
+                      <SelectItem key={advisor.id} value={advisor.id}>
+                        {advisor.name}
+                      </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>

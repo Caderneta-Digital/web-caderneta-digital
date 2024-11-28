@@ -5,6 +5,8 @@ import {
   InternType,
   InternWeeklySummaryType,
 } from "@/types/internTypes";
+import { TokenType } from "@/types/tokenTypes";
+import { UsersType } from "@/types/userTypes";
 import axios from "axios";
 
 type SupervisorDashboardResponseType = {
@@ -38,6 +40,11 @@ export type CreateHostEntityRequestType = {
   responsibleName: string;
   activityField: string;
   address: string;
+};
+
+export type ResetPasswordRequestType = {
+  newPassword: string;
+  tokenId: string;
 };
 
 class API {
@@ -162,9 +169,22 @@ class API {
   }
 
   public async requestPasswordReset() {
-    const response = await this.axios.post(
-      `/users/requestPasswordReset`,
-    );
+    const response = await this.axios.post(`/users/requestPasswordReset`);
+    return response.data;
+  }
+
+  public async isTokenValid(tokenId: string) {
+    const response = await this.axios.get<TokenType>(`/tokens/${tokenId}`);
+    return response.data;
+  }
+
+  public async resetPassword(data: ResetPasswordRequestType) {
+    const response = await this.axios.post(`/users/resetPassword`, data);
+    return response.data;
+  }
+
+  public async getProfile() {
+    const response = await this.axios.get<UsersType>(`/users/profile`);
     return response.data;
   }
 }

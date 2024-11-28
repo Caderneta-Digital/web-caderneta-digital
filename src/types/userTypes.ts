@@ -1,3 +1,7 @@
+import { InternAdvisorType } from "./internAdvisorTypes";
+import { InternType } from "./internTypes";
+import { SupervisorType } from "./supervisorTypes";
+
 export enum UserTypeEnum {
   INTERN = "intern",
   SUPERVISOR = "supervisor",
@@ -16,3 +20,5 @@ export interface UserType {
   type: UserTypeEnum;
   supervisorType?: SupervisorTypeEnum;
 }
+
+export type UsersType = InternType | InternAdvisorType | SupervisorType;

@@ -19,7 +19,7 @@ type PropsType = {
 export const SupervisorDashboardEntities: React.FC<PropsType> = ({
   hostEntities,
 }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div>
@@ -52,7 +52,14 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
                 </TableCell>
                 <TableCell>?</TableCell>
                 <TableCell>
-                  <Button variant="outline" onClick={() => router.push(`/dashboard/supervisor/hostEntity/details/${hostEntity.id}`)}>
+                  <Button
+                    variant="outline"
+                    onClick={() =>
+                      router.push(
+                        `/dashboard/supervisor/hostEntity/details/${hostEntity.id}`,
+                      )
+                    }
+                  >
                     Mais Informações
                   </Button>
                 </TableCell>

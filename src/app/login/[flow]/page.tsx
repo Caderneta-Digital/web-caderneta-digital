@@ -177,7 +177,6 @@ export default function Login() {
         </p>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Campo de Email */}
             <FormField
               control={form.control}
               name="email"
@@ -192,7 +191,6 @@ export default function Login() {
               )}
             />
 
-            {/* Campo de Senha */}
             <FormField
               control={form.control}
               name="password"
@@ -209,12 +207,7 @@ export default function Login() {
               )}
             />
 
-            {/* Botão de Submissão */}
-            <Button
-              isLoading={isLoading}
-              type="submit"
-              className="w-full bg-black text-white hover:bg-gray-900"
-            >
+            <Button isLoading={isLoading} type="submit" className="w-full">
               Iniciar Sessão
             </Button>
           </form>

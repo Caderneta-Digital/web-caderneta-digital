@@ -62,6 +62,7 @@ export const CreateInternModal = () => {
       setIsModalOpen(false);
 
       toast({
+        variant: "success",
         title: "Estágiario criado com sucesso!",
         description:
           "Foi enviado um email para o estágiario para que o mesmo possa aceder à Caderneta Digital",

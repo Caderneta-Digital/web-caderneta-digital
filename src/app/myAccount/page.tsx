@@ -12,20 +12,32 @@ import { InputEditLine } from "@/components/ui/inputEditLine";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/ui/navbar";
 import { Api } from "@/services/api";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
 export default function MyAccount() {
+  const { data: profile, isLoading: isLoadingProfile } = useQuery({
+    queryKey: ["findUserById"],
+    queryFn: async () => {
+      const response = await Api.getProfile();
+      return response;
+    },
+  });
+
   const { mutateAsync: requestPasswordReset, isLoading } = useMutation({
     mutationKey: ["requestPasswordReset"],
     mutationFn: async () => {
-      const response = await Api.requestPasswordReset()
-      return response
-    }
-  })
+      const response = await Api.requestPasswordReset();
+      return response;
+    },
+  });
+
+  if (!profile || isLoadingProfile) {
+    return <h1>Loading...</h1>;
+  }
 
   const handleRequestPasswordReset = async () => {
     await requestPasswordReset();
-  }
+  };
 
   return (
     <div className="w-screen h-screen">
@@ -42,23 +54,23 @@ export default function MyAccount() {
           <CardContent className="flex flex-col gap-2">
             <div>
               <Label>Nome</Label>
-              <InputEditLine value="Andre Oliveira Rocha" />
+              <InputEditLine value={profile.name} />
             </div>
 
             <div>
               <Label>Email</Label>
-              <h1>andre.rocha@gmail.com</h1>
+              <h1>{profile.email}</h1>
             </div>
 
-            <div>
+            <div className="flex flex-col gap-2">
               <Label>Palavra-passe</Label>
-              <h1>*********</h1>
-              <Button isLoading={isLoading} onClick={handleRequestPasswordReset}>Pedir Redefinição de Palavra Passe</Button>
-            </div>
-
-            <div>
-              <Label>NIF</Label>
-              <h1>123124124</h1>
+              <Button
+                isLoading={isLoading}
+                onClick={handleRequestPasswordReset}
+                className="w-fit"
+              >
+                Pedir Redefinição de Palavra Passe
+              </Button>
             </div>
           </CardContent>
         </Card>
