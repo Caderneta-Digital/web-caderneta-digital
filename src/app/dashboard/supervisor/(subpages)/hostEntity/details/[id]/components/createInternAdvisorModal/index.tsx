@@ -23,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "react-query";
 import { Api, CreateInternAdvisorRequestType } from "@/services/api";
 import { HostEntityType } from "@/types/hostEntititesType";
+import { useToast } from "@/hooks/use-toast";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Preencha o nome" }),
@@ -42,6 +43,7 @@ export const CreateInternAdvisorModal: React.FC<PropsType> = ({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const { mutateAsync: createInternAdvisor, isLoading } = useMutation({
     mutationKey: ["createInternAdvisor"],
@@ -53,6 +55,12 @@ export const CreateInternAdvisorModal: React.FC<PropsType> = ({
     onSuccess: async () => {
       await queryClient.invalidateQueries(["hostEntity", hostEntity.id]);
       setIsModalOpen(false);
+      toast({
+        variant: "success",
+        title: "Conta do tutor criada com sucesso!",
+        description:
+          "Foi enviado um email para o tutor com as intruções de acesso à Caderneta Digital",
+      });
     },
   });
 
@@ -143,4 +151,3 @@ export const CreateInternAdvisorModal: React.FC<PropsType> = ({
     </Dialog>
   );
 };
-

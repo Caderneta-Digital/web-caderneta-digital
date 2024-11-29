@@ -14,6 +14,7 @@ import { Api } from "@/services/api";
 import { useParams } from "next/navigation";
 import { useQuery } from "react-query";
 import { CreateInternAdvisorModal } from "./components/createInternAdvisorModal";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function HostEntityDetails() {
   const params = useParams();
@@ -28,7 +29,15 @@ export default function HostEntityDetails() {
   });
 
   if (!hostEntity || isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="h-screen w-screen">
+        <Navbar title={`Dashboard da`} />
+
+        <div className="px-4 py-3 flex flex-col gap-4 h-full">
+          <Skeleton className="w-full h-full" />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -66,4 +75,3 @@ export default function HostEntityDetails() {
     </div>
   );
 }
-

@@ -5,11 +5,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { InputEditLine } from "@/components/ui/inputEditLine";
-import { InternType } from "@/types/internTypes";
+import { InternStatusEnum, InternType } from "@/types/internTypes";
 
 type PropsType = {
   intern: InternType;
@@ -97,7 +102,17 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
 
         <div>
           <Label className="text-gray-600">Estado</Label>
-          <InputEditLine value={intern.status} />
+          <Select value={intern.status}>
+            <SelectTrigger>
+              <SelectValue placeholder="Estado" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={InternStatusEnum.ACTIVE}>Ativo</SelectItem>
+              <SelectItem value={InternStatusEnum.NOT_ACTIVE}>
+                Desativado
+              </SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </DialogContent>
     </Dialog>

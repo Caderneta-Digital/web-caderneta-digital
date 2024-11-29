@@ -11,7 +11,7 @@ import {
 import { InputEditLine } from "@/components/ui/inputEditLine";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/ui/navbar";
-import { Api } from "@/services/api";
+import { Api, UpdateUserRequestType } from "@/services/api";
 import { useMutation, useQuery } from "react-query";
 
 export default function MyAccount() {
@@ -30,6 +30,15 @@ export default function MyAccount() {
       return response;
     },
   });
+
+  const { mutateAsync: updateUser, isLoading: isLoadingUpdateUser } =
+    useMutation({
+      mutationKey: ["updateUser"],
+      mutationFn: async (data: UpdateUserRequestType) => {
+        const response = await Api.updateUser(data);
+        return response;
+      },
+    });
 
   if (!profile || isLoadingProfile) {
     return <h1>Loading...</h1>;
@@ -54,7 +63,16 @@ export default function MyAccount() {
           <CardContent className="flex flex-col gap-2">
             <div>
               <Label>Nome</Label>
-              <InputEditLine value={profile.name} />
+              <InputEditLine
+                value={profile.name}
+                isLoading={isLoadingUpdateUser}
+                onConfirmEdit={(newValue) => {
+                  updateUser({
+                    ...profile,
+                    name: newValue,
+                  });
+                }}
+              />
             </div>
 
             <div>

@@ -47,6 +47,10 @@ export type ResetPasswordRequestType = {
   tokenId: string;
 };
 
+export type UpdateUserRequestType = {
+  name?: string;
+};
+
 class API {
   axios;
 
@@ -185,6 +189,11 @@ class API {
 
   public async getProfile() {
     const response = await this.axios.get<UsersType>(`/users/profile`);
+    return response.data;
+  }
+
+  public async updateUser(data: UpdateUserRequestType) {
+    const response = await this.axios.patch(`/users`, data);
     return response.data;
   }
 }
