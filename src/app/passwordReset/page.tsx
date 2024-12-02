@@ -19,6 +19,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
 import { useToast } from "@/hooks/use-toast";
+import { Suspense } from "react";
 
 const schema = z.object({
   newPassword: z
@@ -29,6 +30,14 @@ const schema = z.object({
 type FormType = z.infer<typeof schema>;
 
 export default function PasswordReset() {
+  return (
+    <Suspense fallback={<h1>Carregando...</h1>}>
+      <PasswordResetContent />
+    </Suspense>
+  );
+}
+
+function PasswordResetContent(): JSX.Element {
   const searchParams = useSearchParams();
   const router = useRouter();
   const form = useForm<FormType>({
@@ -77,7 +86,7 @@ export default function PasswordReset() {
       variant: "destructive",
       title: "Link expirado. Peça outro",
     });
-    return router.push("/");
+    router.push("/");
   }
 
   const handleChangePassword = async (data: FormType) => {
