@@ -34,7 +34,7 @@ import { format, parseISO } from "date-fns";
 import { InternAttendenceType } from "@/types/internTypes";
 
 type PropsType = {
-  attendences: InternAttendenceType[]
+  attendences: InternAttendenceType[] | undefined
 }
 
 export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences }) => {
@@ -169,8 +169,8 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
             </TableRow>
           </TableHeader>
           <TableBody>
-          {attendences?.map((attendance: InternAttendenceType, index: number) => (
-            <TableRow key={index}>
+          {attendences?.map((attendance) => (
+            <TableRow key={attendance.id}>
               <TableCell>{formatDate(attendance.date)}</TableCell>
               <TableCell>{attendance.morningHours || 0}</TableCell>
               <TableCell>{attendance.afternoonHours || 0}</TableCell>

@@ -34,7 +34,7 @@ import { InternWeeklySummaryType } from "@/types/internTypes";
 import { EditSummariesModal } from "./components/editSummariesModal";
 
 type PropsType = {
-  weeklySummaries: InternWeeklySummaryType[]
+  weeklySummaries: InternWeeklySummaryType[] | undefined
 }
 
 export const InternDashboardWeeklySummaries: React.FC<PropsType> = ({ weeklySummaries }) => {
@@ -150,8 +150,8 @@ export const InternDashboardWeeklySummaries: React.FC<PropsType> = ({ weeklySumm
           <TableBody>
           </TableBody>
           <TableBody>
-              {weeklySummaries?.map((summary: InternWeeklySummaryType, index: number) => (
-                <TableRow key={index}>
+              {weeklySummaries?.map((summary) => (
+                <TableRow key={summary.id}>
                   <TableCell>{`${formatDate(summary.weekStart)} a ${formatDate(summary.weekEnd)}`}</TableCell>
                   <TableCell>
                     <Input disabled />

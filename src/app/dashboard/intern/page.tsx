@@ -34,7 +34,7 @@ export default function Dashboard() {
           <TabsList className="grid w-fit grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="attendences">Presenças</TabsTrigger>
-            <TabsTrigger value="weeklySummaries">Registos</TabsTrigger>
+            <TabsTrigger value="weeklySummaries">Registos</TabsTrigger> 
             <TabsTrigger value="avaliacoes">Avaliações</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">

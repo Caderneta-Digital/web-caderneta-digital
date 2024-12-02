@@ -6,8 +6,8 @@ import { format, parseISO } from "date-fns";
 import { InternAttendenceType, InternWeeklySummaryType } from "@/types/internTypes";
 
 type PropsType = {
-  weeklySummaries: InternWeeklySummaryType[],
-  attendences: InternAttendenceType[]
+  weeklySummaries: InternWeeklySummaryType[] | undefined,
+  attendences: InternAttendenceType[] | undefined
 }
 
 export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, attendences }) => {
@@ -15,7 +15,7 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
     { title: "Nota de FCT", value: "N/A" },
     { title: "Horas Restantes", value: 0 },
     { title: "Faltas", value: 0 },
-    { title: "Registos semanais", value: weeklySummaries.length || 0 },
+    { title: "Registos semanais", value: weeklySummaries?.length || 0 },
   ];
 
   const formatDate = (dateString: string) => {
@@ -60,8 +60,8 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
               </TableRow>
             </TableHeader>
             <TableBody>
-              {attendences?.map((attendance: InternAttendenceType, index: number) => (
-                <TableRow key={index}>
+              {attendences?.map((attendance) => (
+                <TableRow key={attendance.id}>
                   <TableCell>{formatDate(attendance.date)}</TableCell>
                   <TableCell>{attendance.morningHours || 0}</TableCell>
                   <TableCell>{attendance.afternoonHours || 0}</TableCell>
@@ -87,8 +87,8 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
               </TableRow>
             </TableHeader>
             <TableBody>
-              {weeklySummaries?.map((summary: InternWeeklySummaryType, index: number) => (
-                <TableRow key={index}>
+              {weeklySummaries?.map((summary) => (
+                <TableRow key={summary.id}>
                   <TableCell>{`${formatDate(summary.weekStart)} a ${formatDate(summary.weekEnd)}`}</TableCell>
                   <TableCell>
                     <Checkbox checked={summary.isConfirmedByInternAdvisor} disabled />
