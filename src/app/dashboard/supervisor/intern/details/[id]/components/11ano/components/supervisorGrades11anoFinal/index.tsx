@@ -7,14 +7,11 @@ import {
     DialogDescription,
 } from "@/components/ui/dialog";
 
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
 export const SupervisorGrades11anoFinal = () => {
-    const form = useForm();
-
     return (
         <div>
             <Dialog>
