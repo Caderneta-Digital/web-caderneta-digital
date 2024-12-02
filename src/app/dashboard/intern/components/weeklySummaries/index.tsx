@@ -1,25 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
-import {
-  Form,
-  FormItem,
-  FormControl,
-  FormField,
-  FormMessage,
-  FormLabel,
-} from "@/components/ui/form";
-
-import { Textarea } from "@/components/ui/textarea";
-
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -29,11 +12,32 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormItem,
+  FormControl,
+  FormField,
+  FormMessage,
+  FormLabel,
+} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { EditSummariesModal } from "./components/editSummariesModal";
+import { Textarea } from "@/components/ui/textarea";
 import { format, parseISO } from "date-fns"; 
+import { InternWeeklySummaryType } from "@/types/internTypes";
+import { EditSummariesModal } from "./components/editSummariesModal";
 
-export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
+type PropsType = {
+  weeklySummaries: InternWeeklySummaryType[] | undefined
+}
+
+export const InternDashboardWeeklySummaries: React.FC<PropsType> = ({ weeklySummaries }) => {
   const form = useForm();
   const formatDate = (dateString: string) => {
     try {
@@ -146,16 +150,16 @@ export const InternDashboardWeeklySummaries = ({ data }: { data: any }) => {
           <TableBody>
           </TableBody>
           <TableBody>
-              {data?.weeklySummaries?.map((summary: any, index: number) => (
-                <TableRow key={index}>
+              {weeklySummaries?.map((summary) => (
+                <TableRow key={summary.id}>
                   <TableCell>{`${formatDate(summary.weekStart)} a ${formatDate(summary.weekEnd)}`}</TableCell>
                   <TableCell>
                     <Input disabled />
                   </TableCell>
                   <TableCell>
-                    <Checkbox checked={summary.tutorApproved} disabled />
+                    <Checkbox checked={summary.isConfirmedByInternAdvisor} disabled />
                   </TableCell>
-                  <TableCell>{summary.status || "Por Aprovar"}</TableCell>
+                  <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
                   <TableCell>
                     <EditSummariesModal></EditSummariesModal>
                   </TableCell>
