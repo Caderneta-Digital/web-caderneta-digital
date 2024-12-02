@@ -8,12 +8,11 @@ export function middleware(req: NextRequest) {
   const userType = req.cookies.get("type")?.value as UserTypeEnum;
   const user = req.cookies.get("user")?.value;
 
-  const isAPublicRoute = req.url.includes("/") || req.url.includes("/login");
+  const isAPublicRoute = req.url === "http://localhost:3000/" || req.url === "https://fctcadernetadigital.netlify.app/" || req.url.includes("/login");
 
   if (!token && isAPublicRoute) {
     return NextResponse.next();
   }
-
   if (!token) {
     return NextResponse.redirect(new URL(`/`, req.url));
   }

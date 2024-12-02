@@ -57,6 +57,11 @@ function PasswordResetContent(): JSX.Element {
       const response = await Api.isTokenValid(tokenId);
       return response;
     },
+    onSuccess: (token) => {
+      if(token.revoked) {
+        return router.push("/")
+      }
+    }
   });
 
   const { mutateAsync: resetPassword, isLoading: isLoadingResetPassword } =
@@ -79,14 +84,6 @@ function PasswordResetContent(): JSX.Element {
 
   if (!token || isLoading) {
     return <h1>Loading...</h1>;
-  }
-
-  if (token.revoked) {
-    toast({
-      variant: "destructive",
-      title: "Link expirado. Peça outro",
-    });
-    router.push("/");
   }
 
   const handleChangePassword = async (data: FormType) => {
