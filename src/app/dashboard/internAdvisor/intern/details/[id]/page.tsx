@@ -3,9 +3,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
 import { InternAdvisorDashboardAttendences } from "./components/attendences";
-import { InternAdvisorDashboardEvaluation } from "./components/evaluation";
 import { InternAdvisorDashboardWeeklySummaries } from "./components/weeklySummaries";
-import { useParams } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useQuery } from "react-query";
 import { Api } from "@/services/api";
 import { Navbar } from "@/components/ui/navbar";
@@ -20,6 +19,8 @@ import {
 
 export default function Dashboard() {
   const params = useParams();
+  const router = useRouter()
+  const path = usePathname()
   const internId = params.id as string;
 
   const { data: intern, isLoading } = useQuery({
@@ -44,9 +45,9 @@ export default function Dashboard() {
             <TabsList className="grid w-fit grid-cols-3">
               <TabsTrigger value="attendences">Presenças</TabsTrigger>
               <TabsTrigger value="weeklySummaries">Registos</TabsTrigger>
-              <TabsTrigger value="evaluations">Avaliações</TabsTrigger>
+              <TabsTrigger value="evaluations" onClick={() => router.push(`${path}/grades`)}>Avaliações</TabsTrigger>
             </TabsList>
-            <Breadcrumb>
+            <Breadcrumb>  
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink
@@ -74,7 +75,7 @@ export default function Dashboard() {
             />
           </TabsContent>
           <TabsContent value="evaluations">
-            <InternAdvisorDashboardEvaluation />
+            
           </TabsContent>
         </Tabs>
       </div>
