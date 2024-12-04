@@ -52,6 +52,20 @@ export type UpdateUserRequestType = {
   name?: string;
 };
 
+export type CreateInternAttendenceType = {
+  date: Date;
+  morningHours: number;
+  afternoonHours: number;
+  internId: string;
+}
+
+export type CreateInternWeeklySummariesType = {
+  weekStart: Date
+  weekEnd: Date
+  text: string
+  internId: string;
+}
+
 class API {
   axios;
 
@@ -198,6 +212,16 @@ class API {
     return response.data;
   }
 
+  public async createInternAttendence(data: CreateInternAttendenceType) {
+    const response = await this.axios.post(`/interns/${data.internId}/attendences`, data);
+    return response.data;
+  }
+
+  public async createInternWeeklySummaries(data: CreateInternWeeklySummariesType) {
+    const response = await this.axios.post(`/interns/${data.internId}/weeklySummaries`, data);
+    return response.data
+  }
+
   public async findInternshipConfig() {
     const response = await this.axios.get<InternshipConfigType[]>(`/internshipConfigs`);
     return response.data;
@@ -208,5 +232,6 @@ class API {
     return response.data;
   }
 }
+
 
 export const Api = new API();

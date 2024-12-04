@@ -28,31 +28,80 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { Textarea } from "@/components/ui/textarea";
 import { EditAttendenceModal } from "./components/editAttendenceModal";
 import { format, parseISO } from "date-fns"; 
 import { InternAttendenceType } from "@/types/internTypes";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "react-query";
+import { Api, CreateInternAttendenceType } from "@/services/api";
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+
+const schema = z.object({
+  date: z.coerce.date( { message: "Selecione a data"} ),
+  morningHours: z.coerce.number().min(1, { message: "Indique as horas realizadas de manhã" }),
+  afternoonHours: z.coerce.number().min(1, { message: "Indique as horas realizadas de tarde" })
+});
+
+type FormType = z.infer<typeof schema>;
 
 type PropsType = {
   attendences: InternAttendenceType[] | undefined
 }
 
 export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences }) => {
-  const form = useForm();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const form = useForm<FormType>( { resolver: zodResolver( schema ) } );
+
+  const {user} = useAuth();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  const { mutateAsync: createInternAttendeceMutation, isLoading } = useMutation({
+    mutationKey: ["createInternAttendence"],
+    mutationFn: async (data: CreateInternAttendenceType) => {
+      const response = await Api.createInternAttendence(data);
+      return response;
+    },
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["internDashboard", user?.id]);
+      setIsModalOpen(false);
+      toast({
+        variant: "success",
+        title: "Presença foi criada com sucesso!",
+        description:
+          "A sua presença foi criada, aguarde pela aprovação do tutor!",
+      });
+    },
+  });
+
   const formatDate = (dateString: string) => {
     try {
-      return format(parseISO(dateString), "dd/MM/yyyy");
+      return format(parseISO(dateString), "dd/MM/yyyy")
     } catch {
-      return "Data inválida";
+      return "Data inválida"
     }
   };
+
+  const handleCreateInternAttendence = async (data: FormType) => {
+    if (!user) {
+      return
+    }
+    await createInternAttendeceMutation( { ...data, internId: user.id } ) 
+  }
+
+
 
   return (
     <div>
       <Card>
         <div className="flex justify-between p-3">
           <h1 className="text-xl">Registos de Presenças</h1>
-          <Dialog>
+          <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
             <DialogTrigger>
               <Button variant="outline">Marcar Presença</Button>
             </DialogTrigger>
@@ -62,7 +111,7 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
               </DialogHeader>
               <div>
                 <Form {...form}>
-                  <form className="space-y-6">
+                  <form className="space-y-6" onSubmit={form.handleSubmit(handleCreateInternAttendence)}>
                     <FormField
                       control={form.control}
                       name="date"
@@ -74,6 +123,11 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
                               placeholder="dd/mm/aaaa"
                               type="date"
                               {...field}
+                              value={
+                                field.value instanceof Date
+                                ? field.value.toISOString().split("T")[0]
+                                : field.value
+                              }
                             />
                           </FormControl>
                           <FormMessage />
@@ -125,28 +179,10 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
                       )}
                     />
 
-                    <FormField
-                      control={form.control}
-                      name="observacoes"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="no-error-color">
-                            Observações
-                          </FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Escreve aqui as tuas Observações"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
                     <Button
                       type="submit"
                       className="w-full bg-black text-white hover:bg-gray-900"
+                      isLoading={isLoading}
                     >
                       Confirmar
                     </Button>
@@ -162,25 +198,23 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
               <TableHead>Data</TableHead>
               <TableHead>Manhã</TableHead>
               <TableHead>Tarde</TableHead>
-              <TableHead>Observações</TableHead>
               <TableHead>Tutor</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead>Editar</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-          {attendences?.map((attendance) => (
-            <TableRow key={attendance.id}>
-              <TableCell>{formatDate(attendance.date)}</TableCell>
-              <TableCell>{attendance.morningHours || 0}</TableCell>
-              <TableCell>{attendance.afternoonHours || 0}</TableCell>
-              <TableCell><Input disabled/></TableCell>
+          {attendences?.map((attendence) => (
+            <TableRow key={attendence.id}>
+              <TableCell>{formatDate(attendence.date)}</TableCell>
+              <TableCell>{attendence.morningHours || 0}</TableCell>
+              <TableCell>{attendence.afternoonHours || 0}</TableCell>
               <TableCell>
-                <Checkbox checked={attendance.isConfirmedByInternAdvisor} disabled />
+                <Checkbox checked={attendence.isConfirmedByInternAdvisor} disabled />
               </TableCell>
-              <TableCell>{attendance.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
+              <TableCell>{attendence.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
               <TableCell>
-                <EditAttendenceModal />
+                <EditAttendenceModal attendence={attendence} />
               </TableCell>
             </TableRow>
             ))}
