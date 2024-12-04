@@ -1,4 +1,4 @@
-import { LogOut, User } from "lucide-react";
+import { ArrowLeft, LogOut, Settings, User } from "lucide-react";
 import { Avatar, AvatarFallback } from "./avatar";
 import { Button } from "./button";
 import {
@@ -14,14 +14,22 @@ import Link from "next/link";
 
 type PropsType = {
   title: string;
+  goBackUrl?: string
 };
 
-export const Navbar: React.FC<PropsType> = ({ title }) => {
+export const Navbar: React.FC<PropsType> = ({ title, goBackUrl }) => {
   const { user, logOut } = useAuth();
 
   return (
     <div className="flex justify-between items-center px-5 py-3 border-b-[1px] border-b-gray-300">
-      <h1 className="font-bold text-2xl">{title}</h1>
+      <div className="flex items-center gap-2">
+        {goBackUrl && (
+          <Link href={goBackUrl}>
+            <ArrowLeft />
+          </Link>
+        )}
+        <h1 className="font-bold text-2xl">{title}</h1>
+      </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
@@ -45,6 +53,14 @@ export const Navbar: React.FC<PropsType> = ({ title }) => {
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
                 <span>Minha conta</span>
+              </div>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/internshipConfigs">
+              <div className="flex items-center gap-2">
+                <Settings className="h-4 w-4" />
+                <span>Configurações do Estágio</span>
               </div>
             </Link>
           </DropdownMenuItem>

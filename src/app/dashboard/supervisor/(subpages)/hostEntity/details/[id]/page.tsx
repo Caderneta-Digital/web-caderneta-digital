@@ -15,8 +15,10 @@ import { useParams } from "next/navigation";
 import { useQuery } from "react-query";
 import { CreateInternAdvisorModal } from "./components/createInternAdvisorModal";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/context/AuthContext";
 
 export default function HostEntityDetails() {
+  const { user } = useAuth()
   const params = useParams();
   const hostEntityId = params.id as string;
 
@@ -42,7 +44,7 @@ export default function HostEntityDetails() {
 
   return (
     <div className="h-screen w-screen">
-      <Navbar title={`Dashboard da ${hostEntity.name}`} />
+      <Navbar title={`Dashboard da ${hostEntity.name}`} goBackUrl={`/dashboard/${user?.type}`}/>
 
       <div className="px-4 py-3 flex flex-col gap-4">
         <Card>
@@ -65,7 +67,7 @@ export default function HostEntityDetails() {
                   <TableCell>{advisor.name}</TableCell>
                   <TableCell>{advisor.email}</TableCell>
                   <TableCell>?</TableCell>
-                  <TableCell>?</TableCell>
+                  <TableCell>{advisor.interns?.map(intern => intern.name).join(", ") || "-"}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

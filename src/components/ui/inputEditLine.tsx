@@ -7,7 +7,7 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
   isLoading?: boolean;
-  onConfirmEdit: (newValue: string) => void;
+  onConfirmEdit: (newValue: string) => Promise<void>;
 }
 
 const InputEditLine: React.FC<InputProps> = ({
@@ -21,8 +21,8 @@ const InputEditLine: React.FC<InputProps> = ({
   const [inputValue, setInputValue] = React.useState<string>(value);
   const inputRef = React.useRef<HTMLDivElement>(null);
 
-  const handleConfirmEdit = () => {
-    onConfirmEdit(inputValue);
+  const handleConfirmEdit = async () => {
+    await onConfirmEdit(inputValue);
     setShouldShowInput(false);
   };
 
@@ -58,7 +58,7 @@ const InputEditLine: React.FC<InputProps> = ({
           />
           <div className="h-8 border border-neutral-200 p-2 ml-2 rounded-md flex items-center justify-center hover:bg-neutral-200 transition duration-200 cursor-pointer">
             {isLoading ? (
-              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              <Loader2 size={20} className="animate-spin" />
             ) : (
               <Check size={20} onClick={handleConfirmEdit} />
             )}
