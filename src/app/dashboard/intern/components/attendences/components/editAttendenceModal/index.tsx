@@ -17,15 +17,68 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { InternAttendenceType } from "@/types/internTypes";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "react-query";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { useUpdateInternAttendence } from "@/hooks/useUpdateInternAttendence";
 
-export const EditAttendenceModal = () => {
-  const form = useForm();
+const schema = z.object({
+  date: z.coerce.date( { message: "Selecione a data"} ),
+  morningHours: z.coerce.number().min(1, { message: "Indique as horas realizadas de manhã" }),
+  afternoonHours: z.coerce.number().min(1, { message: "Indique as horas realizadas de tarde" })
+});
+
+type FormType = z.infer<typeof schema>;
+
+type PropsType = {
+  attendence: InternAttendenceType
+}
+
+export const EditAttendenceModal: React.FC<PropsType> = ({attendence}) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const {user} = useAuth();
+  const queryClient = useQueryClient();  
+  const { toast } = useToast();
+
+  const { mutateAsync: updateInternAttendence, isLoading } =
+    useUpdateInternAttendence({
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["internDashboard", user?.id]);
+        setIsModalOpen(false);
+        toast({
+          variant: "success",
+          title: "Presença foi atualizada com sucesso!",
+          description:
+            "A sua presença foi atualizada, aguarde pela aprovação do tutor!",
+        });
+      },
+    });
+
+  const handleUpdateInternAttendence = async (data: FormType) => {
+    if (!user) {
+      return
+    }
+    await updateInternAttendence({ ...attendence, ...data, date: data.date.toISOString() }) 
+  }
+
+  const form = useForm<FormType>({
+    resolver: zodResolver( schema ),
+    defaultValues: {
+      date: new Date(attendence.date),
+      morningHours: attendence.morningHours,
+      afternoonHours: attendence.afternoonHours
+    }
+  });
   return (
-    <Dialog>
-      <DialogTrigger>
-        <Button variant="outline">Mais Informações</Button>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <DialogTrigger disabled={attendence.isConfirmedByInternAdvisor}>
+        <Button variant="outline" disabled={attendence.isConfirmedByInternAdvisor}>Mais Informações</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -33,8 +86,7 @@ export const EditAttendenceModal = () => {
         </DialogHeader>
         <div>
           <Form {...form}>
-            <form className="space-y-6">
-              {/* Campo de Data */}
+            <form className="space-y-6" onSubmit={form.handleSubmit(handleUpdateInternAttendence)}>
               <FormField
                 control={form.control}
                 name="date"
@@ -42,14 +94,21 @@ export const EditAttendenceModal = () => {
                   <FormItem>
                     <FormLabel className="no-error-color">Data</FormLabel>
                     <FormControl>
-                      <Input placeholder="dd/mm/aaaa" type="date" {...field} />
+                      <Input 
+                        type="date" 
+                        {...field}
+                        value={
+                          field.value instanceof Date
+                          ? field.value.toISOString().split("T")[0]
+                          : field.value
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              {/* Campo de Manhã */}
               <FormField
                 control={form.control}
                 name="morningHours"
@@ -70,7 +129,6 @@ export const EditAttendenceModal = () => {
                 )}
               />
 
-              {/* Campo de Tarde */}
               <FormField
                 control={form.control}
                 name="afternoonHours"
@@ -91,30 +149,10 @@ export const EditAttendenceModal = () => {
                 )}
               />
 
-              {/* Campo de Observações */}
-              <FormField
-                control={form.control}
-                name="observacoes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="no-error-color">
-                      Observações
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Escreve aqui as tuas Observações"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Botão de Submissão */}
               <Button
                 type="submit"
                 className="w-full bg-black text-white hover:bg-gray-900"
+                isLoading={isLoading}
               >
                 Editar
               </Button>
