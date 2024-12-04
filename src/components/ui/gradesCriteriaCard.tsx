@@ -8,7 +8,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 
-export const SupervisorDashboardGradesCriteriaCard = ({ }) => {
+export const GradesCriteriaCard = ({ }) => {
   return (
     <div>
       <Card className="my-5">

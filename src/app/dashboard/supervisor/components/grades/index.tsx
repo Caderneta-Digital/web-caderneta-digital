@@ -9,10 +9,10 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
-import { SupervisorDashboardGradesCriteria } from "./components/assessmentCriteria";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { InternType } from "@/types/internTypes";
+import { GradesCriteria } from "@/components/ui/gradesCriteria";
 
 type PropsType = {
   interns: InternType[];
@@ -30,7 +30,7 @@ export const SupervisorDashboardGrades: React.FC<PropsType> = ({ interns }) => {
   return (
     <div>
       {shouldShowComponent ? (
-        <SupervisorDashboardGradesCriteria
+        <GradesCriteria
           setShouldShowComponent={setShouldShowComponent}
         />
       ) : (
