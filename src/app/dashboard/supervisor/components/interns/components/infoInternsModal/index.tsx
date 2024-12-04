@@ -15,12 +15,24 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { InternStatusEnum, InternType } from "@/types/internTypes";
+import { useUpdateIntern } from "@/hooks/useUpdateIntern";
+import { useQueryClient } from "react-query";
+import { useAuth } from "@/context/AuthContext";
 
 type PropsType = {
   intern: InternType;
 };
 
 export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
+  const { user } = useAuth()
+
+  const queryClient = useQueryClient()
+  const { mutateAsync: updateIntern } = useUpdateIntern({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["supervisorDashboard", user?.id])
+    }
+  })
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -102,7 +114,7 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
 
         <div>
           <Label className="text-gray-600">Estado</Label>
-          <Select value={intern.status}>
+          <Select value={intern.status} onValueChange={value => updateIntern({ ...intern, status: value as InternStatusEnum })}>
             <SelectTrigger>
               <SelectValue placeholder="Estado" />
             </SelectTrigger>

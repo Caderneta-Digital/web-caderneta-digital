@@ -1,16 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { SupervisorGrades12anoAuto } from "./components/supervisorGrades12anoAuto";
-import { SupervisorGrades12anoInfo } from "./components/supervisorGrades12anoInfo";
-import { SupervisorGrades12anoFinal } from "./components/supervisorGrades12anoFinal";
+import { InternAdvisorGrades12anoAuto } from "./components/internAdvisorGrades12anoAuto";
+import { InternAdvisorGrades12anoInfo } from "./components/internAdvisorGrades12anoInfo";
+import { InternAdvisorGrades12anoFinal } from "./components/internAdvisorGrades12anoFinal";
 
-export const SupervisorDashboardGrades12Ano = () => {
+export const InternAdvisorDashboardGrades12Ano = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <Card>
         <CardHeader className="flex flex-row justify-between items-center">
           <CardTitle>Autoavaliação do Aluno</CardTitle>
-          <SupervisorGrades12anoAuto />
+          <InternAdvisorGrades12anoAuto />
         </CardHeader>
         <CardContent>
           <Table>
@@ -60,7 +60,7 @@ export const SupervisorDashboardGrades12Ano = () => {
       <Card>
         <CardHeader className="flex flex-row justify-between items-center">
           <CardTitle>Avaliação Final do Tutor/Professor Orientador</CardTitle>
-          <SupervisorGrades12anoInfo/>
+          <InternAdvisorGrades12anoInfo/>
         </CardHeader>
         <CardContent>
           <Table>
@@ -105,7 +105,7 @@ export const SupervisorDashboardGrades12Ano = () => {
             <span className="text-sm text-neutral-950">
               Avaliação Final: N/A &nbsp;&nbsp;&nbsp; Data: N/A
             </span>
-            <SupervisorGrades12anoFinal/>
+            <InternAdvisorGrades12anoFinal/>
           </div>
         </CardContent>
       </Card>

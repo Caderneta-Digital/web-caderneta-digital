@@ -1,5 +1,6 @@
 import { HostEntityType } from "@/types/hostEntititesType";
 import { InternAdvisorType } from "@/types/internAdvisorTypes";
+import { InternshipConfigType } from "@/types/internshipConfigTypes";
 import {
   InternAttendenceType,
   InternType,
@@ -194,6 +195,16 @@ class API {
 
   public async updateUser(data: UpdateUserRequestType) {
     const response = await this.axios.patch(`/users`, data);
+    return response.data;
+  }
+
+  public async findInternshipConfig() {
+    const response = await this.axios.get<InternshipConfigType[]>(`/internshipConfigs`);
+    return response.data;
+  }
+
+  public async updateInternshipConfig(data: InternshipConfigType) {
+    const response = await this.axios.patch(`/internshipConfigs/${data.id}`, data);
     return response.data;
   }
 }

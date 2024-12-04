@@ -11,7 +11,7 @@ import {
   import { Label } from "@/components/ui/label";
   import { Card, CardContent } from "@/components/ui/card";
   
-  export const SupervisorGrades12anoInfo = () => {
+  export const InternAdvisorGrades12anoAuto = () => {
     return (
       <Dialog>
         <DialogTrigger>
@@ -21,9 +21,9 @@ import {
         </DialogTrigger>
         <DialogContent className="h-[500px] overflow-auto w-11/12">
           <DialogHeader>
-            <DialogTitle>Avaliação Final do Tutor/Professor Orientador</DialogTitle>
+            <DialogTitle>Autoavaliação do Aluno</DialogTitle>
           </DialogHeader>
-          <DialogDescription>Avaliação Final do 12º Ano</DialogDescription>
+          <DialogDescription>Autoavaliação do 12º Ano</DialogDescription>
           <Card className="max-w-md mb-3">
             <CardContent className="p-6 space-y-2">
               <p>

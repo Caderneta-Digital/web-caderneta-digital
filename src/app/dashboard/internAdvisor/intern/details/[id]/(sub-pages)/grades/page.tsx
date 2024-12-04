@@ -15,10 +15,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { SupervisorDashboardGrades11Ano } from "./components/11ano";
-import { SupervisorDashboardGrades12Ano } from "./components/12ano";
-import { SupervisorDashboardGradesFinal } from "./components/final";
 import { SupervisorDashboardGradesCriteria } from "./assessmentCriteria";
+import { InternAdvisorDashboardGrades11Ano } from "./components/11ano";
+import { InternAdvisorDashboardGrades12Ano } from "./components/12ano";
+import { InternAdvisorDashboardGradesFinal } from "./components/final";
 
 export default function Dashboard() {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
@@ -92,13 +92,13 @@ export default function Dashboard() {
               </div>
             </div>
             <TabsContent value="11ano">
-              <SupervisorDashboardGrades11Ano />
+              <InternAdvisorDashboardGrades11Ano />
             </TabsContent>
             <TabsContent value="12ano">
-              <SupervisorDashboardGrades12Ano />
+              <InternAdvisorDashboardGrades12Ano />
             </TabsContent>
             <TabsContent value="final">
-              <SupervisorDashboardGradesFinal />
+              <InternAdvisorDashboardGradesFinal />
             </TabsContent>
           </Tabs>
         </div>

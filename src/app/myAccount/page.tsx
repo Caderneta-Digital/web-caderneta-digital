@@ -11,10 +11,12 @@ import {
 import { InputEditLine } from "@/components/ui/inputEditLine";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/ui/navbar";
+import { useAuth } from "@/context/AuthContext";
 import { Api, UpdateUserRequestType } from "@/services/api";
 import { useMutation, useQuery } from "react-query";
 
 export default function MyAccount() {
+  const { user } = useAuth()
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
     queryKey: ["findUserById"],
     queryFn: async () => {
@@ -50,7 +52,7 @@ export default function MyAccount() {
 
   return (
     <div className="w-screen h-screen">
-      <Navbar title="Minha Conta" />
+      <Navbar title="Minha Conta" goBackUrl={`/dashboard/${user?.type}`} />
 
       <div className="px-4 py-3 flex flex-col gap-4">
         <Card>
@@ -66,8 +68,8 @@ export default function MyAccount() {
               <InputEditLine
                 value={profile.name}
                 isLoading={isLoadingUpdateUser}
-                onConfirmEdit={(newValue) => {
-                  updateUser({
+                onConfirmEdit={async (newValue) => {
+                  await updateUser({
                     ...profile,
                     name: newValue,
                   });

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
-export const SupervisorDashboardGradesFinal = () => {
+export const InternAdvisorDashboardGradesFinal = () => {
   return (
     <div className="flex flex-col">
       <Card>

@@ -11,7 +11,7 @@ import {
   import { Label } from "@/components/ui/label";
   import { Card, CardContent } from "@/components/ui/card";
   
-  export const SupervisorGrades11anoInfo = () => {
+  export const InternAdvisorGrades11anoInfo = () => {
     return (
       <Dialog>
         <DialogTrigger>

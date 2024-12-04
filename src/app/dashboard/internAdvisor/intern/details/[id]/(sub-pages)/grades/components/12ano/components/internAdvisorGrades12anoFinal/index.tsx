@@ -23,7 +23,7 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 
-export const SupervisorGrades11anoFinal = () => {
+export const InternAdvisorGrades12anoFinal = () => {
   const form = useForm();
   return (
     <div>
@@ -39,7 +39,7 @@ export const SupervisorGrades11anoFinal = () => {
               Avaliação Final do Tutor/Professor Orientador
             </DialogTitle>
           </DialogHeader>
-          <DialogDescription>Avaliação Final do 11º Ano</DialogDescription>
+          <DialogDescription>Avaliação Final do 12º Ano</DialogDescription>
           <Card className="max-w-md mb-3">
             <CardContent className="p-6 space-y-2">
               <p>

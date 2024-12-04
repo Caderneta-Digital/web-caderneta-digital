@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 
-export const SupervisorGrades11anoAuto = () => {
+export const InternAdvisorGrades11anoAuto = () => {
   return (
     <Dialog>
       <DialogTrigger>
