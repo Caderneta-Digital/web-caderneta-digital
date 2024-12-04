@@ -38,7 +38,7 @@ export default function Dashboard() {
             <TabsTrigger value="avaliacoes">Avaliações</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
-            <InternDashboardOverview attendences={data.attendences} weeklySummaries={data.weeklySummaries} />
+            <InternDashboardOverview attendences={data.attendences} weeklySummaries={data.weeklySummaries} remainingHours={data.remainingHours} />
           </TabsContent>
           <TabsContent value="attendences">
             <InternDashboardAttendences attendences={data.attendences} />

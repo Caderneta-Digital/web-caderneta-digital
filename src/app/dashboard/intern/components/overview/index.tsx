@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { User } from "lucide-react";
 import { format, parseISO } from "date-fns"; 
@@ -7,13 +6,14 @@ import { InternAttendenceType, InternWeeklySummaryType } from "@/types/internTyp
 
 type PropsType = {
   weeklySummaries: InternWeeklySummaryType[] | undefined,
-  attendences: InternAttendenceType[] | undefined
+  attendences: InternAttendenceType[] | undefined,
+  remainingHours: number
 }
 
-export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, attendences }) => {
+export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, attendences, remainingHours }) => {
   const cardsData = [
     { title: "Nota de FCT", value: "N/A" },
-    { title: "Horas Restantes", value: 0 },
+    { title: "Horas Restantes", value: remainingHours },
     { title: "Faltas", value: 0 },
     { title: "Registos semanais", value: weeklySummaries?.length || 0 },
   ];
@@ -55,7 +55,6 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
                 <TableHead>Data</TableHead>
                 <TableHead>Manhã</TableHead>
                 <TableHead>Tarde</TableHead>
-                <TableHead>Tutor</TableHead>
                 <TableHead>Estado</TableHead>
               </TableRow>
             </TableHeader>
@@ -65,10 +64,7 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
                   <TableCell>{formatDate(attendance.date)}</TableCell>
                   <TableCell>{attendance.morningHours || 0}</TableCell>
                   <TableCell>{attendance.afternoonHours || 0}</TableCell>
-                  <TableCell>
-                    <Checkbox checked={attendance.isConfirmedByInternAdvisor} disabled />
-                  </TableCell>
-                  <TableCell>{attendance.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
+                  <TableCell>{attendance.isConfirmedByInternAdvisor ? "Aprovado" : "Por aprovar"}</TableCell>
                   </TableRow>
               ))}
             </TableBody>
@@ -82,7 +78,6 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
             <TableHeader>
               <TableRow>
                 <TableHead>Semana</TableHead>
-                <TableHead>Tutor</TableHead>
                 <TableHead>Estado</TableHead>
               </TableRow>
             </TableHeader>
@@ -90,10 +85,7 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
               {weeklySummaries?.map((summary) => (
                 <TableRow key={summary.id}>
                   <TableCell>{`${formatDate(summary.weekStart)} a ${formatDate(summary.weekEnd)}`}</TableCell>
-                  <TableCell>
-                    <Checkbox checked={summary.isConfirmedByInternAdvisor} disabled />
-                  </TableCell>
-                  <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
+                  <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovado" : "Por aprovar"}</TableCell>
                   </TableRow>
               ))}
             </TableBody>
