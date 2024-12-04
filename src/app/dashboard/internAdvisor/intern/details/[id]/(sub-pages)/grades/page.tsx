@@ -15,10 +15,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-// import { SupervisorDashboardGradesCriteria } from "../../../components/grades/components/assessmentCriteria";
 import { SupervisorDashboardGrades11Ano } from "./components/11ano";
 import { SupervisorDashboardGrades12Ano } from "./components/12ano";
 import { SupervisorDashboardGradesFinal } from "./components/final";
+import { SupervisorDashboardGradesCriteria } from "./assessmentCriteria";
 
 export default function Dashboard() {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
@@ -42,12 +42,12 @@ export default function Dashboard() {
     <div className="h-screen w-screen">
       <Navbar title={`Avaliação do ${intern.name}`} />
 
-      {/* {shouldShowComponent ? (
-        // <SupervisorDashboardGradesCriteria
+      {shouldShowComponent ? (
+        <SupervisorDashboardGradesCriteria
           setShouldShowComponent={setShouldShowComponent}
           className="p-4"
         />
-      ) : ( */}
+      ) : (
         <div className="px-4 py-3 flex flex-col gap-4">
           <Tabs defaultValue="11ano" className="w-full space-y-5">
             <div className="flex justify-between items-center">
@@ -61,10 +61,19 @@ export default function Dashboard() {
                   <BreadcrumbList>
                     <BreadcrumbItem>
                       <BreadcrumbLink
-                        href={"/dashboard/supervisor/"}
+                        href={`/dashboard/internAdvisor`}
                         className="cursor-pointer"
                       >
-                        Avaliações
+                        Home
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href={`/dashboard/internAdvisor/intern/details/${internId}`}
+                        className="cursor-pointer"
+                      >
+                        Informações do Estagiário
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
@@ -93,7 +102,7 @@ export default function Dashboard() {
             </TabsContent>
           </Tabs>
         </div>
-      {/* // )} */}
+      )}
     </div>
   );
 }
