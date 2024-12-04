@@ -9,9 +9,12 @@ import { useQuery } from "react-query";
 import { Api } from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
 import { Navbar } from "@/components/ui/navbar";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const router = useRouter();
+  const path = usePathname();
 
   const { data, isLoading } = useQuery({
     queryKey: ["internDashboard", user?.id],
@@ -35,7 +38,12 @@ export default function Dashboard() {
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="attendences">Presenças</TabsTrigger>
             <TabsTrigger value="weeklySummaries">Registos</TabsTrigger> 
-            <TabsTrigger value="avaliacoes">Avaliações</TabsTrigger>
+            <TabsTrigger
+                value="evaluations"
+                onClick={() => router.push(`${path}/${data.id}/grades`)}
+              >
+                Avaliações
+              </TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
             <InternDashboardOverview attendences={data.attendences} weeklySummaries={data.weeklySummaries} remainingHours={data.remainingHours} />
