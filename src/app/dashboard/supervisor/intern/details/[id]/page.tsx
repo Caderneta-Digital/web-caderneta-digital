@@ -15,10 +15,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { SupervisorDashboardGradesCriteria } from "../../../components/grades/components/assessmentCriteria";
 import { SupervisorDashboardGrades11Ano } from "./components/11ano";
 import { SupervisorDashboardGrades12Ano } from "./components/12ano";
 import { SupervisorDashboardGradesFinal } from "./components/final";
+import { GradesCriteria } from "@/components/ui/gradesCriteria";
 
 export default function Dashboard() {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
@@ -43,7 +43,7 @@ export default function Dashboard() {
       <Navbar title={`Avaliação do ${intern.name}`} />
 
       {shouldShowComponent ? (
-        <SupervisorDashboardGradesCriteria
+        <GradesCriteria
           setShouldShowComponent={setShouldShowComponent}
           className="p-4"
         />

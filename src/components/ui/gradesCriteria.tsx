@@ -15,14 +15,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SupervisorDashboardGradesCriteriaCard } from "./components";
+import { GradesCriteriaCard } from "./gradesCriteriaCard";
 
 type PropsType = {
   setShouldShowComponent: (value: boolean) => void;
   className?: string;
 };
 
-export const SupervisorDashboardGradesCriteria: React.FC<PropsType> = ({
+export const GradesCriteria: React.FC<PropsType> = ({
   setShouldShowComponent,
   className = "",
 }) => {
@@ -168,7 +168,7 @@ export const SupervisorDashboardGradesCriteria: React.FC<PropsType> = ({
           </TableBody>
         </Table>
       </Card>
-      <SupervisorDashboardGradesCriteriaCard />
+      <GradesCriteriaCard />
     </div>
   );
 };
