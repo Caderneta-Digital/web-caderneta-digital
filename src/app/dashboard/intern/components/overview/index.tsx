@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { User } from "lucide-react";
 import { format, parseISO } from "date-fns"; 
 import { InternAttendenceType, InternWeeklySummaryType } from "@/types/internTypes";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type PropsType = {
   weeklySummaries: InternWeeklySummaryType[] | undefined,
@@ -15,7 +15,7 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
     { title: "Nota de FCT", value: "N/A" },
     { title: "Horas Restantes", value: 0 },
     { title: "Faltas", value: 0 },
-    { title: "Registos semanais", value: weeklySummaries?.length || 0 },
+    { title: "Registos Semanais", value: weeklySummaries ?.length, secondValue: weeklySummaries?.filter(item => item.isConfirmedByInternAdvisor).length },
   ];
 
   const formatDate = (dateString: string) => {
@@ -38,7 +38,21 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
               </div>
             </CardHeader>
             <CardContent>
+              <div className="flex gap-2">
               <h1 className="font-bold text-3xl">{card.value}</h1>
+              {card.secondValue && (
+                <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <h1 className="text-gray-500 font-bold text-3xl">({card.secondValue})</h1>   
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Registos Semanais aprovados</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              )}
+              </div>
             </CardContent>
           </Card>
         ))}
@@ -55,7 +69,6 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
                 <TableHead>Data</TableHead>
                 <TableHead>Manhã</TableHead>
                 <TableHead>Tarde</TableHead>
-                <TableHead>Tutor</TableHead>
                 <TableHead>Estado</TableHead>
               </TableRow>
             </TableHeader>
@@ -65,10 +78,7 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
                   <TableCell>{formatDate(attendance.date)}</TableCell>
                   <TableCell>{attendance.morningHours || 0}</TableCell>
                   <TableCell>{attendance.afternoonHours || 0}</TableCell>
-                  <TableCell>
-                    <Checkbox checked={attendance.isConfirmedByInternAdvisor} disabled />
-                  </TableCell>
-                  <TableCell>{attendance.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
+                  <TableCell>{attendance.isConfirmedByInternAdvisor ? "Aprovado" : "Por aprovar"}</TableCell>
                   </TableRow>
               ))}
             </TableBody>
@@ -82,7 +92,6 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
             <TableHeader>
               <TableRow>
                 <TableHead>Semana</TableHead>
-                <TableHead>Tutor</TableHead>
                 <TableHead>Estado</TableHead>
               </TableRow>
             </TableHeader>
@@ -90,10 +99,7 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
               {weeklySummaries?.map((summary) => (
                 <TableRow key={summary.id}>
                   <TableCell>{`${formatDate(summary.weekStart)} a ${formatDate(summary.weekEnd)}`}</TableCell>
-                  <TableCell>
-                    <Checkbox checked={summary.isConfirmedByInternAdvisor} disabled />
-                  </TableCell>
-                  <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
+                  <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovado" : "Por aprovar"}</TableCell>
                   </TableRow>
               ))}
             </TableBody>

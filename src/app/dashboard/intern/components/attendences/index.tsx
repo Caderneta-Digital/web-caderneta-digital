@@ -72,7 +72,7 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
       setIsModalOpen(false);
       toast({
         variant: "success",
-        title: "Presença foi criada com sucesso!",
+        title: "A sua presença foi criada com sucesso!",
         description:
           "A sua presença foi criada, aguarde pela aprovação do tutor!",
       });
