@@ -89,7 +89,7 @@ export default function MyAccount() {
                 onClick={handleRequestPasswordReset}
                 className="w-fit"
               >
-                Pedir Redefinição de Palavra Passe
+                Pedir Redefinição de Palavra-passe
               </Button>
             </div>
           </CardContent>
