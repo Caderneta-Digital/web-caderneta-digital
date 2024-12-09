@@ -7,13 +7,14 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 type PropsType = {
   weeklySummaries: InternWeeklySummaryType[] | undefined,
-  attendences: InternAttendenceType[] | undefined
+  attendences: InternAttendenceType[] | undefined,
+  remainingHours: number
 }
 
-export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, attendences }) => {
+export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, attendences, remainingHours }) => {
   const cardsData = [
     { title: "Nota de FCT", value: "N/A" },
-    { title: "Horas Restantes", value: 0 },
+    { title: "Horas Restantes", value: remainingHours },
     { title: "Faltas", value: 0 },
     { title: "Registos Semanais", value: weeklySummaries ?.length, secondValue: weeklySummaries?.filter(item => item.isConfirmedByInternAdvisor).length },
   ];

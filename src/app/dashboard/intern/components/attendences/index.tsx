@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -38,6 +37,7 @@ import { Api, CreateInternAttendenceType } from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { handleError } from "@/utils/handleError";
 
 const schema = z.object({
   date: z.coerce.date( { message: "Selecione a data"} ),
@@ -77,6 +77,10 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
           "A sua presença foi criada, aguarde pela aprovação do tutor!",
       });
     },
+
+    onError: async (error) => {
+      handleError(error, toast)
+    }
   });
 
   const formatDate = (dateString: string) => {
@@ -198,7 +202,6 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
               <TableHead>Data</TableHead>
               <TableHead>Manhã</TableHead>
               <TableHead>Tarde</TableHead>
-              <TableHead>Tutor</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead>Editar</TableHead>
             </TableRow>
@@ -209,9 +212,6 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
               <TableCell>{formatDate(attendence.date)}</TableCell>
               <TableCell>{attendence.morningHours || 0}</TableCell>
               <TableCell>{attendence.afternoonHours || 0}</TableCell>
-              <TableCell>
-                <Checkbox checked={attendence.isConfirmedByInternAdvisor} disabled />
-              </TableCell>
               <TableCell>{attendence.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
               <TableCell>
                 <EditAttendenceModal attendence={attendence} />

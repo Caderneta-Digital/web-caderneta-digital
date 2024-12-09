@@ -216,7 +216,7 @@ export const InternDashboardWeeklySummaries: React.FC<PropsType> = ({ weeklySumm
                   <TableCell>
                     <Checkbox checked={summary.isConfirmedByInternAdvisor} disabled />
                   </TableCell>
-                  <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
+                  <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovado" : "Por aprovar"}</TableCell>
                   <TableCell>
                     <EditSummariesModal summary={summary}/>
                   </TableCell>

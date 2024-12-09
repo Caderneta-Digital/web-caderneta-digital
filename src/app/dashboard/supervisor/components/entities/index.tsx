@@ -45,7 +45,7 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
                 <TableCell>{hostEntity.name}</TableCell>
                 <TableCell>{hostEntity.responsibleName}</TableCell>
                 <TableCell>{hostEntity.activityField}</TableCell>
-                <TableCell>?</TableCell>
+                <TableCell>{hostEntity.advisors.map(advisor => advisor.name).join(", ") || "-"}</TableCell>
                 <TableCell>
                   {hostEntity.interns.map((intern) => intern.name).join(", ") ||
                     "-"}
