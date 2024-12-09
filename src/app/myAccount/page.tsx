@@ -43,7 +43,7 @@ export default function MyAccount() {
     });
 
   if (!profile || isLoadingProfile) {
-    return <h1>Loading...</h1>;
+    return <h1>A carregar...</h1>;
   }
 
   const handleRequestPasswordReset = async () => {
@@ -52,14 +52,14 @@ export default function MyAccount() {
 
   return (
     <div className="w-screen h-screen">
-      <Navbar title="Minha Conta" goBackUrl={`/dashboard/${user?.type}`} />
+      <Navbar title="A Minha Conta" goBackUrl={`/dashboard/${user?.type}`} />
 
       <div className="px-4 py-3 flex flex-col gap-4">
         <Card>
           <CardHeader>
-            <CardTitle>Meus Dados</CardTitle>
+            <CardTitle>Os Meus Dados</CardTitle>
             <CardDescription>
-              Gerencie suas informações pessoais e credenciais de acesso
+              Administre as suas informações pessoais e credenciais de acesso.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
@@ -79,7 +79,7 @@ export default function MyAccount() {
 
             <div>
               <Label>Email</Label>
-              <h1>{profile.email}</h1>
+              <h1 className="pb-2">{profile.email}</h1>
             </div>
 
             <div className="flex flex-col gap-2">

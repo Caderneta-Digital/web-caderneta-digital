@@ -19,7 +19,7 @@ export default function Dashboard() {
   });
 
   if (!data || isLoading) {
-    return <h1>Loading...</h1>;
+    return <h1>A Carregar...</h1>;
   }
 
   return (

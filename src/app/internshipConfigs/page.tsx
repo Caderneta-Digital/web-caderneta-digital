@@ -38,7 +38,7 @@ export default function InternshipConfigsPage() {
 
 
   if (!internshipConfigs || isLoading) {
-    return <h1>Loading...</h1>
+    return <h1>A Carregar...</h1>
   }
 
   const firstPeriod = internshipConfigs.find(config => config.period === "11") as InternshipConfigType

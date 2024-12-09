@@ -44,8 +44,8 @@ export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({
 
   const cardsData = [
     { title: "Estagiários Inseridos", value: interns.length },
-    { title: "Presenças a confirmar", value: needToConfirmAttendencesCount },
-    { title: "Registos a confirmar", value: needToConfirmWeeklySummariesCount },
+    { title: "Presenças a Confirmar", value: needToConfirmAttendencesCount },
+    { title: "Registos a Confirmar", value: needToConfirmWeeklySummariesCount },
     { title: "Horas Restantes (média)", value: "?" },
   ];
 

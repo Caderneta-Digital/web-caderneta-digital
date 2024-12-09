@@ -35,7 +35,7 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
               <TableHead>Nome do Responsável</TableHead>
               <TableHead>Ramo de Actividade</TableHead>
               <TableHead>Tutores de FCT</TableHead>
-              <TableHead>Estágiarios Inseridos</TableHead>
+              <TableHead>Estagiários Inseridos</TableHead>
               <TableHead>Estado</TableHead>
             </TableRow>
           </TableHeader>
