@@ -58,7 +58,7 @@ export default function HostEntityDetails() {
                 <TableHead>Nome</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Estado</TableHead>
-                <TableHead>Estágiarios</TableHead>
+                <TableHead>Estagiários</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

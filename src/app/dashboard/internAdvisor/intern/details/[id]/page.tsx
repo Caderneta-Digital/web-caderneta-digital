@@ -30,11 +30,11 @@ export default function Dashboard() {
     },
   });
   if (!intern || isLoading) {
-    return <h1>Loading...</h1>;
+    return <h1>A Carregar...</h1>;
   }
   return (
     <div className="h-screen w-screen">
-      <Navbar title={`Informações do ${intern.name}`} />
+      <Navbar title={`Informações de ${intern.name}`} />
       <div className="px-4 py-3 flex flex-col gap-4">
         <Tabs defaultValue="attendences" className="w-full space-y-5">
           <div className="flex justify-between items-center">

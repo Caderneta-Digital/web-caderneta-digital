@@ -121,7 +121,7 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
             <SelectContent>
               <SelectItem value={InternStatusEnum.ACTIVE}>Ativo</SelectItem>
               <SelectItem value={InternStatusEnum.NOT_ACTIVE}>
-                Desativado
+                Não Ativo
               </SelectItem>
             </SelectContent>
           </Select>

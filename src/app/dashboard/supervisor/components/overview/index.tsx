@@ -83,7 +83,7 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
               <TableRow>
                 <TableHead>Nome</TableHead>
                 <TableHead>Nome do Responsável</TableHead>
-                <TableHead>Estiários inseridos</TableHead>
+                <TableHead>Estagiários Inseridos</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

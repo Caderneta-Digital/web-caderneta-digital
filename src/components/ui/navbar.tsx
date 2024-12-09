@@ -14,7 +14,7 @@ import Link from "next/link";
 
 type PropsType = {
   title: string;
-  goBackUrl?: string
+  goBackUrl?: string;
 };
 
 export const Navbar: React.FC<PropsType> = ({ title, goBackUrl }) => {
@@ -48,29 +48,29 @@ export const Navbar: React.FC<PropsType> = ({ title, goBackUrl }) => {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Link href="/myAccount">
+          <Link href="/myAccount">
+            <DropdownMenuItem className="cursor-pointer">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                <span>Minha conta</span>
+                <span>A Minha conta</span>
               </div>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/internshipConfigs">
+            </DropdownMenuItem>
+          </Link>
+          <Link href="/internshipConfigs">
+            <DropdownMenuItem className="cursor-pointer">
               <div className="flex items-center gap-2">
                 <Settings className="h-4 w-4" />
                 <span>Configurações do Estágio</span>
               </div>
-            </Link>
-          </DropdownMenuItem>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem
-            className="text-red-600 focus:bg-red-50 focus:text-red-600"
+            className="text-red-600 focus:bg-red-50 focus:text-red-600 cursor-pointer"
             onClick={logOut}
           >
             <div className="flex items-center gap-2">
               <LogOut className="h-4 w-4" />
-              <span>Sair</span>
+              <span>Sair da Conta</span>
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
