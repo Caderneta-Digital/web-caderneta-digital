@@ -24,18 +24,18 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
   return (
     <div>
       <Card>
-        <div className="flex justify-between p-3">
-          <h1 className="text-xl">Entidades de Acolhimento</h1>
+        <div className="flex items-center justify-between p-3">
+         <h1 className="md:text-xl">Entidades de Acolhimento</h1>
           <CreateHostEntityModal />
         </div>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Nome</TableHead>
-              <TableHead>Nome do Responsável</TableHead>
-              <TableHead>Ramo de Actividade</TableHead>
-              <TableHead>Tutores de FCT</TableHead>
-              <TableHead>Estagiários Inseridos</TableHead>
+              <TableHead>Responsável</TableHead>
+              <TableHead>Ramo</TableHead>
+              <TableHead>Tutores</TableHead>
+              <TableHead>Estagiários</TableHead>
               <TableHead>Estado</TableHead>
             </TableRow>
           </TableHeader>
