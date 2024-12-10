@@ -27,7 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Preencha o nome" }),
-  email: z.string().email().min(1, { message: "Preencha o email" }),
+  email: z.string().email({ message: "Email inválido" }).min(1, { message: "Preencha o email" }),
   phone: z.string(),
 });
 
@@ -132,7 +132,7 @@ export const CreateInternAdvisorModal: React.FC<PropsType> = ({
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="no-error-color">Telemovel</FormLabel>
+                    <FormLabel className="no-error-color">Telemóvel</FormLabel>
                     <FormControl>
                       <Input type="number" placeholder="951567843" {...field} />
                     </FormControl>

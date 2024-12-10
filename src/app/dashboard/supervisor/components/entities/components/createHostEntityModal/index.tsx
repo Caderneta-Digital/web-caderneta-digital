@@ -28,10 +28,10 @@ import { useAuth } from "@/context/AuthContext";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Preencha o nome" }),
-  email: z.string().email({ message: "Insira um email valido" }),
-  phone: z.string().min(1, { message: "Preencha o telemovel" }),
+  email: z.string().email({ message: "Insira um email válido" }),
+  phone: z.string().min(1, { message: "Preencha o telemóvel" }),
   nif: z.string().min(1, { message: "Preencha o NIF" }),
-  responsibleName: z.string().min(1, { message: "Preencha o nome do responsavel" }),
+  responsibleName: z.string().min(1, { message: "Preencha o nome do responsável" }),
   address: z.string().min(1, { message: "Preencha o endereço" }),
   activityField: z.string().min(1, { message: "Preencha o ramo de atividade" }),
 })
@@ -151,7 +151,7 @@ export const CreateHostEntityModal = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Julio Cesar"
+                        placeholder="Júlio Cesar"
                         {...field}
                       />
                     </FormControl>

@@ -52,7 +52,7 @@ export const Navbar: React.FC<PropsType> = ({ title, goBackUrl }) => {
             <DropdownMenuItem className="cursor-pointer">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                <span>A Minha conta</span>
+                <span>A Minha Conta</span>
               </div>
             </DropdownMenuItem>
           </Link>

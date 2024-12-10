@@ -76,7 +76,7 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
         </Card>
         <Card>
           <div className="p-3">
-            <h1 className="text-xl">Entidades de acolhimento</h1>
+            <h1 className="text-xl">Entidades de Acolhimento</h1>
           </div>
           <Table>
             <TableHeader>

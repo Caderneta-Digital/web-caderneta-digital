@@ -51,18 +51,18 @@ export default function InternshipConfigsPage() {
       <div className="px-4 py-3 flex flex-col gap-4">
         <Card>
           <CardHeader>
-            <CardDescription>Configure aqui os parametros do estagio para o curso que direges</CardDescription>
+            <CardDescription>Configure aqui os parâmetros do estágio para o curso que direges</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             <div>
-              <Label>Horas do primeiro periodo</Label>
+              <Label>Horas do primeiro período</Label>
               <InputEditLine
                 isLoading={isLoadingUpdateConfig}
                 value={firstPeriod.totalHours.toString() || ""}
                 onConfirmEdit={newValue => handleUpdatePeriodTotalHours({ ...firstPeriod, totalHours: Number(newValue) })} />
             </div>
             <div>
-              <Label>Horas do segundo periodo</Label>
+              <Label>Horas do segundo período</Label>
               <InputEditLine
                 value={secondPeriod.totalHours.toString() || ""}
                 isLoading={isLoadingUpdateConfig}
