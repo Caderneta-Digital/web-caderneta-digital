@@ -75,9 +75,9 @@ export const InternDashboardWeeklySummaries: React.FC<PropsType> = ({ weeklySumm
       setIsModalOpen(false);
       toast({
         variant: "success",
-        title: "Presença foi criada com sucesso!",
+        title: "O seu registo semanal foi criada com sucesso!",
         description:
-          "A sua presença foi criada, aguarde pela aprovação do tutor!",
+          "O seu registo semanal foi criado, aguarde pela aprovação do tutor!",
       });
     },
   });
@@ -218,7 +218,7 @@ export const InternDashboardWeeklySummaries: React.FC<PropsType> = ({ weeklySumm
                   </TableCell>
                   <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovado" : "Por aprovar"}</TableCell>
                   <TableCell>
-                    <EditSummariesModal />
+                    <EditSummariesModal summary={summary}/>
                   </TableCell>
                 </TableRow>
               ))}

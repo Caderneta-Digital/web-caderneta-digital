@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { User } from "lucide-react";
 import { format, parseISO } from "date-fns"; 
 import { InternAttendenceType, InternWeeklySummaryType } from "@/types/internTypes";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type PropsType = {
   weeklySummaries: InternWeeklySummaryType[] | undefined,
@@ -15,7 +16,7 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
     { title: "Nota de FCT", value: "N/A" },
     { title: "Horas Restantes", value: remainingHours },
     { title: "Faltas", value: 0 },
-    { title: "Registos semanais", value: weeklySummaries?.length || 0 },
+    { title: "Registos Semanais", value: weeklySummaries ?.length, secondValue: weeklySummaries?.filter(item => item.isConfirmedByInternAdvisor).length },
   ];
 
   const formatDate = (dateString: string) => {
@@ -38,7 +39,21 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
               </div>
             </CardHeader>
             <CardContent>
+              <div className="flex gap-2">
               <h1 className="font-bold text-3xl">{card.value}</h1>
+              {card.secondValue && (
+                <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <h1 className="text-gray-500 font-bold text-3xl">({card.secondValue})</h1>   
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Registos Semanais aprovados</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              )}
+              </div>
             </CardContent>
           </Card>
         ))}
