@@ -26,12 +26,19 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useUpdateInternAttendence } from "@/hooks/useUpdateInternAttendence";
+import { Pencil } from "lucide-react";
 
 const schema = z.object({
   date: z.coerce.date( { message: "Selecione a data"} ),
   morningHours: z.coerce.number().min(1, { message: "Indique as horas realizadas de manhã" }),
   afternoonHours: z.coerce.number().min(1, { message: "Indique as horas realizadas de tarde" })
-});
+}).refine(
+  (data) => data.morningHours + data.afternoonHours <= 7,
+  {
+    message: "A soma das horas da manhã e da tarde não pode ser maior que 7.",
+    path: ["morningHours", "afternoonHours"], 
+  }
+);;
 
 type FormType = z.infer<typeof schema>;
 
@@ -78,7 +85,7 @@ export const EditAttendenceModal: React.FC<PropsType> = ({attendence}) => {
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger disabled={attendence.isConfirmedByInternAdvisor}>
-        <Button variant="outline" disabled={attendence.isConfirmedByInternAdvisor}>Mais Informações</Button>
+        <Pencil cursor="pointer" className={attendence.isConfirmedByInternAdvisor ? "text-gray-400" : ""} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

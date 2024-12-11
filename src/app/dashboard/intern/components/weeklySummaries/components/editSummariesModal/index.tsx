@@ -34,6 +34,9 @@ const schema = z.object({
   weekStart: z.coerce.date( { message: "Selecione a data de início da semana"} ),
   weekEnd: z.coerce.date( { message: "Selecione a data de fim da semana"}),
   text: z.coerce.string().min(1, { message: "Indique as atividades realizadas" })
+}).refine((data) => data.weekStart <= data.weekEnd, {
+  message: "A data de início deve ser anterior ou igual à data de fim",
+  path: ["weekEnd"],  
 });
 
 type FormType = z.infer<typeof schema>;
@@ -79,8 +82,8 @@ const handleUpdateInternWeeklySummary = async (data: FormType) => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogTrigger>
-        <Pencil cursor="pointer" />
+      <DialogTrigger disabled={summary.isConfirmedByInternAdvisor}>
+        <Pencil cursor="pointer" className={summary.isConfirmedByInternAdvisor ? "text-gray-400" : ""} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

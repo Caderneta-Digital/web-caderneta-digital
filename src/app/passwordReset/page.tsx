@@ -31,7 +31,7 @@ type FormType = z.infer<typeof schema>;
 
 export default function PasswordReset() {
   return (
-    <Suspense fallback={<h1>Carregando...</h1>}>
+    <Suspense fallback={<h1>A Carregar...</h1>}>
       <PasswordResetContent />
     </Suspense>
   );
