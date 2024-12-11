@@ -43,7 +43,14 @@ const schema = z.object({
   date: z.coerce.date( { message: "Selecione a data"} ),
   morningHours: z.coerce.number().min(1, { message: "Indique as horas realizadas de manhã" }),
   afternoonHours: z.coerce.number().min(1, { message: "Indique as horas realizadas de tarde" })
-});
+}).refine(
+  (data) => data.morningHours + data.afternoonHours <= 7,
+  {
+    message: "A soma das horas da manhã e da tarde não pode ser maior que 7.",
+    path: ["morningHours"], 
+  }
+);
+;
 
 type FormType = z.infer<typeof schema>;
 
@@ -212,7 +219,7 @@ export const InternDashboardAttendences: React.FC<PropsType> = ({ attendences })
               <TableCell>{formatDate(attendence.date)}</TableCell>
               <TableCell>{attendence.morningHours || 0}</TableCell>
               <TableCell>{attendence.afternoonHours || 0}</TableCell>
-              <TableCell>{attendence.isConfirmedByInternAdvisor ? "Aprovador" : "Por aprovar"}</TableCell>
+              <TableCell>{attendence.isConfirmedByInternAdvisor ? "Aprovado" : "Por aprovar"}</TableCell>
               <TableCell>
                 <EditAttendenceModal attendence={attendence} />
               </TableCell>

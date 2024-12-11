@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -45,6 +44,9 @@ const schema = z.object({
   weekStart: z.coerce.date( { message: "Selecione a data de início da semana"} ),
   weekEnd: z.coerce.date( { message: "Selecione a data de fim da semana"}),
   text: z.coerce.string().min(1, { message: "Indique as atividades realizadas" })
+}).refine((data) => data.weekStart <= data.weekEnd, {
+  message: "A data de início deve ser anterior ou igual à data de fim",
+  path: ["weekEnd"],  
 });
 
 type FormType = z.infer<typeof schema>;
@@ -201,7 +203,6 @@ export const InternDashboardWeeklySummaries: React.FC<PropsType> = ({ weeklySumm
             <TableRow>
               <TableHead>Semana</TableHead>
               <TableHead>Registo</TableHead>
-              <TableHead>Tutor</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead>Editar</TableHead>
             </TableRow>
@@ -213,9 +214,6 @@ export const InternDashboardWeeklySummaries: React.FC<PropsType> = ({ weeklySumm
                 <TableRow key={summary.id}>
                   <TableCell>{`${formatDate(summary.weekStart)} a ${formatDate(summary.weekEnd)}`}</TableCell>
                   <TableCell>{summary.text}</TableCell>
-                  <TableCell>
-                    <Checkbox checked={summary.isConfirmedByInternAdvisor} disabled />
-                  </TableCell>
                   <TableCell>{summary.isConfirmedByInternAdvisor ? "Aprovado" : "Por aprovar"}</TableCell>
                   <TableCell>
                     <EditSummariesModal summary={summary}/>
