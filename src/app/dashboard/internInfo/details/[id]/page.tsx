@@ -15,12 +15,15 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import Cookies from "js-cookie";
+
 
 export default function Dashboard() {
   const params = useParams();
   const router = useRouter();
   const path = usePathname();
   const internId = params.id as string;
+  const type = Cookies.get("type");
 
   const { data: intern, isLoading } = useQuery({
     queryKey: ["findInternById", internId],
@@ -52,7 +55,7 @@ export default function Dashboard() {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink
-                    href={"/dashboard/internAdvisor/"}
+                    href={`/dashboard/${type}/`}
                     className="cursor-pointer"
                   >
                     Home
