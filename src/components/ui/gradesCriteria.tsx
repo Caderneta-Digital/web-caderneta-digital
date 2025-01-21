@@ -19,15 +19,13 @@ import { GradesCriteriaCard } from "./gradesCriteriaCard";
 
 type PropsType = {
   setShouldShowComponent: (value: boolean) => void;
-  className?: string;
 };
 
 export const GradesCriteria: React.FC<PropsType> = ({
   setShouldShowComponent,
-  className = "",
 }) => {
   return (
-    <div className={className}>
+    <div className="px-10 py-3">
       <Card>
         <div className="flex justify-between p-3">
           <h1 className="text-xl">Rubrica - Relatório de FCT (EFP)</h1>

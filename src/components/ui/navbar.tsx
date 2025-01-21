@@ -21,7 +21,7 @@ export const Navbar: React.FC<PropsType> = ({ title, goBackUrl }) => {
   const { user, logOut } = useAuth();
 
   return (
-    <div className="flex justify-between items-center px-5 py-3 border-b-[1px] border-b-gray-300">
+    <div className="flex justify-between items-center px-10 py-3 border-b-[1px] border-b-gray-300">
       <div className="flex items-center gap-2">
         {goBackUrl && (
           <Link href={goBackUrl}>

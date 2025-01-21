@@ -19,9 +19,17 @@ import { InternAdvisorDashboardGrades11Ano } from "./components/11ano";
 import { InternAdvisorDashboardGrades12Ano } from "./components/12ano";
 import { InternAdvisorDashboardGradesFinal } from "./components/final";
 import { GradesCriteria } from "@/components/ui/gradesCriteria";
+import { useAuth } from "@/context/AuthContext";
+import { UserTypeEnum } from "@/types/userTypes";
 
 export default function Dashboard() {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
+
+  const { user } = useAuth()
+
+  const isIntern = user?.type === UserTypeEnum.INTERN
+  const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
+  const isInternAdvisor = user?.type === UserTypeEnum.INTERN_ADVISOR
 
   const params = useParams();
   const internId = params.id as string;
@@ -45,10 +53,9 @@ export default function Dashboard() {
       {shouldShowComponent ? (
         <GradesCriteria
           setShouldShowComponent={setShouldShowComponent}
-          className="p-4"
         />
       ) : (
-        <div className="px-4 py-3 flex flex-col gap-4">
+        <div className="px-10 py-3 flex flex-col gap-4">
           <Tabs defaultValue="11ano" className="w-full space-y-5">
             <div className="flex justify-between items-center">
               <TabsList className="grid w-fit grid-cols-3">
@@ -61,19 +68,10 @@ export default function Dashboard() {
                   <BreadcrumbList>
                     <BreadcrumbItem>
                       <BreadcrumbLink
-                        href={`/dashboard/internAdvisor`}
+                        href={isSupervisor ? `/dashboard/supervisor` : "/dashboard/intern"}
                         className="cursor-pointer"
                       >
                         Home
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <BreadcrumbLink
-                        href={`/dashboard/internAdvisor/intern/details/${internId}`}
-                        className="cursor-pointer"
-                      >
-                        Informações do Estagiário
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />

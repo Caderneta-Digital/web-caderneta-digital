@@ -24,7 +24,7 @@ export const SupervisorDashboardGrades: React.FC<PropsType> = ({ interns }) => {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
 
   const goInternDetails = (internId: string) => {
-    router.push(`/dashboard/supervisor/intern/details/${internId}`);
+    router.push(`/dashboard/internInfo/details/${internId}/grades`);
   };
 
   return (

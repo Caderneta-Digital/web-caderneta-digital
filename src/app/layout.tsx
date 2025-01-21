@@ -20,7 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AppProviders>
-          {children}
+          <div className="overflow-x-hidden">
+            {children}
+          </div>
           <Toaster />
         </AppProviders>
       </body>
