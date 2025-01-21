@@ -16,7 +16,7 @@ export const InternAdvisorGrades11anoAuto = () => {
     <Dialog>
       <DialogTrigger>
         <Button variant="outline" size="sm">
-          Ver Mais
+          Preencher Autoavaliação
         </Button>{" "}
       </DialogTrigger>
       <DialogContent className="h-[500px] overflow-auto w-11/12">
