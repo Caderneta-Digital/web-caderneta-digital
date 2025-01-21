@@ -50,7 +50,7 @@ export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({
   ];
 
   const goInternDetails = (internId: string) => {
-    router.push(`/dashboard/internAdvisor/intern/details/${internId}`);
+    router.push(`/dashboard/internInfo/details/${internId}`);
   };
 
   return (
