@@ -2,17 +2,29 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { ChevronRight } from "lucide-react"; // Ícone para as setas
 import foto from "../public/aje.svg";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col lg:flex-row h-screen w-full">
-      <div className="flex flex-col justify-center items-start w-full lg:w-1/2 px-6 py-8 lg:px-10">
+    <div className="relative flex flex-col lg:flex-row h-screen w-full bg-white">
+      {/* Logo no topo para mobile */}
+      <div className="relative w-full h-48 lg:hidden">
+        <Image
+          src={foto}
+          alt="Caderneta Digital Overview"
+          className="object-cover object-center scale-130" // Amplia a imagem e centraliza
+          layout="fill"
+        />
+      </div>
+
+      {/* Cards de Acesso */}
+      <div className="flex flex-col justify-center items-start w-full lg:w-1/2 px-6 py-8 lg:px-10 pt-12 lg:pt-0">
         <h1 className="text-2xl lg:text-3xl font-bold mb-6 text-center lg:text-left">
           Aceder à Caderneta Digital
         </h1>
 
-        <Card className="mb-4 w-full">
+        <Card className="relative mb-4 w-full">
           <Link href="/login/intern" className="mb-4">
             <CardHeader>
               <h2 className="text-lg lg:text-xl font-medium">Estagiário</h2>
@@ -22,9 +34,10 @@ export default function HomePage() {
               forma simples e eficiente.
             </CardContent>
           </Link>
+          <ChevronRight className="absolute top-1/2 right-4 transform -translate-y-1/2 text-neutral-950" />
         </Card>
 
-        <Card className="mb-4 w-full">
+        <Card className="relative mb-4 w-full">
           <Link href="/login/supervisor" className="mb-4">
             <CardHeader>
               <h2 className="text-lg lg:text-xl font-medium">Orientador</h2>
@@ -34,9 +47,10 @@ export default function HomePage() {
               facilidade e eficiência.
             </CardContent>
           </Link>
+          <ChevronRight className="absolute top-1/2 right-4 transform -translate-y-1/2 text-neutral-950" />
         </Card>
 
-        <Card className="w-full">
+        <Card className="relative w-full">
           <Link href="/login/internAdvisor" className="mb-4">
             <CardHeader>
               <h2 className="text-lg lg:text-xl font-medium">Tutor</h2>
@@ -46,10 +60,12 @@ export default function HomePage() {
               simples e organizada.
             </CardContent>
           </Link>
+          <ChevronRight className="absolute top-1/2 right-4 transform -translate-y-1/2 text-neutral-950" />
         </Card>
       </div>
 
-      <div className="relative w-full lg:w-1/2 h-64 lg:h-full bg-slate-200">
+      {/* Imagem lateral para desktop */}
+      <div className="relative hidden lg:block w-full lg:w-1/2 h-full bg-slate-200">
         <Image
           src={foto}
           alt="Caderneta Digital Overview"
