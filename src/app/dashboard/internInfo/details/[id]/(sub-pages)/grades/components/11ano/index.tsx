@@ -12,13 +12,12 @@ import { InternAdvisorGrades11anoInfo } from "./components/internAdvisorGrades11
 import { InternAdvisorGrades11anoFinal } from "./components/internAdvisorGrades11anoFinal";
 import { useAuth } from "@/context/AuthContext";
 import { UserTypeEnum } from "@/types/userTypes";
-import { Button } from "@/components/ui/button";
 
 export const InternAdvisorDashboardGrades11Ano = () => {
   const { user } = useAuth()
 
   const isIntern = user?.type === UserTypeEnum.INTERN
-  const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
+  //const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
   const isInternAdvisor = user?.type === UserTypeEnum.INTERN_ADVISOR
 
   return (
@@ -26,7 +25,7 @@ export const InternAdvisorDashboardGrades11Ano = () => {
       <Card>
         <CardHeader className="flex flex-row justify-between items-center">
           <CardTitle>Autoavaliação do Aluno</CardTitle>
-          <InternAdvisorGrades11anoAuto />
+          <InternAdvisorGrades11anoInfo />
         </CardHeader>
         <CardContent>
           <Table>
@@ -102,9 +101,7 @@ export const InternAdvisorDashboardGrades11Ano = () => {
               Avaliação Final: N/A &nbsp;&nbsp;&nbsp; Data: N/A
             </div>
             {isIntern && (
-              <Button variant="outline">
-                Preencher Avaliação
-              </Button>
+              <InternAdvisorGrades11anoAuto />
             )}
           </div>
         </CardContent>

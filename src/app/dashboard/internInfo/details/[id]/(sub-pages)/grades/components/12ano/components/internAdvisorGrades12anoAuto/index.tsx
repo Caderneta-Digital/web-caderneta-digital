@@ -16,7 +16,7 @@ import {
       <Dialog>
         <DialogTrigger>
           <Button variant="outline" size="sm">
-            Ver Mais
+            Preencher Avaliação
           </Button>{" "}
         </DialogTrigger>
         <DialogContent className="h-[500px] overflow-auto w-11/12">

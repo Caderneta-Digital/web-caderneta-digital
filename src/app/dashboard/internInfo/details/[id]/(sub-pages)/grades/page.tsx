@@ -27,9 +27,9 @@ export default function Dashboard() {
 
   const { user } = useAuth()
 
-  const isIntern = user?.type === UserTypeEnum.INTERN
+  //const isIntern = user?.type === UserTypeEnum.INTERN
   const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
-  const isInternAdvisor = user?.type === UserTypeEnum.INTERN_ADVISOR
+  //const isInternAdvisor = user?.type === UserTypeEnum.INTERN_ADVISOR
 
   const params = useParams();
   const internId = params.id as string;
