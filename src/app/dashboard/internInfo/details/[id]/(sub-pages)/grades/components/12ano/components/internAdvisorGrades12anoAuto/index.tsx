@@ -1,18 +1,32 @@
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from "@/components/ui/dialog";
-  
-  import { Button } from "@/components/ui/button";
-  import { Label } from "@/components/ui/label";
-  import { Card, CardContent } from "@/components/ui/card";
-  
-  export const InternAdvisorGrades12anoAuto = () => {
-    return (
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
+} from "@/components/ui/dialog";
+
+import {
+  Form,
+  FormItem,
+  FormControl,
+  FormField,
+  FormMessage,
+  FormLabel,
+  FormDescription,
+} from "@/components/ui/form";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+
+export const InternAdvisorGrades12anoAuto = () => {
+  const form = useForm();
+  return (
+    <div>
       <Dialog>
         <DialogTrigger>
           <Button variant="outline" size="sm">
@@ -21,7 +35,9 @@ import {
         </DialogTrigger>
         <DialogContent className="h-[500px] overflow-auto w-11/12">
           <DialogHeader>
-            <DialogTitle>Autoavaliação do Aluno</DialogTitle>
+            <DialogTitle>
+              Autoavaliação do Aluno
+            </DialogTitle>
           </DialogHeader>
           <DialogDescription>Autoavaliação do 12º Ano</DialogDescription>
           <Card className="max-w-md mb-3">
@@ -36,88 +52,189 @@ import {
               <p>5 = 175 a 200 (Muito Bom)</p>
             </CardContent>
           </Card>
-          <Label className="text-lg">Trabalho Prático (80%)</Label>
-          <DialogDescription className="text-sm">
-            Processo de Trabalho na FCT
-          </DialogDescription>
+
           <div>
-            <Label>Participação</Label>
-            <p className="text-neutral-500 text-sm">(Interesse, Integração)</p>
-            <h1>?</h1>
+            <Form {...form}>
+              <form className="space-y-6">
+                <Label className="text-lg">Trabalho Prático (80%)</Label>
+                <DialogDescription className="text-sm">
+                  Processo de Trabalho na FCT
+                </DialogDescription>
+
+                <FormField
+                  control={form.control}
+                  name="participation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="no-error-color">
+                        Participação
+                      </FormLabel>
+                      <FormDescription>(Interesse, Integração)</FormDescription>
+                      <FormControl>
+                        <Input type="number" min={0} max={20} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="autonomy"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="no-error-color">
+                        Autonomia
+                      </FormLabel>
+                      <FormDescription>
+                        (Iniciativa, Adaptabilidade)
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="number" min={0} max={20} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="responsibility"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="no-error-color">
+                        Responsabilidade
+                      </FormLabel>
+                      <FormDescription>
+                        (Cumprimento de Tarefas, Recetivo, Trabalho em Equipa)
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="number" min={0} max={20} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="relationship"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="no-error-color">
+                        Relacionamento
+                      </FormLabel>
+                      <FormDescription>
+                        (Assiduidade, Pontualidade, Higiene e Segurança no
+                        Trabalho)
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="number" min={0} max={20} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="py-1">
+                  <Label className="text-lg">
+                    Conceptualização/Compreensão/Aplicação (20%)
+                  </Label>
+                  <DialogDescription className="text-sm">
+                    Relatório de FCT
+                  </DialogDescription>
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="relevance"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="no-error-color">
+                        Pertinência
+                      </FormLabel>
+                      <FormDescription>
+                        (Seleciona e recorre a informação e meios descritores da
+                        entidade)
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="number" min={0} max={20} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="rigor"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="no-error-color">Rigor</FormLabel>
+                      <FormDescription>
+                        (Clareza, Coerência, Objetividade)
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="number" min={0} max={20} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="structuring"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="no-error-color">
+                        Estruturação
+                      </FormLabel>
+                      <FormDescription>
+                        (Respeita a estrutura do relatório e a formatação
+                        textual)
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="number" min={0} max={20} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="reflection"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="no-error-color">Reflexão</FormLabel>
+                      <FormDescription>
+                        (Argumenta, apresenta Conclusões da FCT)
+                      </FormDescription>
+                      <FormControl>
+                        <Input type="number" min={0} max={20} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </form>
+            </Form>
           </div>
-  
-          <div>
-            <Label>Autonomia</Label>
-            <p className="text-neutral-500 text-sm">
-              (Iniciativa, Adaptabilidade)
-            </p>
-            <h1>?</h1>
-          </div>
-  
-          <div>
-            <Label>Responsabilidade</Label>
-            <p className="text-neutral-500 text-sm">
-              (Cumprimento de Tarefas, Recetivo, Trabalho em Equipa)
-            </p>
-            <h1>?</h1>
-          </div>
-  
-          <div>
-            <Label>Relacionamento</Label>
-            <p className="text-neutral-500 text-sm">
-              (Assiduidade, Pontualidade, Higiene e Segurança no Trabalho)
-            </p>
-            <h1>?</h1>
-          </div>
-  
-          <Label className="text-lg">
-            Conceptualização/Compreensão/Aplicação (20%)
-          </Label>
-          <DialogDescription className="text-sm">
-            Relatório de FCT
-          </DialogDescription>
-          <div>
-            <Label>Pertinência</Label>
-            <p className="text-neutral-500 text-sm">
-              (Seleciona e recorre a informação e meios descritores da entidade)
-            </p>
-            <h1>?</h1>
-          </div>
-  
-          <div>
-            <Label>Rigor</Label>
-            <p className="text-neutral-500 text-sm">
-              (Clareza, Coerência, Objetividade){" "}
-            </p>
-            <h1>?</h1>
-          </div>
-  
-          <div>
-            <Label>Estruturação</Label>
-            <p className="text-neutral-500 text-sm">
-              (Respeita a estrutura do relatório e a formatação textual){" "}
-            </p>
-            <h1>?</h1>
-          </div>
-  
-          <div>
-            <Label>Reflexão</Label>
-            <p className="text-neutral-500 text-sm">
-              (Argumenta, apresenta Conclusões da FCT){" "}
-            </p>
-            <h1>?</h1>
-          </div>
-  
+
           <div>
             <Label>Avaliação Final</Label>
-            <h1>?</h1>
+            <h1>-</h1>
           </div>
-  
-          <div>
-            <Label>Data</Label>
-            <h1>?</h1>
-          </div>
+
+          <Button
+            type="submit"
+            className="w-full bg-black text-white hover:bg-gray-900"
+          >
+            Submeter Avaliação
+          </Button>
         </DialogContent>
       </Dialog>
-    );
-  };
+    </div>
+  );
+};
