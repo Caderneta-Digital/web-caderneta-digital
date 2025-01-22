@@ -20,7 +20,7 @@ import { InternAdvisorDashboardGrades12Ano } from "./components/12ano";
 import { InternAdvisorDashboardGradesFinal } from "./components/final";
 import { GradesCriteria } from "@/components/ui/gradesCriteria";
 import { useAuth } from "@/context/AuthContext";
-import { UserTypeEnum } from "@/types/userTypes";
+//import { UserTypeEnum } from "@/types/userTypes";
 
 export default function Dashboard() {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
@@ -28,7 +28,7 @@ export default function Dashboard() {
   const { user } = useAuth()
 
   //const isIntern = user?.type === UserTypeEnum.INTERN
-  const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
+  //const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
   //const isInternAdvisor = user?.type === UserTypeEnum.INTERN_ADVISOR
 
   const params = useParams();
@@ -68,7 +68,7 @@ export default function Dashboard() {
                   <BreadcrumbList>
                     <BreadcrumbItem>
                       <BreadcrumbLink
-                        href={isSupervisor ? `/dashboard/supervisor` : "/dashboard/intern"}
+                        href={`/dashboard/${user?.type}`}
                         className="cursor-pointer"
                       >
                         Home

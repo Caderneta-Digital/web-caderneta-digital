@@ -23,7 +23,7 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 
-export const InternAdvisorGrades11anoFinal = () => {
+export const InternAdvisorGrades11anoAuto = () => {
   const form = useForm();
   return (
     <div>

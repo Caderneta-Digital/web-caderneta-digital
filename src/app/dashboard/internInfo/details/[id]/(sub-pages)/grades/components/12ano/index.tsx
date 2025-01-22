@@ -77,7 +77,7 @@ export const InternAdvisorDashboardGrades12Ano = () => {
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
-                    <TableCell>Estruturção</TableCell>
+                    <TableCell>Estruturação</TableCell>
                     <TableCell>N/A</TableCell>
                   </TableRow>
     
@@ -162,7 +162,7 @@ export const InternAdvisorDashboardGrades12Ano = () => {
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
-                    <TableCell>Estruturção</TableCell>
+                    <TableCell>Estruturação</TableCell>
                     <TableCell>N/A</TableCell>
                   </TableRow>
     
