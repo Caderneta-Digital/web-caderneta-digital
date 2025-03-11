@@ -2,6 +2,7 @@ import { HostEntityType } from "@/types/hostEntititesType";
 import { InternAdvisorType } from "@/types/internAdvisorTypes";
 import { InternshipConfigType } from "@/types/internshipConfigTypes";
 import {
+  InternAbsencesType,
   InternAttendenceType,
   InternType,
   InternWeeklySummaryType,
@@ -60,9 +61,15 @@ export type CreateInternAttendenceType = {
 }
 
 export type CreateInternWeeklySummariesType = {
-  weekStart: Date
-  weekEnd: Date
-  text: string
+  weekStart: Date;
+  weekEnd: Date;
+  text: string;
+  internId: string;
+}
+
+export type CreateInternAbsencesType = {
+  date: Date;
+  reason: string;
   internId: string;
 }
 
@@ -231,7 +238,16 @@ class API {
     const response = await this.axios.patch(`/internshipConfigs/${data.id}`, data);
     return response.data;
   }
-}
 
+  public async createInternAbsences(data: CreateInternAbsencesType) {
+    const response = await this.axios.post(`/interns/${data.internId}/absences`, data);
+    return response.data
+  }
+
+  public async updateInternAbsences(data: InternAbsencesType) {
+    const response = await this.axios.patch(`/interns/${data.internId}/absences/${data.id}`, data);
+    return response.data;
+  }
+}
 
 export const Api = new API();
