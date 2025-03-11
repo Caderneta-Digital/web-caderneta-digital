@@ -10,6 +10,7 @@ import { Api } from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
 import { Navbar } from "@/components/ui/navbar";
 import {  useRouter } from "next/navigation";
+import { InternDashboardAbsences } from "./components/absences";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -33,10 +34,11 @@ export default function Dashboard() {
 
       <div className="px-4 py-3 flex flex-col gap-4">
         <Tabs defaultValue="overview" className="w-full space-y-5">
-          <TabsList className="grid w-fit grid-cols-4">
+          <TabsList className="grid w-fit grid-cols-5">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="attendences">Presenças</TabsTrigger>
             <TabsTrigger value="weeklySummaries">Registos</TabsTrigger> 
+            <TabsTrigger value="absences">Faltas</TabsTrigger>
             <TabsTrigger
                 value="evaluations"
                 onClick={() => router.push(`internInfo/details/${data.id}/grades`)}
@@ -45,10 +47,13 @@ export default function Dashboard() {
               </TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
-            <InternDashboardOverview attendences={data.attendences} weeklySummaries={data.weeklySummaries} remainingHours={data.remainingHours} />
+            <InternDashboardOverview attendences={data.attendences} weeklySummaries={data.weeklySummaries} remainingHours={data.remainingHours} absences={data.absences} />
           </TabsContent>
           <TabsContent value="attendences">
             <InternDashboardAttendences attendences={data.attendences} />
+          </TabsContent>
+          <TabsContent value="absences">
+            <InternDashboardAbsences absences={data.absences} />
           </TabsContent>
           <TabsContent value="weeklySummaries">
             <InternDashboardWeeklySummaries weeklySummaries={data.weeklySummaries} />

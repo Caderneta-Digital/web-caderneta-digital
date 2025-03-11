@@ -42,6 +42,7 @@ export type InternType = {
   hostEntity?: HostEntityType;
   attendences?: InternAttendenceType[];
   weeklySummaries?: InternWeeklySummaryType[];
+  absences?: InternAbsencesType[];
 };
 
 export type InternAttendenceType = {
@@ -63,4 +64,13 @@ export type InternWeeklySummaryType = {
   weekStart: string;
   isConfirmedByInternAdvisor: boolean;
   createdAt: string;
+};
+
+export type InternAbsencesType = {
+  id: string;
+  internId: string;
+  date: string;
+  reason: string;
+  isConfirmedByHostEntity: boolean;
+  isConfirmedBySupervisor: boolean;
 };

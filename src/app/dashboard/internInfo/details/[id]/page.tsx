@@ -16,6 +16,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Cookies from "js-cookie";
+import { InternAdvisorDashboardAbsences } from "./components/absences";
 
 
 export default function Dashboard() {
@@ -32,6 +33,7 @@ export default function Dashboard() {
       return response;
     },
   });
+  
   if (!intern || isLoading) {
     return <h1>A Carregar...</h1>;
   }
@@ -41,9 +43,10 @@ export default function Dashboard() {
       <div className="px-4 py-3 flex flex-col gap-4">
         <Tabs defaultValue="attendences" className="w-full space-y-5">
           <div className="flex justify-between items-center">
-            <TabsList className="grid w-fit grid-cols-3">
+            <TabsList className="grid w-fit grid-cols-4">
               <TabsTrigger value="attendences">Presenças</TabsTrigger>
               <TabsTrigger value="weeklySummaries">Registos</TabsTrigger>
+              <TabsTrigger value="absences">Faltas</TabsTrigger>
               <TabsTrigger
                 value="evaluations"
                 onClick={() => router.push(`${path}/grades`)}
@@ -76,6 +79,11 @@ export default function Dashboard() {
           <TabsContent value="weeklySummaries">
             <InternAdvisorDashboardWeeklySummaries
               weeklySummaries={intern.weeklySummaries || []}
+            />
+          </TabsContent>
+          <TabsContent value="absences">
+            <InternAdvisorDashboardAbsences
+              absences={intern.absences || []}
             />
           </TabsContent>
           <TabsContent value="evaluations"></TabsContent>

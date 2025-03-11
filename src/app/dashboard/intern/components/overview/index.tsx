@@ -2,20 +2,21 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { User } from "lucide-react";
 import { format, parseISO } from "date-fns"; 
-import { InternAttendenceType, InternWeeklySummaryType } from "@/types/internTypes";
+import { InternAbsencesType, InternAttendenceType, InternWeeklySummaryType } from "@/types/internTypes";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type PropsType = {
   weeklySummaries: InternWeeklySummaryType[] | undefined,
   attendences: InternAttendenceType[] | undefined,
-  remainingHours: number
+  remainingHours: number,
+  absences: InternAbsencesType[] | undefined
 }
 
-export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, attendences, remainingHours }) => {
+export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, attendences, remainingHours, absences }) => {
   const cardsData = [
     { title: "Nota de FCT", value: "N/A" },
     { title: "Horas Restantes", value: remainingHours },
-    { title: "Faltas", value: 0 },
+    { title: "Faltas", value: absences?.length },
     { title: "Registos Semanais", value: weeklySummaries ?.length, secondValue: weeklySummaries?.filter(item => item.isConfirmedByInternAdvisor).length },
   ];
 
