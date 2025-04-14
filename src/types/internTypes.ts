@@ -74,3 +74,19 @@ export type InternAbsencesType = {
   isConfirmedByHostEntity: boolean;
   isConfirmedBySupervisor: boolean;
 };
+
+export type InternAutoEvaluationType = {
+  id: string;
+  participacao: number;
+  autonomia: number;
+  responsabilidade: number;
+  relacionamento: number;
+  pertinencia: number;
+  rigor: number;
+  estruturacao: number;
+  reflexao: number;
+  period: string;
+  finalGrade: number;
+  createdAt: string;
+  internId: string;
+};

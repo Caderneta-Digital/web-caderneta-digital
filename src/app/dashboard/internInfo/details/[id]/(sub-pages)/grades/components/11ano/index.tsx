@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -12,9 +13,25 @@ import { InternAdvisorGrades11anoInfo } from "./components/internAdvisorGrades11
 import { InternAdvisorGrades11anoFinal } from "./components/internAdvisorGrades11anoFinal";
 import { useAuth } from "@/context/AuthContext";
 import { UserTypeEnum } from "@/types/userTypes";
+import { useQuery } from "react-query";
+import { Api } from "@/services/api";
+import { format, parseISO } from "date-fns";
 
 export const InternAdvisorDashboardGrades11Ano = () => {
-  const { user } = useAuth()
+
+  const { user } = useAuth();
+  
+  const { data, isLoading } = useQuery({
+    queryKey: ["internGrades", user?.id],
+    queryFn: async () => {
+      const response = await Api.getInternAutoEvaluation(user?.id as string, "11");
+      return response;
+    },
+  });
+  
+  if (isLoading) {
+    return <h1>Carrengando...</h1>;
+  }
 
   const isIntern = user?.type === UserTypeEnum.INTERN
   //const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
@@ -44,25 +61,25 @@ export const InternAdvisorDashboardGrades11Ano = () => {
                 </TableCell>
                 <TableCell>Processo de Trabalho na FCT</TableCell>
                 <TableCell>Participação</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{data ? data.participacao : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Autonomia</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{data ?data.autonomia : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Responsabilidade</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{data ?data.responsabilidade : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Relacionamento</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{data ?data.relacionamento : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
@@ -71,37 +88,37 @@ export const InternAdvisorDashboardGrades11Ano = () => {
                 </TableCell>
                 <TableCell>Relatório de FCT</TableCell>
                 <TableCell>Pertinência</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{data ?data.pertinencia : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Rigor</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{data ?data.rigor : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Estruturação</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{data ?data.estruturacao : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Reflexão</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{data ?data.reflexao : "N/A"}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
           <div className="flex flex-row justify-between">
             <div className="mt-4 text-sm text-neutral-950">
-              Avaliação Final: N/A &nbsp;&nbsp;&nbsp; Data: N/A
+              Avaliação Final: {data ?data.finalGrade : "N/A"} &nbsp;&nbsp;&nbsp; Data: {data ? format(parseISO(data.createdAt), "dd/MM/yyyy") : "N/A"}
             </div>
             {isIntern && (
-              <InternAdvisorGrades11anoAuto />
+              <InternAdvisorGrades11anoAuto isButtonDisabled={data != "" as any} />
             )}
           </div>
         </CardContent>

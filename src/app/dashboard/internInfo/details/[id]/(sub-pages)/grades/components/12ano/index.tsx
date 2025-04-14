@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { InternAdvisorGrades12anoAuto } from "./components/internAdvisorGrades12anoAuto";
@@ -5,10 +6,23 @@ import { InternAdvisorGrades12anoInfo } from "./components/internAdvisorGrades12
 import { InternAdvisorGrades12anoFinal } from "./components/internAdvisorGrades12anoFinal";
 import { useAuth } from "@/context/AuthContext";
 import { UserTypeEnum } from "@/types/userTypes";
+import { useQuery } from "react-query";
+import { Api } from "@/services/api";
 
 export const InternAdvisorDashboardGrades12Ano = () => {
-  const { user } = useAuth()
-
+  const { user } = useAuth();
+  
+  const { data, isLoading } = useQuery({
+    queryKey: ["internGrades", user?.id],
+    queryFn: async () => {
+      const response = await Api.getInternAutoEvaluation(user?.id as string, "12");
+      return response;
+    },
+  });
+  
+  if (isLoading) {
+    return <h1>Carrengando...</h1>;
+  }
   const isIntern = user?.type === UserTypeEnum.INTERN
   //const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
   const isInternAdvisor = user?.type === UserTypeEnum.INTERN_ADVISOR
@@ -94,7 +108,7 @@ export const InternAdvisorDashboardGrades12Ano = () => {
                   Avaliação Final: N/A &nbsp;&nbsp;&nbsp; Data: N/A
                 </div>
                 {isIntern && (
-                  <InternAdvisorGrades12anoAuto />
+                  <InternAdvisorGrades12anoAuto isButtonDisabled={data != "" as any} />
                 )}
               </div>
             </CardContent>
