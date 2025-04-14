@@ -11,7 +11,7 @@ import {
 } from "./dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
-import { SupervisorTypeEnum, UserTypeEnum } from "@/types/userTypes";
+//import { SupervisorTypeEnum, UserTypeEnum } from "@/types/userTypes";
 
 type PropsType = {
   title: string;
