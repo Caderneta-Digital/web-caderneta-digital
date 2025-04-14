@@ -4,6 +4,7 @@ import { InternshipConfigType } from "@/types/internshipConfigTypes";
 import {
   InternAbsencesType,
   InternAttendenceType,
+  InternAutoEvaluationType,
   InternType,
   InternWeeklySummaryType,
 } from "@/types/internTypes";
@@ -70,6 +71,18 @@ export type CreateInternWeeklySummariesType = {
 export type CreateInternAbsencesType = {
   date: Date;
   reason: string;
+  internId: string;
+}
+
+export type CreateInternAutoEvaluationType = {
+  participacao: number;
+  autonomia: number;
+  responsabilidade: number;
+  relacionamento: number;
+  pertinencia: number;
+  rigor: number;
+  estruturacao: number;
+  reflexao: number;
   internId: string;
 }
 
@@ -246,6 +259,16 @@ class API {
 
   public async updateInternAbsences(data: InternAbsencesType) {
     const response = await this.axios.patch(`/interns/${data.internId}/absences/${data.id}`, data);
+    return response.data;
+  }
+
+  public async createInternAutoEvaluation(data: CreateInternAutoEvaluationType) {
+    const response = await this.axios.post(`/interns/${data.internId}/grades`, data);
+    return response.data;
+  }
+
+  public async getInternAutoEvaluation(internId: string, period: string) {
+    const response = await this.axios.get<InternAutoEvaluationType>(`/interns/${internId}/grades/${period}`);
     return response.data;
   }
 }

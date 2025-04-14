@@ -11,6 +11,7 @@ import {
 } from "./dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
+//import { SupervisorTypeEnum, UserTypeEnum } from "@/types/userTypes";
 
 type PropsType = {
   title: string;
@@ -19,6 +20,8 @@ type PropsType = {
 
 export const Navbar: React.FC<PropsType> = ({ title, goBackUrl }) => {
   const { user, logOut } = useAuth();
+
+  //const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR && user.supervisorType === SupervisorTypeEnum.COURSE_DIRECTOR;
 
   return (
     <div className="flex justify-between items-center px-10 py-3 border-b-[1px] border-b-gray-300">

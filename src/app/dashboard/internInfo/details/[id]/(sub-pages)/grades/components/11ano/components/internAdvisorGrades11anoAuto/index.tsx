@@ -22,14 +22,94 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { Api, CreateInternAutoEvaluationType } from "@/services/api";
+import { useMutation, useQueryClient } from "react-query";
+import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { handleError } from "@/utils/handleError";
+import { useAuth } from "@/context/AuthContext";
 
-export const InternAdvisorGrades11anoAuto = () => {
-  const form = useForm();
+const schema = z.object({
+  participacao: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(20, { message: "O número deve ser no máximo 20" }),
+  autonomia: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(20, { message: "O número deve ser no máximo 20" }),
+  responsabilidade: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(20, { message: "O número deve ser no máximo 20" }),
+  relacionamento: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(20, { message: "O número deve ser no máximo 20" }),
+  pertinencia: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(20, { message: "O número deve ser no máximo 20" }),
+  rigor:  z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(20, { message: "O número deve ser no máximo 20" }),
+  estruturacao: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(20, { message: "O número deve ser no máximo 20" }),
+  reflexao: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(20, { message: "O número deve ser no máximo 20" }),
+});
+
+type FormType = z.infer<typeof schema>;
+
+export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisabled : boolean}) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  
+  const form = useForm<FormType>( { resolver: zodResolver( schema ), mode: "onBlur" } );
+
+  const {user} = useAuth();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  const { mutateAsync: createInternAutoEvaluationMutation, isLoading } = useMutation({
+      mutationKey: ["createInternAutoEvaluation"],
+      mutationFn: async (data: CreateInternAutoEvaluationType) => {
+        const response = await Api.createInternAutoEvaluation(data);
+        return response;
+      },
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["internAutoEvaluation", user?.id]);
+        setIsModalOpen(false);
+        toast({
+          variant: "success",
+          title: "A sua Auto Avaliação foi registada com sucesso!",
+          description: "A sua Auto Avaliação foi registada, ...!",
+        });
+      },
+      onError: async (error) => {
+        handleError(error, toast);
+      }
+  });
+
+  const handleCreateInternAutoEvaluation = async (data: FormType) => {
+    if (!user) {
+      return;
+    }
+    await createInternAutoEvaluationMutation({ ...data, internId: user.id });
+  };
+  
+
   return (
     <div>
-      <Dialog>
-        <DialogTrigger>
-          <Button variant="outline" size="sm">
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogTrigger disabled={isButtonDisabled}>
+          <Button variant="outline" size="sm" disabled={isButtonDisabled}>
             Preencher Avaliação
           </Button>{" "}
         </DialogTrigger>
@@ -45,7 +125,7 @@ export const InternAdvisorGrades11anoAuto = () => {
               <p>
                 <b>Nota:</b>
               </p>
-              <p>1 = 0 a 44 (Muito Insuficiente)</p>
+              <p>1 = 0 a 44 (Muito Insuficiente)</p> 
               <p>2 = 45 a 94 (Insuficiente)</p>
               <p>3 = 95 a 134 (Suficiente)</p>
               <p>4 = 135 a 174 (Bom)</p>
@@ -55,7 +135,7 @@ export const InternAdvisorGrades11anoAuto = () => {
 
           <div>
             <Form {...form}>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={form.handleSubmit(handleCreateInternAutoEvaluation)}>
                 <Label className="text-lg">Trabalho Prático (80%)</Label>
                 <DialogDescription className="text-sm">
                   Processo de Trabalho na FCT
@@ -63,7 +143,7 @@ export const InternAdvisorGrades11anoAuto = () => {
 
                 <FormField
                   control={form.control}
-                  name="participation"
+                  name="participacao"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -71,7 +151,7 @@ export const InternAdvisorGrades11anoAuto = () => {
                       </FormLabel>
                       <FormDescription>(Interesse, Integração)</FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={20} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -80,7 +160,7 @@ export const InternAdvisorGrades11anoAuto = () => {
 
                 <FormField
                   control={form.control}
-                  name="autonomy"
+                  name="autonomia"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -90,7 +170,7 @@ export const InternAdvisorGrades11anoAuto = () => {
                         (Iniciativa, Adaptabilidade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={20} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -99,7 +179,7 @@ export const InternAdvisorGrades11anoAuto = () => {
 
                 <FormField
                   control={form.control}
-                  name="responsibility"
+                  name="responsabilidade"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -109,7 +189,7 @@ export const InternAdvisorGrades11anoAuto = () => {
                         (Cumprimento de Tarefas, Recetivo, Trabalho em Equipa)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={20} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -118,7 +198,7 @@ export const InternAdvisorGrades11anoAuto = () => {
 
                 <FormField
                   control={form.control}
-                  name="relationship"
+                  name="relacionamento"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -129,7 +209,7 @@ export const InternAdvisorGrades11anoAuto = () => {
                         Trabalho)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={20} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -147,7 +227,7 @@ export const InternAdvisorGrades11anoAuto = () => {
 
                 <FormField
                   control={form.control}
-                  name="relevance"
+                  name="pertinencia"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -158,7 +238,7 @@ export const InternAdvisorGrades11anoAuto = () => {
                         entidade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={20} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -175,7 +255,7 @@ export const InternAdvisorGrades11anoAuto = () => {
                         (Clareza, Coerência, Objetividade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={20} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -184,7 +264,7 @@ export const InternAdvisorGrades11anoAuto = () => {
 
                 <FormField
                   control={form.control}
-                  name="structuring"
+                  name="estruturacao"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -195,7 +275,7 @@ export const InternAdvisorGrades11anoAuto = () => {
                         textual)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={20} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -204,7 +284,7 @@ export const InternAdvisorGrades11anoAuto = () => {
 
                 <FormField
                   control={form.control}
-                  name="reflection"
+                  name="reflexao"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">Reflexão</FormLabel>
@@ -218,23 +298,19 @@ export const InternAdvisorGrades11anoAuto = () => {
                     </FormItem>
                   )}
                 />
+
+                <Button
+                  type="submit"
+                  className="w-full bg-black text-white hover:bg-gray-900"
+                  isLoading={isLoading}
+                >
+                  Submeter Avaliação
+                </Button>
               </form>
             </Form>
           </div>
-
-          <div>
-            <Label>Avaliação Final</Label>
-            <h1>-</h1>
-          </div>
-
-          <Button
-            type="submit"
-            className="w-full bg-black text-white hover:bg-gray-900"
-          >
-            Submeter Avaliação
-          </Button>
         </DialogContent>
       </Dialog>
     </div>
-  );
-};
+);
+}
