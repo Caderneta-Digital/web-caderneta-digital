@@ -33,37 +33,37 @@ import { useAuth } from "@/context/AuthContext";
 
 const schema = z.object({
   participacao: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   autonomia: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   responsabilidade: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   relacionamento: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   pertinencia: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   rigor:  z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   estruturacao: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   reflexao: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
 });
 
 type FormType = z.infer<typeof schema>;
@@ -89,7 +89,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
         toast({
           variant: "success",
           title: "A sua Auto Avaliação foi registada com sucesso!",
-          description: "A sua Auto Avaliação foi registada, ...!",
+          description: "A sua Auto Avaliação foi registada!",
         });
       },
       onError: async (error) => {
@@ -104,7 +104,6 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
     await createInternAutoEvaluationMutation({ ...data, internId: user.id });
   };
   
-
   return (
     <div>
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -151,7 +150,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
                       </FormLabel>
                       <FormDescription>(Interesse, Integração)</FormDescription>
                       <FormControl>
-                        <Input type="number" min={1} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -170,7 +169,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
                         (Iniciativa, Adaptabilidade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={1} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -189,7 +188,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
                         (Cumprimento de Tarefas, Recetivo, Trabalho em Equipa)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={1} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -209,7 +208,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
                         Trabalho)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={1} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -238,7 +237,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
                         entidade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={1} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -255,7 +254,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
                         (Clareza, Coerência, Objetividade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={1} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -275,7 +274,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
                         textual)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={1} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -292,7 +291,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
                         (Argumenta, apresenta Conclusões da FCT)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

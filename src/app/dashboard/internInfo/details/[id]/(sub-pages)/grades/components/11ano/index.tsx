@@ -16,20 +16,31 @@ import { UserTypeEnum } from "@/types/userTypes";
 import { useQuery } from "react-query";
 import { Api } from "@/services/api";
 import { format, parseISO } from "date-fns";
+import { useParams } from "next/navigation";
 
 export const InternAdvisorDashboardGrades11Ano = () => {
+  const { id:internId } = useParams() as { id: string }
 
   const { user } = useAuth();
   
   const { data, isLoading } = useQuery({
-    queryKey: ["internGrades", user?.id],
+    queryKey: ["internGrades", internId],
     queryFn: async () => {
-      const response = await Api.getInternAutoEvaluation(user?.id as string, "11");
+      const response = await Api.getInternAutoEvaluation(internId, "11");
+      return response;
+    },
+  });
+
+  const { data: internAdvisorEvaluation, isLoading: isLoadingInternAdvisor } = useQuery({
+    queryKey: ["internFinalGrades", internId],
+    queryFn: async () => {
+      const response = await Api.getInternAdvisorEvaluation(internId, "11");
       return response;
     },
   });
   
-  if (isLoading) {
+  
+  if (isLoading || isLoadingInternAdvisor) {
     return <h1>Carrengando...</h1>;
   }
 
@@ -67,19 +78,19 @@ export const InternAdvisorDashboardGrades11Ano = () => {
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Autonomia</TableCell>
-                <TableCell>{data ?data.autonomia : "N/A"}</TableCell>
+                <TableCell>{data ? data.autonomia : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Responsabilidade</TableCell>
-                <TableCell>{data ?data.responsabilidade : "N/A"}</TableCell>
+                <TableCell>{data ? data.responsabilidade : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Relacionamento</TableCell>
-                <TableCell>{data ?data.relacionamento : "N/A"}</TableCell>
+                <TableCell>{data ? data.relacionamento : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
@@ -88,34 +99,34 @@ export const InternAdvisorDashboardGrades11Ano = () => {
                 </TableCell>
                 <TableCell>Relatório de FCT</TableCell>
                 <TableCell>Pertinência</TableCell>
-                <TableCell>{data ?data.pertinencia : "N/A"}</TableCell>
+                <TableCell>{data ? data.pertinencia : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Rigor</TableCell>
-                <TableCell>{data ?data.rigor : "N/A"}</TableCell>
+                <TableCell>{data ? data.rigor : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Estruturação</TableCell>
-                <TableCell>{data ?data.estruturacao : "N/A"}</TableCell>
+                <TableCell>{data ? data.estruturacao : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Reflexão</TableCell>
-                <TableCell>{data ?data.reflexao : "N/A"}</TableCell>
+                <TableCell>{data ? data.reflexao : "N/A"}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
           <div className="flex flex-row justify-between">
             <div className="mt-4 text-sm text-neutral-950">
-              Avaliação Final: {data ?data.finalGrade : "N/A"} &nbsp;&nbsp;&nbsp; Data: {data ? format(parseISO(data.createdAt), "dd/MM/yyyy") : "N/A"}
+              Avaliação Final: {data ? data.finalGrade : "N/A"} &nbsp;&nbsp;&nbsp; Data: {data ? format(parseISO(data.createdAt), "dd/MM/yyyy") : "N/A"}
             </div>
             {isIntern && (
               <InternAdvisorGrades11anoAuto isButtonDisabled={data != "" as any} />
@@ -146,25 +157,25 @@ export const InternAdvisorDashboardGrades11Ano = () => {
                 </TableCell>
                 <TableCell>Processo de Trabalho na FCT</TableCell>
                 <TableCell>Participação</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{internAdvisorEvaluation ? internAdvisorEvaluation?.participacao : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Autonomia</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{internAdvisorEvaluation ? internAdvisorEvaluation?.autonomia : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Responsabilidade</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{internAdvisorEvaluation ? internAdvisorEvaluation?.responsabilidade : "N/A"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Relacionamento</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{internAdvisorEvaluation ? internAdvisorEvaluation?.relacionamento : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
@@ -173,38 +184,38 @@ export const InternAdvisorDashboardGrades11Ano = () => {
                 </TableCell>
                 <TableCell>Relatório de FCT</TableCell>
                 <TableCell>Pertinência</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{internAdvisorEvaluation ? internAdvisorEvaluation?.pertinencia : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Rigor</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{internAdvisorEvaluation ? internAdvisorEvaluation?.rigor : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Estruturação</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{internAdvisorEvaluation ? internAdvisorEvaluation?.participacao : "N/A"}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell>Reflexão</TableCell>
-                <TableCell>N/A</TableCell>
+                <TableCell>{internAdvisorEvaluation ? internAdvisorEvaluation?.reflexao : "N/A"}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
           <div className="mt-4 flex justify-between items-center">
             <span className="text-sm text-neutral-950">
-              Avaliação Final: N/A &nbsp;&nbsp;&nbsp; Data: N/A
+              Avaliação Final: {internAdvisorEvaluation ? internAdvisorEvaluation.finalGrade : "N/A"} &nbsp;&nbsp;&nbsp; Data: {internAdvisorEvaluation ? format(parseISO(internAdvisorEvaluation.createdAt), "dd/MM/yyyy") : "N/A"}
             </span>
             {
               isInternAdvisor && (
-                <InternAdvisorGrades11anoFinal />
+                <InternAdvisorGrades11anoFinal isButtonDisabled={internAdvisorEvaluation != "" as any} />
               )
             }
           </div>

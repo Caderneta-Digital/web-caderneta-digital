@@ -35,35 +35,35 @@ const schema = z.object({
   participacao: z.coerce.number()
     .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 20" }),
   autonomia: z.coerce.number()
     .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 20" }),
   responsabilidade: z.coerce.number()
     .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 20" }),
   relacionamento: z.coerce.number()
     .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 20" }),
   pertinencia: z.coerce.number()
     .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 20" }),
   rigor:  z.coerce.number()
     .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 20" }),
   estruturacao: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 20" }),
   reflexao: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(20, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
 });
 
 type FormType = z.infer<typeof schema>;
@@ -90,7 +90,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
       toast({
         variant: "success",
         title: "A sua Auto Avaliação foi registada com sucesso!",
-        description: "A sua Auto Avaliação foi registada, ...!",
+        description: "A sua Auto Avaliação foi registada!",
       });
     },
     onError: async (error) => {

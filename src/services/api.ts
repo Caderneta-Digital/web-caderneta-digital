@@ -86,6 +86,19 @@ export type CreateInternAutoEvaluationType = {
   internId: string;
 }
 
+export type CreateInternAdvisorEvaluationType = {
+  participacao: number;
+  autonomia: number;
+  responsabilidade: number;
+  relacionamento: number;
+  pertinencia: number;
+  rigor: number;
+  estruturacao: number;
+  reflexao: number;
+  period: string;
+  internId: string;
+}
+
 class API {
   axios;
 
@@ -269,6 +282,16 @@ class API {
 
   public async getInternAutoEvaluation(internId: string, period: string) {
     const response = await this.axios.get<InternAutoEvaluationType>(`/interns/${internId}/grades/${period}`);
+    return response.data;
+  }
+
+  public async createInternAdvisorEvaluation(data: CreateInternAdvisorEvaluationType) {
+    const response = await this.axios.post(`/internAdvisors/grades`, data);
+    return response.data;
+  }
+
+  public async getInternAdvisorEvaluation(internId: string, period: string) {
+    const response = await this.axios.get<InternAutoEvaluationType>(`/internAdvisors/grades/${internId}/${period}`);
     return response.data;
   }
 }
