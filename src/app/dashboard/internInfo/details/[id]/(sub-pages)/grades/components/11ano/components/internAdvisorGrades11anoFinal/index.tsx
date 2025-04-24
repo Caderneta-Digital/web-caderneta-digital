@@ -22,14 +22,97 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { z } from "zod";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "react-query";
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import { Api, CreateInternAdvisorEvaluationType } from "@/services/api";
+import { handleError } from "@/utils/handleError";
+import { useParams } from "next/navigation";
 
-export const InternAdvisorGrades11anoFinal = () => {
-  const form = useForm();
+const schema = z.object({
+  participacao: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(200, { message: "O número deve ser no máximo 200" }),
+  autonomia: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(200, { message: "O número deve ser no máximo 200" }),
+  responsabilidade: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(200, { message: "O número deve ser no máximo 200" }),
+  relacionamento: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(200, { message: "O número deve ser no máximo 200" }),
+  pertinencia: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(200, { message: "O número deve ser no máximo 200" }),
+  rigor:  z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(200, { message: "O número deve ser no máximo 200" }),
+  estruturacao: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(200, { message: "O número deve ser no máximo 200" }),
+  reflexao: z.coerce.number()
+    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .min(1, { message: "O número deve ser no mínimo 0" })
+    .max(200, { message: "O número deve ser no máximo 200" }),
+});
+
+type FormType = z.infer<typeof schema>;
+
+
+export const InternAdvisorGrades11anoFinal = ({isButtonDisabled} : {isButtonDisabled : boolean}) => {
+  const { id:internId } = useParams() as { id: string }
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    
+  const form = useForm<FormType>( { resolver: zodResolver( schema ), mode: "onBlur" } );
+
+  const {user} = useAuth();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  const { mutateAsync: createInternAdvisorEvaluationMutation, isLoading } = useMutation({
+      mutationKey: ["createInternAdvisorEvaluation"],
+      mutationFn: async (data: CreateInternAdvisorEvaluationType) => {
+        const response = await Api.createInternAdvisorEvaluation(data);
+        return response;
+      },
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["internAdvisorEvaluation", user?.id]);
+        setIsModalOpen(false);
+        toast({
+          variant: "success",
+          title: "A sua Auto Avaliação foi registada com sucesso!",
+          description: "A sua Auto Avaliação foi registada, ...!",
+        });
+      },
+      onError: async (error) => {
+        handleError(error, toast);
+      }
+  });
+
+  const handleCreateInternAdvisorEvaluation = async (data: FormType) => {
+    if (!user) {
+      return;
+    }
+    await createInternAdvisorEvaluationMutation({ ...data, period: "11", internId});
+  };
+
   return (
     <div>
-      <Dialog>
-        <DialogTrigger>
-          <Button variant="outline" size="sm">
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogTrigger disabled={isButtonDisabled}>
+          <Button variant="outline" size="sm" disabled={isButtonDisabled}>
             Preencher Avaliação
           </Button>{" "}
         </DialogTrigger>
@@ -55,7 +138,7 @@ export const InternAdvisorGrades11anoFinal = () => {
 
           <div>
             <Form {...form}>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={form.handleSubmit(handleCreateInternAdvisorEvaluation)}>
                 <Label className="text-lg">Trabalho Prático (80%)</Label>
                 <DialogDescription className="text-sm">
                   Processo de Trabalho na FCT
@@ -63,7 +146,7 @@ export const InternAdvisorGrades11anoFinal = () => {
 
                 <FormField
                   control={form.control}
-                  name="participation"
+                  name="participacao"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -71,7 +154,7 @@ export const InternAdvisorGrades11anoFinal = () => {
                       </FormLabel>
                       <FormDescription>(Interesse, Integração)</FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -80,7 +163,7 @@ export const InternAdvisorGrades11anoFinal = () => {
 
                 <FormField
                   control={form.control}
-                  name="autonomy"
+                  name="autonomia"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -90,7 +173,7 @@ export const InternAdvisorGrades11anoFinal = () => {
                         (Iniciativa, Adaptabilidade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -99,7 +182,7 @@ export const InternAdvisorGrades11anoFinal = () => {
 
                 <FormField
                   control={form.control}
-                  name="responsibility"
+                  name="responsabilidade"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -109,7 +192,7 @@ export const InternAdvisorGrades11anoFinal = () => {
                         (Cumprimento de Tarefas, Recetivo, Trabalho em Equipa)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -118,7 +201,7 @@ export const InternAdvisorGrades11anoFinal = () => {
 
                 <FormField
                   control={form.control}
-                  name="relationship"
+                  name="relacionamento"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -129,7 +212,7 @@ export const InternAdvisorGrades11anoFinal = () => {
                         Trabalho)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -147,7 +230,7 @@ export const InternAdvisorGrades11anoFinal = () => {
 
                 <FormField
                   control={form.control}
-                  name="relevance"
+                  name="pertinencia"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -158,7 +241,7 @@ export const InternAdvisorGrades11anoFinal = () => {
                         entidade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -175,7 +258,7 @@ export const InternAdvisorGrades11anoFinal = () => {
                         (Clareza, Coerência, Objetividade)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -184,7 +267,7 @@ export const InternAdvisorGrades11anoFinal = () => {
 
                 <FormField
                   control={form.control}
-                  name="structuring"
+                  name="estruturacao"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">
@@ -195,7 +278,7 @@ export const InternAdvisorGrades11anoFinal = () => {
                         textual)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -204,7 +287,7 @@ export const InternAdvisorGrades11anoFinal = () => {
 
                 <FormField
                   control={form.control}
-                  name="reflection"
+                  name="reflexao"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="no-error-color">Reflexão</FormLabel>
@@ -212,27 +295,23 @@ export const InternAdvisorGrades11anoFinal = () => {
                         (Argumenta, apresenta Conclusões da FCT)
                       </FormDescription>
                       <FormControl>
-                        <Input type="number" min={0} max={20} {...field} />
+                        <Input type="number" min={1} max={200} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
+                <Button
+                  type="submit"
+                  className="w-full bg-black text-white hover:bg-gray-900"
+                  isLoading={isLoading}
+                >
+                  Submeter Avaliação
+                </Button>
               </form>
             </Form>
           </div>
-
-          <div>
-            <Label>Avaliação Final</Label>
-            <h1>-</h1>
-          </div>
-
-          <Button
-            type="submit"
-            className="w-full bg-black text-white hover:bg-gray-900"
-          >
-            Submeter Avaliação
-          </Button>
         </DialogContent>
       </Dialog>
     </div>
