@@ -89,7 +89,7 @@ export const InternAdvisorGrades11anoAuto = ({isButtonDisabled} : {isButtonDisab
         toast({
           variant: "success",
           title: "A sua Auto Avaliação foi registada com sucesso!",
-          description: "A sua Auto Avaliação foi registada, ...!",
+          description: "A sua Auto Avaliação foi registada!",
         });
       },
       onError: async (error) => {
