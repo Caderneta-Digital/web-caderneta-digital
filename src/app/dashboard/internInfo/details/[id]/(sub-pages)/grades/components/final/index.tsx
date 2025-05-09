@@ -6,8 +6,53 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Api } from "@/services/api";
+import { useParams } from "next/navigation";
+import { useQuery } from "react-query";
 
 export const InternAdvisorDashboardGradesFinal = () => {
+  const { id:internId } = useParams() as { id: string }
+  
+  // Auto avaliação do Estagiário
+  // 11º
+  const { data: internAutoEvaluation11, isLoading: isLoadingAuto11 } = useQuery({
+    queryKey: ["internAutoGrades11", internId],
+    queryFn: async () => {
+      const response = await Api.getInternAutoEvaluation(internId, "11");
+      return response;
+    },
+  });
+
+  // 12º
+  const { data: internAutoEvaluation12, isLoading: isLoadingAuto12 } = useQuery({
+    queryKey: ["internAutoGrades12", internId],
+    queryFn: async () => {
+      const response = await Api.getInternAutoEvaluation(internId, "12");
+      return response;
+    },
+  });
+
+  // Avaliação Final pelo Tutor
+  const { data: internFinalGrade11, isLoading: isLoadingFinalGrade11 } = useQuery({
+    queryKey: ["internFinalGrade11", internId],
+    queryFn: async () => {
+      const response = await Api.getInternAdvisorEvaluation(internId, "11");
+      return response;
+    },
+  });
+
+  const { data: internFinalGrade12, isLoading: isLoadingFinalGrade12 } = useQuery({
+    queryKey: ["internFinalGrade12", internId],
+    queryFn: async () => {
+      const response = await Api.getInternAdvisorEvaluation(internId, "12");
+      return response;
+    },
+  });
+
+  if (isLoadingFinalGrade11 || isLoadingFinalGrade12 || isLoadingAuto11 || isLoadingAuto12) {
+    return <h1>Carrengando...</h1>;
+  }
+
   return (
     <div className="flex flex-col">
       <Card>
@@ -28,32 +73,32 @@ export const InternAdvisorDashboardGradesFinal = () => {
           <div>
             <Label>Avaliação Final do 11º Ano</Label>
             <CardDescription>Coeficiente (25%)</CardDescription>
-            <h1>200</h1>
+            <h1>{internAutoEvaluation11 ? internAutoEvaluation11.finalGrade : "N/A"}</h1>
           </div>
 
           <div>
             <Label>Avaliação Final do 12º Ano</Label>
             <CardDescription>Coeficiente (75%)</CardDescription>
-            <h1>?</h1>
+            <h1>{internAutoEvaluation12? internAutoEvaluation12.finalGrade : "N/A"}</h1>
           </div>
 
           <Label className="text-lg">Resultado</Label>
           <div>
             <Label>Avaliação Final do 11º Ano</Label>
-            <h1>50</h1>
+            <h1>{internFinalGrade11 ? internFinalGrade11.finalGrade : "N/A"}</h1>
           </div>
 
           <div>
             <Label>Avaliação Final do 12º Ano</Label>
-            <h1>?</h1>
+            <h1>{internFinalGrade12 ? internFinalGrade12.finalGrade : "N/A"}</h1>
           </div>
-
+          
           <Label className="text-lg">Classificação</Label>
           <div>
             <Label>Total</Label>
             <h1>?</h1>
           </div>
-
+          
           <div>
             <Label>Classificação Final</Label>
             <CardDescription>(Arredondada às unidades)</CardDescription>

@@ -41,7 +41,7 @@ export const InternAdvisorDashboardGrades11Ano = () => {
   
   
   if (isLoading || isLoadingInternAdvisor) {
-    return <h1>Carrengando...</h1>;
+    return <h1>Carregando...</h1>;
   }
 
   const isIntern = user?.type === UserTypeEnum.INTERN
