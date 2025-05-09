@@ -33,7 +33,7 @@ export const InternAdvisorDashboardGrades12Ano = () => {
     });
   
   if (isLoading || isLoadingInternAdvisor) {
-    return <h1>Carrengando...</h1>;
+    return <h1>Carregando...</h1>;
   }
   const isIntern = user?.type === UserTypeEnum.INTERN
   //const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
