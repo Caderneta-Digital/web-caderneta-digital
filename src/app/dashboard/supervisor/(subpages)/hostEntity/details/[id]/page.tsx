@@ -16,6 +16,8 @@ import { useQuery } from "react-query";
 import { CreateInternAdvisorModal } from "./components/createInternAdvisorModal";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
+import LoadingSpinner from "@/components/ui/loading";
+import React from "react";
 
 export default function HostEntityDetails() {
   const { user } = useAuth()
@@ -32,12 +34,8 @@ export default function HostEntityDetails() {
 
   if (!hostEntity || isLoading) {
     return (
-      <div className="h-screen w-screen">
-        <Navbar title={`Dashboard da`} />
-
-        <div className="px-4 py-3 flex flex-col gap-4 h-full">
-          <Skeleton className="w-full h-full" />
-        </div>
+      <div className="h-screen flex items-center justify-center">
+        <LoadingSpinner />
       </div>
     );
   }

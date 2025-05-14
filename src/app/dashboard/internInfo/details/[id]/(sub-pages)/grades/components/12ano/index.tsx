@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { InternAdvisorGrades12anoAuto } from "./components/internAdvisorGrades12anoAuto";
 import { InternAdvisorGrades12anoInfo } from "./components/internAdvisorGrades12anoInfo";
 import { InternAdvisorGrades12anoFinal } from "./components/internAdvisorGrades12anoFinal";
@@ -10,34 +17,43 @@ import { useQuery } from "react-query";
 import { Api } from "@/services/api";
 import { format, parseISO } from "date-fns";
 import { useParams } from "next/navigation";
+import LoadingSpinner from "@/components/ui/loading";
 
 export const InternAdvisorDashboardGrades12Ano = () => {
-  const { id:internId } = useParams() as { id: string }
+  const { id: internId } = useParams() as { id: string };
 
   const { user } = useAuth();
-  
+
   const { data, isLoading } = useQuery({
     queryKey: ["internGrades", user?.id],
     queryFn: async () => {
-      const response = await Api.getInternAutoEvaluation(user?.id as string, "12");
+      const response = await Api.getInternAutoEvaluation(
+        user?.id as string,
+        "12"
+      );
       return response;
     },
   });
 
-  const { data: internAdvisorEvaluation, isLoading: isLoadingInternAdvisor } = useQuery({
+  const { data: internAdvisorEvaluation, isLoading: isLoadingInternAdvisor } =
+    useQuery({
       queryKey: ["internFinalGrades", internId],
       queryFn: async () => {
         const response = await Api.getInternAdvisorEvaluation(internId, "12");
         return response;
       },
     });
-  
+
   if (isLoading || isLoadingInternAdvisor) {
-    return <h1>Carregando...</h1>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
-  const isIntern = user?.type === UserTypeEnum.INTERN
+  const isIntern = user?.type === UserTypeEnum.INTERN;
   //const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
-  const isInternAdvisor = user?.type === UserTypeEnum.INTERN_ADVISOR
+  const isInternAdvisor = user?.type === UserTypeEnum.INTERN_ADVISOR;
 
   return (
     <div className="grid grid-cols-1 gap-6">
@@ -208,10 +224,12 @@ export const InternAdvisorDashboardGrades12Ano = () => {
                   isInternAdvisor && (
                     <InternAdvisorGrades12anoFinal />
                   )
-                }
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                : "N/A"}
+            </span>
+            {isInternAdvisor && <InternAdvisorGrades12anoFinal />}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };

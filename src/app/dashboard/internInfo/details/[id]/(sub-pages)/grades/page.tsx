@@ -20,12 +20,13 @@ import { InternAdvisorDashboardGrades12Ano } from "./components/12ano";
 import { InternAdvisorDashboardGradesFinal } from "./components/final";
 import { GradesCriteria } from "@/components/ui/gradesCriteria";
 import { useAuth } from "@/context/AuthContext";
+import LoadingSpinner from "@/components/ui/loading";
 //import { UserTypeEnum } from "@/types/userTypes";
 
 export default function Dashboard() {
   const [shouldShowComponent, setShouldShowComponent] = useState(false);
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   //const isIntern = user?.type === UserTypeEnum.INTERN
   //const isSupervisor = user?.type === UserTypeEnum.SUPERVISOR
@@ -43,7 +44,11 @@ export default function Dashboard() {
   });
 
   if (!intern || isLoading) {
-    return <h1>A Carregar...</h1>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   console.log(intern)

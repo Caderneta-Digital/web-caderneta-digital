@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { useAuth } from "@/context/AuthContext";
 import { Api } from "@/services/api";
 import { Navbar } from "@/components/ui/navbar";
+import LoadingSpinner from "@/components/ui/loading";
 
 export default function Dashboard() {
   const { user: internAdvisor } = useAuth();
@@ -19,7 +20,11 @@ export default function Dashboard() {
   });
 
   if (!data || isLoading) {
-    return <h1>A Carregar...</h1>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (
