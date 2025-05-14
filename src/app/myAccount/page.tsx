@@ -10,9 +10,11 @@ import {
 } from "@/components/ui/card";
 import { InputEditLine } from "@/components/ui/inputEditLine";
 import { Label } from "@/components/ui/label";
+import LoadingSpinner from "@/components/ui/loading";
 import { Navbar } from "@/components/ui/navbar";
 import { useAuth } from "@/context/AuthContext";
 import { Api, UpdateUserRequestType } from "@/services/api";
+import React from "react";
 import { useMutation, useQuery } from "react-query";
 
 export default function MyAccount() {
@@ -43,7 +45,11 @@ export default function MyAccount() {
     });
 
   if (!profile || isLoadingProfile) {
-    return <h1>A carregar...</h1>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const handleRequestPasswordReset = async () => {

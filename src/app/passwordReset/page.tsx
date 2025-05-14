@@ -20,6 +20,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
 import { useToast } from "@/hooks/use-toast";
 import { Suspense } from "react";
+import LoadingSpinner from "@/components/ui/loading";
+import React from "react";
 
 const schema = z.object({
   newPassword: z
@@ -83,7 +85,11 @@ function PasswordResetContent(): JSX.Element {
     });
 
   if (!token || isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const handleChangePassword = async (data: FormType) => {

@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import Cookies from "js-cookie";
 import { InternAdvisorDashboardAbsences } from "./components/absences";
-
+import LoadingSpinner from "@/components/ui/loading";
 
 export default function Dashboard() {
   const params = useParams();
@@ -33,9 +33,13 @@ export default function Dashboard() {
       return response;
     },
   });
-  
+
   if (!intern || isLoading) {
-    return <h1>A Carregar...</h1>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
   return (
     <div className="h-screen w-screen">
@@ -82,9 +86,7 @@ export default function Dashboard() {
             />
           </TabsContent>
           <TabsContent value="absences">
-            <InternAdvisorDashboardAbsences
-              absences={intern.absences || []}
-            />
+            <InternAdvisorDashboardAbsences absences={intern.absences || []} />
           </TabsContent>
           <TabsContent value="evaluations"></TabsContent>
         </Tabs>

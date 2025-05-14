@@ -89,7 +89,6 @@ export default function Login() {
 
   const onSubmit = async (data: FormType) => {
     if (flow === UserTypeEnum.INTERN) {
-      // TODO: Passar toda essa função para o AuthContext
       const response = await loginInternMutation(data);
       setUser({
         id: response.intern.id,
