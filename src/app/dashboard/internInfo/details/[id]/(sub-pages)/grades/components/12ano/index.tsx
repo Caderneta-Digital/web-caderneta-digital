@@ -117,7 +117,7 @@ export const InternAdvisorDashboardGrades12Ano = () => {
               </Table>
               <div className="flex flex-row justify-between">
                 <div className="mt-4 text-sm text-neutral-950">
-                  Avaliação Final: N/A &nbsp;&nbsp;&nbsp; Data: N/A
+                  Avaliação Final: {data ? data.finalGrade : "N/A"} &nbsp;&nbsp;&nbsp; Data: {data ? format(parseISO(data.createdAt), "dd/MM/yyyy") : "N/A"}
                 </div>
                 {isIntern && (
                   <InternAdvisorGrades12anoAuto isButtonDisabled={data != "" as any} />

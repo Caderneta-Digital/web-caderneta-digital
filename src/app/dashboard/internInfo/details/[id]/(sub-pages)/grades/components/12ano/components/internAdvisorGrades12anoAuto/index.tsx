@@ -33,35 +33,35 @@ import { z } from "zod";
 
 const schema = z.object({
   participacao: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 1 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(200, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   autonomia: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 1 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(200, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   responsabilidade: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 1 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(200, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   relacionamento: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 1 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(200, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   pertinencia: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 1 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(200, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   rigor:  z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 20 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 1 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(200, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   estruturacao: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 1 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
-    .max(200, { message: "O número deve ser no máximo 20" }),
+    .max(200, { message: "O número deve ser no máximo 200" }),
   reflexao: z.coerce.number()
-    .int({ message: "Apenas números inteiros compreendidos de 0 a 200 são permitidos" })
+    .int({ message: "Apenas números inteiros compreendidos de 1 a 200 são permitidos" })
     .min(1, { message: "O número deve ser no mínimo 0" })
     .max(200, { message: "O número deve ser no máximo 200" }),
 });
@@ -151,7 +151,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
                     </FormLabel>
                     <FormDescription>(Interesse, Integração)</FormDescription>
                     <FormControl>
-                      <Input type="number" min={1} max={20} {...field} />
+                      <Input type="number" min={1} max={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -170,7 +170,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
                       (Iniciativa, Adaptabilidade)
                     </FormDescription>
                     <FormControl>
-                      <Input type="number" min={1} max={20} {...field} />
+                      <Input type="number" min={1} max={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -189,7 +189,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
                       (Cumprimento de Tarefas, Recetivo, Trabalho em Equipa)
                     </FormDescription>
                     <FormControl>
-                      <Input type="number" min={1} max={20} {...field} />
+                      <Input type="number" min={1} max={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -209,7 +209,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
                       Trabalho)
                     </FormDescription>
                     <FormControl>
-                      <Input type="number" min={1} max={20} {...field} />
+                      <Input type="number" min={1} max={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -238,7 +238,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
                       entidade)
                     </FormDescription>
                     <FormControl>
-                      <Input type="number" min={1} max={20} {...field} />
+                      <Input type="number" min={1} max={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -255,7 +255,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
                       (Clareza, Coerência, Objetividade)
                     </FormDescription>
                     <FormControl>
-                      <Input type="number" min={1} max={20} {...field} />
+                      <Input type="number" min={1} max={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -275,7 +275,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
                       textual)
                     </FormDescription>
                     <FormControl>
-                      <Input type="number" min={1} max={20} {...field} />
+                      <Input type="number" min={1} max={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -292,7 +292,7 @@ const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
                       (Argumenta, apresenta Conclusões da FCT)
                     </FormDescription>
                     <FormControl>
-                      <Input type="number" min={0} max={20} {...field} />
+                      <Input type="number" min={0} max={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

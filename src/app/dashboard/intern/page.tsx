@@ -25,7 +25,7 @@ export default function Dashboard() {
   });
 
   if (!data || isLoading) {
-    return <h1>Carrengando...</h1>;
+    return <h1>Carregando...</h1>;
   }
 
   return (
