@@ -48,7 +48,7 @@ type PropsType = {
 export const EditSummariesModal: React.FC<PropsType> = ({ summary }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const form = useForm<FormType>( { resolver: zodResolver( schema ) } );
+  const form = useForm<FormType>( { resolver: zodResolver( schema ), defaultValues: {weekStart: new Date(summary.weekStart), weekEnd: new Date(summary.weekEnd), text: summary.text } } );
 
   const {user} = useAuth();
   const queryClient = useQueryClient();

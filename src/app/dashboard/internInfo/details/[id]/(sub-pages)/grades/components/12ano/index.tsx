@@ -44,6 +44,14 @@ export const InternAdvisorDashboardGrades12Ano = () => {
       },
     });
 
+    const { data: intern } = useQuery({
+    queryKey: ["intern", internId],
+    queryFn: async () => {
+      const response = await Api.findInternById(internId);
+      return response;
+    },
+  });
+
   if (isLoading || isLoadingInternAdvisor) {
     return (
       <div className="h-screen flex items-center justify-center">
@@ -136,7 +144,7 @@ export const InternAdvisorDashboardGrades12Ano = () => {
               Avaliação Final: {data ? data.finalGrade : "N/A"} &nbsp;&nbsp;&nbsp; Data: {data ? format(parseISO(data.createdAt), "dd/MM/yyyy") : "N/A"}
             </div>
             {isIntern && (
-              <InternAdvisorGrades12anoAuto isButtonDisabled={data != "" as any} />
+              <InternAdvisorGrades12anoAuto isButtonDisabled={data != "" as any || (intern?.remainingHours||0) > 0} />
             )}
           </div>
         </CardContent>

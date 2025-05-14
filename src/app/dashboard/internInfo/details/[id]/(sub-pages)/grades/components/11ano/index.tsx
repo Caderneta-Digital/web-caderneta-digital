@@ -24,6 +24,14 @@ export const InternAdvisorDashboardGrades11Ano = () => {
 
   const { user } = useAuth();
 
+  const { data: intern } = useQuery({
+    queryKey: ["intern", internId],
+    queryFn: async () => {
+      const response = await Api.findInternById(internId);
+      return response;
+    },
+  });
+
   const { data, isLoading } = useQuery({
     queryKey: ["internGrades", internId],
     queryFn: async () => {
@@ -137,7 +145,7 @@ export const InternAdvisorDashboardGrades11Ano = () => {
             </div>
             {isIntern && (
               <InternAdvisorGrades11anoAuto
-                isButtonDisabled={data != ("" as any)}
+                isButtonDisabled={data != ("" as any) || (intern?.remainingHours || 0) > 425}
               />
             )}
           </div>

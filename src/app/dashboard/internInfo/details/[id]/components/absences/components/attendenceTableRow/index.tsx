@@ -14,6 +14,7 @@ type PropsType = {
 export const AbsenceTableRow: React.FC<PropsType> = ({ absence }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth()
+  console.log(user)
 
   const { mutateAsync: updateInternAbsence, isLoading } =
   useUpdateInternAbsences({
@@ -51,7 +52,8 @@ export const AbsenceTableRow: React.FC<PropsType> = ({ absence }) => {
           <Button
             variant="outline"
             onClick={handleApproveAbsence}
-            isLoading={isLoading}
+            isLoading={isLoading && user?.type === UserTypeEnum.INTERN_ADVISOR}
+            disabled={user?.type !== UserTypeEnum.INTERN_ADVISOR}
           >
             Aprovar
           </Button>
@@ -64,7 +66,8 @@ export const AbsenceTableRow: React.FC<PropsType> = ({ absence }) => {
           <Button
             variant="outline"
             onClick={handleApproveAbsence}
-            isLoading={isLoading}
+            isLoading={isLoading && user?.type === UserTypeEnum.SUPERVISOR}
+            disabled={user?.type !== UserTypeEnum.SUPERVISOR}
           >
             Aprovar
           </Button>

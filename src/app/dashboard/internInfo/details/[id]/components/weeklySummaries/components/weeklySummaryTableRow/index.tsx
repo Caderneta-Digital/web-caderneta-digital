@@ -34,7 +34,7 @@ export const WeeklySummaryTableRow: React.FC<PropsType> = ({
     <TableRow>
       <TableCell>
         {format(weeklySummary.weekStart, "dd/MM/yyyy")} -{" "}
-        {format(weeklySummary.weekStart, "dd/MM/yyyy")}
+        {format(weeklySummary.weekEnd, "dd/MM/yyyy")}
       </TableCell>
       <TableCell>
         <h1>{weeklySummary.text}</h1>

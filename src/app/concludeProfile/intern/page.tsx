@@ -39,9 +39,9 @@ const schema = z.object({
   address: z.string().min(1, { message: "Preencha o endereço" }),
   postalCode: z
     .string()
-    .length(7, { message: "Insira um código postal valido" })
+    .length(8, { message: "Insira um código postal valido" })
     .min(1, { message: "Preencha o codigo postal" })
-    .max(7, { message: "Insira um código postal valido" }),
+    .max(8, { message: "Insira um código postal valido" }),
   phone: z
     .string()
     .length(9, { message: "Insira um telemovel valido" })
