@@ -14,7 +14,6 @@ import { Api } from "@/services/api";
 import { useParams } from "next/navigation";
 import { useQuery } from "react-query";
 import { CreateInternAdvisorModal } from "./components/createInternAdvisorModal";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
 import LoadingSpinner from "@/components/ui/loading";
 import React from "react";
@@ -55,7 +54,6 @@ export default function HostEntityDetails() {
               <TableRow>
                 <TableHead>Nome</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Estado</TableHead>
                 <TableHead>Estagiários</TableHead>
               </TableRow>
             </TableHeader>
@@ -64,7 +62,6 @@ export default function HostEntityDetails() {
                 <TableRow key={advisor.id}>
                   <TableCell>{advisor.name}</TableCell>
                   <TableCell>{advisor.email}</TableCell>
-                  <TableCell>?</TableCell>
                   <TableCell>{advisor.interns?.map(intern => intern.name).join(", ") || "-"}</TableCell>
                 </TableRow>
               ))}

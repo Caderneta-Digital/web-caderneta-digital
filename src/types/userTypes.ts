@@ -1,5 +1,5 @@
 import { InternAdvisorType } from "./internAdvisorTypes";
-import { InternType } from "./internTypes";
+import { CourseType, InternType } from "./internTypes";
 import { SupervisorType } from "./supervisorTypes";
 
 export enum UserTypeEnum {
@@ -19,6 +19,7 @@ export interface UserType {
   name: string;
   type: UserTypeEnum;
   supervisorType?: SupervisorTypeEnum;
+  course?: CourseType;
 }
 
 export type UsersType = InternType | InternAdvisorType | SupervisorType;

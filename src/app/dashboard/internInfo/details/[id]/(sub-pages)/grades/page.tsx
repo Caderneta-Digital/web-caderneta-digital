@@ -21,6 +21,7 @@ import { InternAdvisorDashboardGradesFinal } from "./components/final";
 import { GradesCriteria } from "@/components/ui/gradesCriteria";
 import { useAuth } from "@/context/AuthContext";
 import LoadingSpinner from "@/components/ui/loading";
+import Cookies from "js-cookie";
 //import { UserTypeEnum } from "@/types/userTypes";
 
 export default function Dashboard() {
@@ -75,7 +76,7 @@ export default function Dashboard() {
                   <BreadcrumbList>
                     <BreadcrumbItem>
                       <BreadcrumbLink
-                        href={`/dashboard/${user?.type}`}
+                        href={`/dashboard/${user?.type || Cookies.get("type")}`}
                         className="cursor-pointer"
                       >
                         Home

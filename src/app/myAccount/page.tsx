@@ -16,6 +16,7 @@ import { useAuth } from "@/context/AuthContext";
 import { Api, UpdateUserRequestType } from "@/services/api";
 import React from "react";
 import { useMutation, useQuery } from "react-query";
+import Cookies from "js-cookie";
 
 export default function MyAccount() {
   const { user } = useAuth()
@@ -58,7 +59,7 @@ export default function MyAccount() {
 
   return (
     <div className="w-screen h-screen">
-      <Navbar title="A Minha Conta" goBackUrl={`/dashboard/${user?.type}`} />
+      <Navbar title="A Minha Conta" goBackUrl={`/dashboard/${user?.type || Cookies.get("type")}`} />
 
       <div className="px-4 py-3 flex flex-col gap-4">
         <Card>

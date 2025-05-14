@@ -89,6 +89,7 @@ export default function ConcludeInternProfilePage() {
     await updateIntern({
       id: user.id,
       ...data,
+      postalCode: data.postalCode.includes("-") ? data.postalCode.replaceAll("-", "") : data.postalCode
     });
   };
 

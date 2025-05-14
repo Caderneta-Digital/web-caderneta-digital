@@ -36,7 +36,6 @@ export const SupervisorDashboardInterns: React.FC<PropsType> = ({
               <TableHead>Nome</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Curso</TableHead>
-              <TableHead>Classificação</TableHead>
               <TableHead>Horas Restantes</TableHead>
               <TableHead>Entidade de Acolhimento</TableHead>
               <TableHead>Estado</TableHead>

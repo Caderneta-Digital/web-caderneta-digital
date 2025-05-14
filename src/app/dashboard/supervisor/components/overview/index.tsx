@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAuth } from "@/context/AuthContext";
 import { HostEntityType } from "@/types/hostEntititesType";
 import { InternType } from "@/types/internTypes";
 import { User } from "lucide-react";
@@ -20,8 +21,11 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
   interns,
   hostEntities,
 }) => {
+
+  const {user} = useAuth();
+
   const cardsData = [
-    { title: "Nota de FCT (média)", value: "?" },
+    { title: "Curso", value: user?.course?.name },
     { title: "Nº de Estagiários", value: interns.length },
     { title: "Nº de Entidades", value: hostEntities.length },
     {

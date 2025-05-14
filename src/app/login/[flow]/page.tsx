@@ -95,6 +95,7 @@ export default function Login() {
         name: response.intern.name,
         email: response.intern.email,
         type: UserTypeEnum.INTERN,
+        course: response.intern.course,
       });
       Api.setBearerToken(response.token);
       Cookies.set(
@@ -117,6 +118,7 @@ export default function Login() {
         email: response.supervisor.email,
         type: UserTypeEnum.SUPERVISOR,
         supervisorType: response.supervisor.type,
+        course: response.supervisor.course,
       });
       Api.setBearerToken(response.token);
       Cookies.set(

@@ -1,9 +1,11 @@
 "use client"
 
+import LoadingSpinner from "@/components/ui/loading";
+
 export const InternAdvisorDashboardEvaluation = () => {
   return (
-    <div>
-      <h1>Em construção...</h1>
-    </div>
-  )
+        <div className="h-screen flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      );
 }
