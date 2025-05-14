@@ -43,7 +43,6 @@ import {
           <div>
             <Label>Participação</Label>
             <p className="text-neutral-500 text-sm">(Interesse, Integração)</p>
-            <h1>?</h1>
           </div>
   
           <div>
@@ -51,7 +50,6 @@ import {
             <p className="text-neutral-500 text-sm">
               (Iniciativa, Adaptabilidade)
             </p>
-            <h1>?</h1>
           </div>
   
           <div>
@@ -59,7 +57,6 @@ import {
             <p className="text-neutral-500 text-sm">
               (Cumprimento de Tarefas, Recetivo, Trabalho em Equipa)
             </p>
-            <h1>?</h1>
           </div>
   
           <div>
@@ -67,7 +64,6 @@ import {
             <p className="text-neutral-500 text-sm">
               (Assiduidade, Pontualidade, Higiene e Segurança no Trabalho)
             </p>
-            <h1>?</h1>
           </div>
   
           <Label className="text-lg">
@@ -81,41 +77,27 @@ import {
             <p className="text-neutral-500 text-sm">
               (Seleciona e recorre a informação e meios descritores da entidade)
             </p>
-            <h1>?</h1>
           </div>
   
           <div>
             <Label>Rigor</Label>
             <p className="text-neutral-500 text-sm">
-              (Clareza, Coerência, Objetividade){" "}
+              (Clareza, Coerência, Objetividade)
             </p>
-            <h1>?</h1>
           </div>
   
           <div>
             <Label>Estruturação</Label>
             <p className="text-neutral-500 text-sm">
-              (Respeita a estrutura do relatório e a formatação textual){" "}
+              (Respeita a estrutura do relatório e a formatação textual)
             </p>
-            <h1>?</h1>
           </div>
   
           <div>
             <Label>Reflexão</Label>
             <p className="text-neutral-500 text-sm">
-              (Argumenta, apresenta Conclusões da FCT){" "}
+              (Argumenta, apresenta Conclusões da FCT)
             </p>
-            <h1>?</h1>
-          </div>
-  
-          <div>
-            <Label>Avaliação Final</Label>
-            <h1>?</h1>
-          </div>
-  
-          <div>
-            <Label>Data</Label>
-            <h1>?</h1>
           </div>
         </DialogContent>
       </Dialog>

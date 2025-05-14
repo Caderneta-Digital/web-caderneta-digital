@@ -51,13 +51,17 @@ export default function Dashboard() {
     );
   }
 
+  console.log(intern)
+
   return (
     <div className="h-screen w-screen">
-      <Navbar title={`Avaliação do ${intern.name}`} />
+      <Navbar title={`Avaliação ${intern.name}`} />
 
       {shouldShowComponent ? (
-        <GradesCriteria setShouldShowComponent={setShouldShowComponent} />
-      ) : (
+        <GradesCriteria
+          setShouldShowComponent={setShouldShowComponent}
+        />
+      ) : ( 
         <div className="px-10 py-3 flex flex-col gap-4">
           <Tabs defaultValue="11ano" className="w-full space-y-5">
             <div className="flex justify-between items-center">
