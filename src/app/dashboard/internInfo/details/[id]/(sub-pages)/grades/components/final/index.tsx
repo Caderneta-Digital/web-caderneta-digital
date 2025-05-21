@@ -38,23 +38,27 @@ export const InternAdvisorDashboardGradesFinal = () => {
   );
 
   // Avaliação Final pelo Tutor
-  const { data: internFinalGrade11, isLoading: isLoadingFinalGrade11 } =
-    useQuery({
+  // 11º
+  const { data: internFinalGrade11, isLoading: isLoadingFinalGrade11 } = useQuery(
+    {
       queryKey: ["internFinalGrade11", internId],
       queryFn: async () => {
         const response = await Api.getInternAdvisorEvaluation(internId, "11");
         return response;
       },
-    });
+    }
+  );
 
-  const { data: internFinalGrade12, isLoading: isLoadingFinalGrade12 } =
-    useQuery({
+  // 12º
+  const { data: internFinalGrade12, isLoading: isLoadingFinalGrade12 } = useQuery(
+    {
       queryKey: ["internFinalGrade12", internId],
       queryFn: async () => {
         const response = await Api.getInternAdvisorEvaluation(internId, "12");
         return response;
       },
-    });
+    }
+  );
 
   if (
     isLoadingFinalGrade11 ||
@@ -68,6 +72,8 @@ export const InternAdvisorDashboardGradesFinal = () => {
       </div>
     );
   }
+
+  const finalGrade = (internFinalGrade11?.finalGrade ?? 0) * 0.25 + (internFinalGrade12?.finalGrade ?? 0) * 0.75;
 
   return (
     <div className="flex flex-col">
@@ -100,9 +106,7 @@ export const InternAdvisorDashboardGradesFinal = () => {
             <Label>Avaliação Final do 12º Ano</Label>
             <CardDescription>Coeficiente (75%)</CardDescription>
             <h1>
-              {internAutoEvaluation12
-                ? internAutoEvaluation12.finalGrade
-                : "N/A"}
+              {internAutoEvaluation12 ? internAutoEvaluation12.finalGrade : "N/A"}
             </h1>
           </div>
 
@@ -121,16 +125,10 @@ export const InternAdvisorDashboardGradesFinal = () => {
             </h1>
           </div>
 
-          <Label className="text-lg">Classificação</Label>
+          <Label className="text-lg">Classificação Final</Label>
           <div>
             <Label>Total</Label>
-            <h1>?</h1>
-          </div>
-
-          <div>
-            <Label>Classificação Final</Label>
-            <CardDescription>(Arredondada às unidades)</CardDescription>
-            <h1>?</h1>
+            <h1>{ finalGrade ?? "N/A" }</h1>
           </div>
         </CardContent>
       </Card>

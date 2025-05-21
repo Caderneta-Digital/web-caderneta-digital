@@ -18,6 +18,7 @@ import {
 import Cookies from "js-cookie";
 import { InternAdvisorDashboardAbsences } from "./components/absences";
 import LoadingSpinner from "@/components/ui/loading";
+import { InfoInternsModal } from "@/app/dashboard/supervisor/components/interns/components/infoInternsModal";
 
 export default function Dashboard() {
   const params = useParams();
@@ -58,6 +59,9 @@ export default function Dashboard() {
                 Avaliações
               </TabsTrigger>
             </TabsList>
+
+            <InfoInternsModal intern={intern} />
+
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>

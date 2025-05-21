@@ -16,8 +16,12 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { InternStatusEnum, InternType } from "@/types/internTypes";
 import { useUpdateIntern } from "@/hooks/useUpdateIntern";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useAuth } from "@/context/AuthContext";
+import { useParams } from "next/navigation";
+import { Api } from "@/services/api";
+import LoadingSpinner from "@/components/ui/loading";
+import { SupervisorTypeEnum } from "@/types/userTypes";
 
 type PropsType = {
   intern: InternType;
@@ -25,6 +29,7 @@ type PropsType = {
 
 export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
   const { user } = useAuth()
+  const { id: internId } = useParams() as { id: string };
 
   const queryClient = useQueryClient()
   const { mutateAsync: updateIntern } = useUpdateIntern({
@@ -32,6 +37,38 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
       await queryClient.invalidateQueries(["supervisorDashboard", user?.id])
     }
   })
+
+  // 11º
+  const { data: internFinalGrade11, isLoading: isLoadingFinalGrade11 } = useQuery(
+    {
+      queryKey: ["internFinalGrade11", internId],
+      queryFn: async () => {
+        const response = await Api.getInternAdvisorEvaluation(internId, "11");
+        return response;
+      },
+    }
+  );
+    
+  // 12º
+  const { data: internFinalGrade12, isLoading: isLoadingFinalGrade12 } = useQuery(
+    {
+      queryKey: ["internFinalGrade12", internId],
+      queryFn: async () => {
+        const response = await Api.getInternAdvisorEvaluation(internId, "12");
+        return response;
+      },
+    }
+  );
+
+  if (isLoadingFinalGrade11 || isLoadingFinalGrade12) {
+      return (
+        <div className="h-screen flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      );
+  }
+
+  const finalGrade = (internFinalGrade11?.finalGrade ?? 0) * 0.25 + (internFinalGrade12?.finalGrade ?? 0) * 0.75;
 
   return (
     <Dialog>
@@ -59,7 +96,7 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
 
         <div>
           <Label className="text-gray-600">Classificação</Label>
-          <h1>?</h1>
+          <h1>{finalGrade ?? "N/A"}</h1>
         </div>
 
         <div>
@@ -114,7 +151,7 @@ export const InfoInternsModal: React.FC<PropsType> = ({ intern }) => {
 
         <div>
           <Label className="text-gray-600">Estado</Label>
-          <Select value={intern.status} onValueChange={value => updateIntern({ ...intern, status: value as InternStatusEnum })}>
+          <Select disabled={user?.supervisorType !== SupervisorTypeEnum.COURSE_DIRECTOR} value={intern.status} onValueChange={value => updateIntern({ ...intern, status: value as InternStatusEnum })}>
             <SelectTrigger>
               <SelectValue placeholder="Estado" />
             </SelectTrigger>

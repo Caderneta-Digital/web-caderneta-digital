@@ -63,7 +63,6 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
                 <TableHead>Nome</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Curso</TableHead>
-                <TableHead>Classificação</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -72,7 +71,6 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
                   <TableCell>{intern.name}</TableCell>
                   <TableCell>{intern.email}</TableCell>
                   <TableCell>{intern.course.name}</TableCell>
-                  <TableCell>?</TableCell>
                 </TableRow>
               ))}
             </TableBody>

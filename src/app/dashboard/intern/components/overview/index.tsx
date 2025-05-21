@@ -4,6 +4,7 @@ import { User } from "lucide-react";
 import { format, parseISO } from "date-fns"; 
 import { InternAbsencesType, InternAttendenceType, InternWeeklySummaryType } from "@/types/internTypes";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useAuth } from "@/context/AuthContext";
 
 type PropsType = {
   weeklySummaries: InternWeeklySummaryType[] | undefined,
@@ -13,8 +14,10 @@ type PropsType = {
 }
 
 export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, attendences, remainingHours, absences }) => {
+  const { user } = useAuth();
+  
   const cardsData = [
-    { title: "Nota de FCT", value: "N/A" },
+    { title: "Curso", value: user?.course?.name },
     { title: "Horas Restantes", value: remainingHours },
     { title: "Faltas", value: absences?.length },
     { title: "Registos Semanais", value: weeklySummaries ?.length, secondValue: weeklySummaries?.filter(item => item.isConfirmedByInternAdvisor).length },
