@@ -22,7 +22,7 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
   hostEntities,
 }) => {
 
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   const cardsData = [
     { title: "Curso", value: user?.course?.name },
@@ -33,7 +33,7 @@ export const SupervisorDashboardOverview: React.FC<PropsType> = ({
       value: interns.filter((intern) => !intern.hostEntity).length,
     },
   ];
-
+  
   return (
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">

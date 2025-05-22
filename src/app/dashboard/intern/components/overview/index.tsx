@@ -31,6 +31,8 @@ export const InternDashboardOverview: React.FC<PropsType> = ({ weeklySummaries, 
     }
   };
 
+  console.log(user?.course?.name)
+
   return (
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
