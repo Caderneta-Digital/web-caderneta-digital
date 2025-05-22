@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import LoadingSpinner from "@/components/ui/loading";
 import {
   Table,
   TableBody,
@@ -9,18 +8,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Api } from "@/services/api";
 import { InternType } from "@/types/internTypes";
 import { User } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
-import { useQuery } from "react-query";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   interns: InternType[];
 };
 
 export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({interns,}) => {
-  const { id: internId } = useParams() as { id: string };
 
   const router = useRouter();
 
@@ -44,38 +40,6 @@ export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({interns,}) 
     },
     0,
   );
-
-  const { data: internFinalGrade11, isLoading: isLoadingFinalGrade11 } = useQuery(
-    {
-      queryKey: ["internFinalGrade11", internId],
-      queryFn: async () => {
-        const response = await Api.getInternAdvisorEvaluation(internId, "11");
-        return response;
-      },
-    }
-  );
-  
-  // 12º
-  const { data: internFinalGrade12, isLoading: isLoadingFinalGrade12 } = useQuery(
-    {
-      queryKey: ["internFinalGrade12", internId],
-      queryFn: async () => {
-        const response = await Api.getInternAdvisorEvaluation(internId, "12");
-        return response;
-      },
-    }
-  );
-
-  if (isLoadingFinalGrade11 || isLoadingFinalGrade12) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-  
-  const finalGrade = (internFinalGrade11?.finalGrade ?? 0) * 0.25 + (internFinalGrade12?.finalGrade ?? 0) * 0.75;
-  
 
   const cardsData = [
     { title: "Estagiários Inseridos", value: interns.length },
@@ -118,7 +82,6 @@ export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({interns,}) 
                 <TableHead>Email</TableHead>
                 <TableHead>Presenças</TableHead>
                 <TableHead>Registos Semanais</TableHead>
-                <TableHead>Classificação</TableHead>
                 <TableHead>Horas Restantes</TableHead>
               </TableRow>
             </TableHeader>
@@ -129,7 +92,6 @@ export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({interns,}) 
                   <TableCell>{intern.email}</TableCell>
                   <TableCell>{intern.attendences?.length}</TableCell>
                   <TableCell>{intern.weeklySummaries?.length}</TableCell>
-                  <TableCell>{finalGrade ?? "N/A"}</TableCell>
                   <TableCell>{intern.remainingHours}</TableCell>
                   <TableCell>
                     <Button
