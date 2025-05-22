@@ -57,7 +57,7 @@ export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({interns,}) 
     { title: "Estagiários Inseridos", value: interns.length },
     { title: "Presenças a Confirmar", value: needToConfirmAttendencesCount },
     { title: "Registos a Confirmar", value: needToConfirmWeeklySummariesCount },
-    { title: "Horas Restantes (média)", value: needToConfirmAbsencesCount },
+    { title: "Faltas a Confirmar", value: needToConfirmAbsencesCount },
   ];
 
   const goInternDetails = (internId: string) => {
