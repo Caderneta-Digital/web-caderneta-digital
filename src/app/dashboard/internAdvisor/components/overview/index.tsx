@@ -41,11 +41,23 @@ export const InternAdvisorDashboardOverview: React.FC<PropsType> = ({interns,}) 
     0,
   );
 
+  const needToConfirmAbsencesCount = interns.reduce(
+    (counter, intern) => {
+      return (
+        counter +
+        (intern.absences?.filter(
+          (absence) => !absence.isConfirmedByHostEntity,
+        ).length || 0)
+      );
+    },
+    0,
+  );
+
   const cardsData = [
     { title: "Estagiários Inseridos", value: interns.length },
     { title: "Presenças a Confirmar", value: needToConfirmAttendencesCount },
     { title: "Registos a Confirmar", value: needToConfirmWeeklySummariesCount },
-    { title: "Horas Restantes (média)", value: "?" },
+    { title: "Horas Restantes (média)", value: needToConfirmAbsencesCount },
   ];
 
   const goInternDetails = (internId: string) => {
