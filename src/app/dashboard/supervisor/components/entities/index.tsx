@@ -36,7 +36,6 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
               <TableHead>Ramo</TableHead>
               <TableHead>Tutores</TableHead>
               <TableHead>Estagiários</TableHead>
-              <TableHead>Estado</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -50,7 +49,6 @@ export const SupervisorDashboardEntities: React.FC<PropsType> = ({
                   {hostEntity.interns.map((intern) => intern.name).join(", ") ||
                     "-"}
                 </TableCell>
-                <TableCell>?</TableCell>
                 <TableCell>
                   <Button
                     variant="outline"
